@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "title": "Bea & Gábor — Wedding",
+    "description": "Bea & Gábor's wedding — 2026.08.22. • Ceremony 17:00 • Celebration 20:00 • Magic Harghita Resort"
+  },
+  "nav": {
+    "skipLink": "Skip to content",
+    "brand": "Bea & Gábor",
+    "location": "Location",
+    "accommodation": "Accommodation",
+    "rsvp": "RSVP"
+  },
+  "hero": {
+    "date": "August 22, 2026",
+    "names": "Bea and Gábor",
+    "subtitle": "Wedding",
+    "lead": "Join us on this special day when we officially unite our lives!",
+    "ctaRsvp": "RSVP",
+    "ctaLocation": "Location"
+  },
+  "quickfacts": {
+    "ceremony": "Ceremony",
+    "celebration": "Celebration",
+    "location": "Location",
+    "date": "August 22, 2026"
+  },
+  "countdown": {
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds"
+  },
+  "rsvp": {
+    "title": "RSVP",
+    "description": "Help us with planning by sending a quick response! Please let us know your attendance intention and any dietary restrictions:",
+    "deadline": "Please respond via the form below or by phone by June 22.",
+    "button": "Open Google Form"
+  },
+  "location": {
+    "title": "Location",
+    "description": "The wedding will be held at <strong class=\"highlight\">Magic Harghita Resort</strong>.",
+    "detail": "Căpâlnița, Harghita County",
+    "directions": "How to find the venue: Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the fields, straight to the Resort gate.",
+    "button": "Get directions on Google Maps"
+  },
+  "accommodation": {
+    "title": "Accommodation",
+    "price": "150 RON / person",
+    "description": "If you plan to stay at the venue, please let us know your intention, as Magic Harghita Resort can provide accommodation in limited numbers. Find all additional accommodation information here:",
+    "button": "Go to accommodation page",
+    "includes": "Included:",
+    "breakfast": "breakfast / snack",
+    "checkout": "Check-out:",
+    "checkoutTime": "next day at 12"
+  },
+  "footer": {
+    "text": "Bea & Gábor • 2026.08.22."
+  }
+}

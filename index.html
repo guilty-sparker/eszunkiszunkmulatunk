@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Beáta & Gábor esküvője — 2026.08.22. • Ceremónia 17:00 • Lakodalom 20:00 • Magic Harghita Resort" />
-    <title>Beáta & Gábor — Esküvő</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://www.google.com https://maps.google.com; connect-src 'self';" />
+    <meta name="description" content="Bea & Gábor esküvője — 2026.08.22. • Ceremónia 17:00 • Lakodalom 20:00 • Magic Harghita Resort" />
+    <title>Bea & Gábor — Esküvő</title>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,11 +22,52 @@
 
     <div class="topbar" role="banner">
       <div class="container topbar__inner">
-        <a class="topbar__brand" href="#top" aria-label="Ugrás a tetejére">Beáta &amp; Gábor</a>
-        <nav class="topbar__nav" aria-label="Oldal navigáció">
-          <a href="#helyszin">Helyszín</a>
-          <a href="#szallas">Szállás</a>
-          <a class="topbar__cta" href="#rsvp">Visszajelzés</a>
+        <a class="topbar__brand" href="#top" aria-label="Ugrás a tetejére">
+          <svg class="topbar__logo" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#f4eadc;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#d9b089;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <text x="25" y="62" font-family="var(--font-serif)" font-size="42" font-weight="700" text-anchor="middle" fill="url(#logoGradient)" letter-spacing="-0.03em">B</text>
+            <text x="60" y="62" font-family="var(--font-serif)" font-size="32" font-weight="600" text-anchor="middle" fill="url(#logoGradient)" opacity="0.85">&amp;</text>
+            <text x="95" y="62" font-family="var(--font-serif)" font-size="42" font-weight="700" text-anchor="middle" fill="url(#logoGradient)" letter-spacing="-0.03em">G</text>
+          </svg>
+        </a>
+        <div class="topbar__right">
+          <div class="lang-switcher">
+            <button class="lang-switcher__btn" id="langBtn" aria-label="Select language">
+              <img class="lang-switcher__flag" id="langFlag" src="./flags/hu.png" alt="Language flag" onerror="this.src='./flags/hu.svg'; this.onerror=null;" />
+              <svg class="lang-switcher__icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="lang-switcher__dropdown" id="langDropdown">
+              <button class="lang-switcher__option" data-lang="hu" data-flag-png="./flags/hu.png" data-flag-svg="./flags/hu.svg">
+                <img class="lang-switcher__option-flag" src="./flags/hu.png" alt="HU" onerror="this.src='./flags/hu.svg'; this.onerror=null;" />
+                <span>Magyar</span>
+              </button>
+              <button class="lang-switcher__option" data-lang="en" data-flag-png="./flags/en.png" data-flag-svg="./flags/en.svg">
+                <img class="lang-switcher__option-flag" src="./flags/en.png" alt="EN" onerror="this.src='./flags/en.svg'; this.onerror=null;" />
+                <span>English</span>
+              </button>
+              <button class="lang-switcher__option" data-lang="ro" data-flag-png="./flags/ro.png" data-flag-svg="./flags/ro.svg">
+                <img class="lang-switcher__option-flag" src="./flags/ro.png" alt="RO" onerror="this.src='./flags/ro.svg'; this.onerror=null;" />
+                <span>Română</span>
+              </button>
+            </div>
+          </div>
+          <button class="mobile-menu__toggle" aria-label="Menu" id="mobileMenuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+        <nav class="topbar__nav" aria-label="Oldal navigáció" id="topbarNav">
+          <a class="topbar__cta" href="#rsvp" data-i18n="nav.rsvp">Visszajelzés</a>
+          <a href="#helyszin" data-i18n="nav.location">Helyszín</a>
+          <a href="#szallas" data-i18n="nav.accommodation">Szállás</a>
         </nav>
       </div>
     </div>
@@ -35,35 +77,38 @@
       <div class="container hero__content">
         <div class="badge">
           <span class="badge__dot" aria-hidden="true"></span>
-          2026. augusztus 22.
+          <span data-i18n="hero.date">2026. augusztus 22.</span>
         </div>
 
         <h1 class="hero__title">
-          <span class="hero__names">Beáta és Gábor</span>
-          <span class="hero__subtitle">Esküvője</span>
+          <span class="hero__names" data-i18n="hero.names">Bea és Gábor</span>
+          <span class="hero__subtitle" data-i18n="hero.subtitle">Esküvője</span>
         </h1>
 
-        <p class="hero__lead">
+        <p class="hero__lead" data-i18n="hero.lead">
           Tartsatok velünk ezen a különleges napon, amikor hivatalosan is összekötjük az életünket!
         </p>
 
         <div class="hero__cta">
-          <a class="btn btn--primary" href="#rsvp">Visszajelzés</a>
-          <a class="btn btn--ghost" href="#helyszin">Helyszín</a>
+          <a class="btn btn--primary" href="#rsvp" data-i18n="hero.ctaRsvp">Visszajelzés</a>
+          <a class="btn btn--ghost" href="#helyszin" data-i18n="hero.ctaLocation">Helyszín</a>
         </div>
 
         <div class="quickfacts" role="list" aria-label="Gyors információk">
           <div class="quickfacts__item" role="listitem">
-            <div class="quickfacts__k">Ceremónia</div>
+            <div class="quickfacts__k" data-i18n="quickfacts.ceremony">Ceremónia</div>
             <div class="quickfacts__v">17:00</div>
+            <div class="quickfacts__date" data-i18n="quickfacts.date">2026 augusztus 22</div>
           </div>
           <div class="quickfacts__item" role="listitem">
-            <div class="quickfacts__k">Lakodalom</div>
+            <div class="quickfacts__k" data-i18n="quickfacts.celebration">Ünnepség</div>
             <div class="quickfacts__v">20:00</div>
+            <div class="quickfacts__date" data-i18n="quickfacts.date">2026 augusztus 22</div>
           </div>
           <div class="quickfacts__item" role="listitem">
-            <div class="quickfacts__k">Helyszín</div>
+            <div class="quickfacts__k" data-i18n="quickfacts.location">Helyszín</div>
             <div class="quickfacts__v">Magic Harghita Resort</div>
+            <div class="quickfacts__detail">Căpâlnița, jud. Harghita</div>
           </div>
         </div>
       </div>
@@ -75,19 +120,19 @@
           <div class="countdown">
             <div class="countdown__item">
               <div class="countdown__value" id="days">0</div>
-              <div class="countdown__label">Nap</div>
+              <div class="countdown__label" data-i18n="countdown.days">Nap</div>
             </div>
             <div class="countdown__item">
               <div class="countdown__value" id="hours">0</div>
-              <div class="countdown__label">Óra</div>
+              <div class="countdown__label" data-i18n="countdown.hours">Óra</div>
             </div>
             <div class="countdown__item">
               <div class="countdown__value" id="minutes">0</div>
-              <div class="countdown__label">Perc</div>
+              <div class="countdown__label" data-i18n="countdown.minutes">Perc</div>
             </div>
             <div class="countdown__item">
               <div class="countdown__value" id="seconds">0</div>
-              <div class="countdown__label">Másodperc</div>
+              <div class="countdown__label" data-i18n="countdown.seconds">Másodperc</div>
             </div>
           </div>
         </div>
@@ -96,19 +141,21 @@
       <section class="section section--rsvp section--bg section--bg-rsvp" id="rsvp" aria-labelledby="rsvp-cim">
         <div class="container rsvp">
           <div class="rsvp__box">
-            <h2 id="rsvp-cim">Visszajelzés</h2>
-            <p class="muted">Segíts nekünk a szervezésben egy gyors visszajelzéssel! Kérjük, jelezd felénk résztvételi szándékod, illetve ha van bármilyen ételérzékenységed:</p>
+            <h2 id="rsvp-cim" data-i18n="rsvp.title">Visszajelzés</h2>
+            <p class="muted" data-i18n="rsvp.description">Segíts nekünk a szervezésben egy gyors visszajelzéssel! Kérjük, jelezd felénk résztvételi szándékod, illetve ha van bármilyen ételérzékenységed:</p>
             
-            <p class="rsvp__deadline">
+            <p class="rsvp__deadline" data-i18n="rsvp.deadline">
               Kérünk jelezz vissza az alábbi űrlapon vagy telefonon június 22-ig.
             </p>
 
             <div class="actions actions--center">
               <a
                 class="btn btn--primary btn--big"
-                href="https://docs.google.com/forms/d/e/1FAIpQLSeh8XGBgdVrHTwqrkt6ZIA8wwTRwJ8DxY3V5-2tattFiiROjg/viewform?usp=dialog"
+                id="rsvpFormLink"
+                href="https://forms.gle/hxEey31YVZisD2sk6"
                 target="_blank"
                 rel="noreferrer"
+                data-i18n="rsvp.button"
               >
                 Megnyitom a Google űrlapot
               </a>
@@ -121,12 +168,13 @@
       <section class="section section--split section--bg section--bg-helyszin" id="helyszin" aria-labelledby="helyszin-cim">
         <div class="container split">
           <div class="split__text">
-            <h2 id="helyszin-cim">Helyszín</h2>
-            <p>
-              Az esküvő a <strong class="highlight">Magic Harghita Resort</strong>ban lesz, a hegyek között.
+            <h2 id="helyszin-cim" data-i18n="location.title">Helyszín</h2>
+            <p data-i18n="location.description">
+              Az esküvő a <strong class="highlight">Magic Harghita Resort</strong>ban lesz megtartva.
             </p>
-            <p class="muted">
-              Így találtok meg minket: Székelyudvarhely felől érkezve Kápolnásfalunál térjetek le balra a főútról. Innen egy 3 km-es út vezet át a mezőkön, egyenesen a Resort kapujáig, ahol már csak mi és a természet vár rátok.
+            <p class="location-detail" data-i18n="location.detail">Căpâlnița, jud. Harghita</p>
+            <p class="muted" data-i18n="location.directions">
+              Így találtok meg a helyszint: Székelyudvarhely felől érkezve Kápolnásfalunál térjetek le balra a főútról. Innen egy 3 km-es út vezet át a mezőkön, egyenesen a Resort kapujáig.
             </p>
 
             <div class="actions">
@@ -135,6 +183,7 @@
                 href="https://www.google.com/maps/search/?api=1&query=Magic%20Harghita%20Resort"
                 target="_blank"
                 rel="noreferrer"
+                data-i18n="location.button"
               >
                 Útvonaltervezés Google Maps-ben
               </a>
@@ -143,12 +192,16 @@
 
           <div class="split__media">
             <div class="map" role="region" aria-label="Térkép: Magic Harghita Resort">
-              <iframe
-                title="Google térkép: Magic Harghita Resort"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                src="https://www.google.com/maps?q=Magic%20Harghita%20Resort&output=embed"
-              ></iframe>
+              <div class="map__frame">
+                <iframe
+                  title="Google térkép: Magic Harghita Resort"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen
+                  src="https://www.google.com/maps?q=Magic+Harghita+Resort,+Căpâlnița,+Romania&output=embed&zoom=15&t=k"
+                ></iframe>
+                <div class="map__overlay"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -157,10 +210,10 @@
       <section class="section section--split section--bg section--bg-szallas" id="szallas" aria-labelledby="szallas-cim">
         <div class="container split split--reverse">
           <div class="split__text">
-            <h2 id="szallas-cim">Szállás</h2>
-            <div class="pill">150 RON / fő</div>
-            <p>
-              Ha nálunk aludnátok, a főépület szobái és különálló kis faházikók közül választhattok. Minden további infót a szállásról itt találtok:
+            <h2 id="szallas-cim" data-i18n="accommodation.title">Szállás</h2>
+            <div class="pill" data-i18n="accommodation.price">150 RON / fő</div>
+            <p data-i18n="accommodation.description">
+              Amennyiben a helyszinen aludnátok, kérünk jelezzétek szándékotokat, a Magic Harghita Resort tud szállással szolgálni korlátozott számban. Minden további infót a szállásról itt találtok:
             </p>
             <div class="actions">
               <a
@@ -168,12 +221,13 @@
                 href="https://magicharghita.ro/szallas/"
                 target="_blank"
                 rel="noreferrer"
+                data-i18n="accommodation.button"
               >
                 Tovább a szállás oldalára
               </a>
             </div>
             <p class="muted" style="margin-top: 12px;">
-              <strong>Benne van:</strong> reggeli / morzsa • <strong>Check‑out:</strong> másnap 12–13 óra között
+              <strong data-i18n="accommodation.includes">Benne van:</strong> <span data-i18n="accommodation.breakfast">reggeli / morzsa</span> • <strong data-i18n="accommodation.checkout">Check‑out:</strong> <span data-i18n="accommodation.checkoutTime">másnap 12–13 óra között</span>
             </p>
           </div>
 
@@ -204,13 +258,79 @@
 
     <footer class="footer">
       <div class="container footer__inner">
-        <div class="footer__left">Beáta &amp; Gábor • 2026.08.22.</div>
-        <div class="footer__right">
-          <a href="#top">↑</a>
-        </div>
+        <div class="footer__left" data-i18n="footer.text">Bea &amp; Gábor • 2026.08.22.</div>
       </div>
     </footer>
 
+    <script>
+      // Simple, reliable language switcher with flags
+      (function() {
+        const langBtn = document.getElementById('langBtn');
+        const langDropdown = document.getElementById('langDropdown');
+        const langOptions = document.querySelectorAll('.lang-switcher__option');
+        const langFlag = document.getElementById('langFlag');
+        const langCode = document.getElementById('langCode');
+        
+        if (langBtn && langDropdown) {
+          // Set initial language
+          const savedLang = localStorage.getItem('preferredLang') || 'hu';
+          updateLanguageDisplay(savedLang);
+          
+          // Toggle dropdown
+          langBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = langDropdown.classList.contains('lang-switcher__dropdown--open');
+            langDropdown.classList.toggle('lang-switcher__dropdown--open');
+            langBtn.setAttribute('aria-expanded', !isOpen);
+          });
+          
+          // Close when clicking outside
+          document.addEventListener('click', function(e) {
+            if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+              langDropdown.classList.remove('lang-switcher__dropdown--open');
+              langBtn.setAttribute('aria-expanded', 'false');
+            }
+          });
+          
+          // Handle language selection
+          langOptions.forEach(option => {
+            option.addEventListener('click', async function(e) {
+              e.stopPropagation();
+              const lang = option.getAttribute('data-lang');
+              
+              updateLanguageDisplay(lang);
+              langDropdown.classList.remove('lang-switcher__dropdown--open');
+              langBtn.setAttribute('aria-expanded', 'false');
+              
+              if (window.updateTranslations) {
+                await window.updateTranslations(lang);
+              }
+            });
+          });
+          
+          function updateLanguageDisplay(lang) {
+            if (langFlag) {
+              const option = document.querySelector(`.lang-switcher__option[data-lang="${lang}"]`);
+              if (option) {
+                // Try PNG first, fallback to SVG
+                const flagPng = option.getAttribute('data-flag-png');
+                const flagSvg = option.getAttribute('data-flag-svg');
+                if (flagPng) {
+                  langFlag.src = flagPng;
+                  langFlag.onerror = function() {
+                    if (flagSvg) this.src = flagSvg;
+                  };
+                } else if (flagSvg) {
+                  langFlag.src = flagSvg;
+                }
+              }
+            }
+          }
+        }
+      })();
+    </script>
+    
+    <script src="./i18n.js"></script>
     <script>
       // Countdown to August 22, 2026, 17:00 (5:00 PM)
       const targetDate = new Date('2026-08-22T17:00:00').getTime();
@@ -242,6 +362,42 @@
       // Update immediately and then every second
       updateCountdown();
       setInterval(updateCountdown, 1000);
+    </script>
+    
+    <!-- Floating Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Vissza a tetejére" title="Vissza a tetejére">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    
+    <script>
+      // Floating back to top button
+      (function() {
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        // Show/hide button based on scroll position
+        function toggleBackToTop() {
+          if (window.scrollY > 300) {
+            backToTopBtn.classList.add('back-to-top--visible');
+          } else {
+            backToTopBtn.classList.remove('back-to-top--visible');
+          }
+        }
+        
+        // Smooth scroll to top
+        backToTopBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+        
+        // Listen to scroll events
+        window.addEventListener('scroll', toggleBackToTop);
+        toggleBackToTop(); // Check initial state
+      })();
     </script>
   </body>
 </html>

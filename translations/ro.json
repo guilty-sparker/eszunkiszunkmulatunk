@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "title": "Bea & Gábor — Nuntă",
+    "description": "Nunta lui Bea & Gábor — 2026.08.22. • Ceremonie 17:00 • Sărbătoare 20:00 • Magic Harghita Resort"
+  },
+  "nav": {
+    "skipLink": "Sari la conținut",
+    "brand": "Bea & Gábor",
+    "location": "Locație",
+    "accommodation": "Cazare",
+    "rsvp": "Confirmare"
+  },
+  "hero": {
+    "date": "22 august 2026",
+    "names": "Bea și Gábor",
+    "subtitle": "Nunta",
+    "lead": "Alătură-te nouă în această zi specială când ne unim oficial viețile!",
+    "ctaRsvp": "Confirmare",
+    "ctaLocation": "Locație"
+  },
+  "quickfacts": {
+    "ceremony": "Ceremonie",
+    "celebration": "Sărbătoare",
+    "location": "Locație",
+    "date": "22 august 2026"
+  },
+  "countdown": {
+    "days": "Zile",
+    "hours": "Ore",
+    "minutes": "Minute",
+    "seconds": "Secunde"
+  },
+  "rsvp": {
+    "title": "Confirmare",
+    "description": "Ajută-ne cu planificarea trimitând un răspuns rapid! Te rugăm să ne anunți intenția de participare și orice restricții alimentare:",
+    "deadline": "Te rugăm să răspunzi prin formularul de mai jos sau telefonic până pe 22 iunie.",
+    "button": "Deschide formularul Google"
+  },
+  "location": {
+    "title": "Locație",
+    "description": "Nunta va avea loc la <strong class=\"highlight\">Magic Harghita Resort</strong>.",
+    "detail": "Căpâlnița, jud. Harghita",
+    "directions": "Cum să ajungi la locație: Venind din Odorheiu Secuiesc, virați la stânga la Căpâlnița de pe drumul principal. De acolo, un drum de 3 km duce prin câmpuri, direct la poarta Resort-ului.",
+    "button": "Obține direcții pe Google Maps"
+  },
+  "accommodation": {
+    "title": "Cazare",
+    "price": "150 RON / persoană",
+    "description": "Dacă intenționați să rămâneți la locație, vă rugăm să ne anunțați intenția, deoarece Magic Harghita Resort poate oferi cazare în număr limitat. Găsiți toate informațiile suplimentare despre cazare aici:",
+    "button": "Mergi la pagina de cazare",
+    "includes": "Inclus:",
+    "breakfast": "mic dejun / gustare",
+    "checkout": "Check-out:",
+    "checkoutTime": "a doua zi la 12"
+  },
+  "footer": {
+    "text": "Bea & Gábor • 2026.08.22."
+  }
+}
