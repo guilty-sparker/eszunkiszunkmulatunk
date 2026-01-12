@@ -194,6 +194,46 @@ a{color:inherit}
 .quickfacts__k{font-size:.92rem; color:rgba(244,234,220,.74)}
 .quickfacts__v{font-size:1.05rem; font-weight:750; letter-spacing:-.01em}
 
+/* Countdown */
+.section--countdown{
+  padding:60px 0;
+  border-bottom:1px solid var(--line);
+  background:rgba(0,0,0,.05);
+}
+.countdown{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap:16px;
+  max-width:800px;
+  margin:0 auto;
+}
+.countdown__item{
+  text-align:center;
+  padding:20px 16px;
+  border-radius:var(--radius2);
+  background:linear-gradient(180deg, rgba(247,240,230,.08), rgba(247,240,230,.045));
+  border:1px solid rgba(244,234,220,.14);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+.countdown__value{
+  font-size:clamp(2rem, 4vw, 3rem);
+  font-weight:700;
+  font-family: var(--font-sans);
+  color:rgba(244,234,220,.96);
+  letter-spacing:0.02em;
+  line-height:1.1;
+  margin-bottom:6px;
+  text-shadow: 0 4px 12px rgba(0,0,0,.3);
+}
+.countdown__label{
+  font-size:.9rem;
+  color:rgba(244,234,220,.74);
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  font-weight:600;
+}
+
 /* Sections */
 .section{padding:80px 0; position:relative}
 .section__head{margin-bottom:18px}
@@ -395,6 +435,16 @@ a{color:inherit}
   box-shadow: var(--shadow);
 }
 .rsvp__box h2{margin:0 0 8px}
+.rsvp__deadline{
+  margin:18px 0;
+  text-align:center;
+  color:rgba(244,234,220,.92);
+  font-weight:600;
+  font-size:1.05rem;
+}
+.actions--center{
+  justify-content:center;
+}
 
 /* Footer */
 .footer{
@@ -427,6 +477,7 @@ a{color:inherit}
   .topbar__nav a{padding:7px 9px}
   .hero{padding-top:44px}
   .section--bg::before{background-attachment:scroll}
+  .countdown{grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px}
 }
 
 @media (max-width: 720px){
@@ -442,6 +493,9 @@ a{color:inherit}
   }
   .topbar__nav::-webkit-scrollbar{display:none}
   .topbar__nav a{white-space:nowrap}
+  .countdown{grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px}
+  .countdown__value{font-size:clamp(1.5rem, 5vw, 2.2rem)}
+  .countdown__label{font-size:.8rem}
 }
 
 @media (prefers-reduced-motion: reduce){
