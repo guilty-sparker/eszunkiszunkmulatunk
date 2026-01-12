@@ -195,7 +195,7 @@ a{color:inherit}
 .quickfacts__v{font-size:1.05rem; font-weight:750; letter-spacing:-.01em}
 
 /* Sections */
-.section{padding:54px 0}
+.section{padding:80px 0; position:relative}
 .section__head{margin-bottom:18px}
 .section__head h2{
   margin:0 0 6px;
@@ -204,6 +204,36 @@ a{color:inherit}
   font-family: var(--font-serif);
 }
 .section--cards{background:rgba(0,0,0,.10)}
+
+/* Background images with overlays */
+.section--bg::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  opacity:0.12;
+  z-index:0;
+  pointer-events:none;
+}
+.section--bg > *{
+  position:relative;
+  z-index:1;
+}
+.section--bg-helyszin::before{
+  background-image:url("./wedding_pic_2.jpg");
+  background-position:center 30%;
+}
+.section--bg-szallas::before{
+  background-image:url("./wedding_pic_1.jpg");
+  background-position:center 50%;
+}
+.section--bg-rsvp::before{
+  background-image:url("./rings.jpg");
+  background-position:center;
+  opacity:0.08;
+}
 
 .cards{
   display:grid;
@@ -348,7 +378,7 @@ a{color:inherit}
 
 /* RSVP */
 .section--rsvp{
-  padding:68px 0;
+  padding:100px 0;
 }
 .rsvp{
   display:flex;
@@ -396,6 +426,7 @@ a{color:inherit}
   .topbar__nav{gap:8px}
   .topbar__nav a{padding:7px 9px}
   .hero{padding-top:44px}
+  .section--bg::before{background-attachment:scroll}
 }
 
 @media (max-width: 720px){
