@@ -8,11 +8,29 @@
 
     <link rel="preconnect" href="https://images.unsplash.com" />
     <link rel="preconnect" href="https://plus.unsplash.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
 
   <body>
     <a class="skip-link" href="#tartalom">Ugrás a tartalomra</a>
+
+    <div class="topbar" role="banner">
+      <div class="container topbar__inner">
+        <a class="topbar__brand" href="#top" aria-label="Ugrás a tetejére">Beáta &amp; Gábor</a>
+        <nav class="topbar__nav" aria-label="Oldal navigáció">
+          <a href="#menetrend">Menetrend</a>
+          <a href="#helyszin">Helyszín</a>
+          <a href="#szallas">Szállás</a>
+          <a class="topbar__cta" href="#rsvp">RSVP</a>
+        </nav>
+      </div>
+    </div>
 
     <header class="hero" id="top">
       <div class="hero__bg" aria-hidden="true"></div>
@@ -28,7 +46,7 @@
         </h1>
 
         <p class="hero__lead">
-          Szeretettel várunk egy meleg, rusztikus hangulatú ünneplésre a hegyek között.
+          Szeretettel várunk egy meleg, természetközeli ünneplésre a hegyek között.
         </p>
 
         <div class="hero__cta">
@@ -63,21 +81,36 @@
 
           <div class="cards">
             <article class="card">
-              <div class="card__icon" aria-hidden="true">⟡</div>
+              <div class="card__icon" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="none">
+                  <path d="M8.2 11.4c.9-1.9 2.4-3.4 4.3-4.3 1.9.9 3.4 2.4 4.3 4.3-.9 1.9-2.4 3.4-4.3 4.3-1.9-.9-3.4-2.4-4.3-4.3Z" stroke="currentColor" stroke-width="1.6"/>
+                  <path d="M12.5 3.5c-2.7 1.1-4.9 3.3-6 6 1.1 2.7 3.3 4.9 6 6 2.7-1.1 4.9-3.3 6-6-1.1-2.7-3.3-4.9-6-6Z" stroke="currentColor" stroke-width="1.2" opacity=".7"/>
+                </svg>
+              </div>
               <h3 class="card__title">Ceremónia</h3>
               <p class="card__meta"><strong>17:00</strong></p>
               <p class="card__text">Vendégvárás, fogadalmak, igenek.</p>
             </article>
 
             <article class="card">
-              <div class="card__icon" aria-hidden="true">✦</div>
+              <div class="card__icon" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2.8l1.7 6.4L20 12l-6.3 2.8L12 21.2l-1.7-6.4L4 12l6.3-2.8L12 2.8Z" stroke="currentColor" stroke-width="1.6" />
+                  <path d="M4 4l2.1 2.1M20 4l-2.1 2.1M4 20l2.1-2.1M20 20l-2.1-2.1" stroke="currentColor" stroke-width="1.2" opacity=".7"/>
+                </svg>
+              </div>
               <h3 class="card__title">Lakodalom</h3>
               <p class="card__meta"><strong>20:00</strong></p>
               <p class="card__text">Vacsora, koccintás, buli és tánc.</p>
             </article>
 
             <article class="card">
-              <div class="card__icon" aria-hidden="true">⌂</div>
+              <div class="card__icon" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 11.2 12 4l8 7.2V20a1.8 1.8 0 0 1-1.8 1.8H5.8A1.8 1.8 0 0 1 4 20v-8.8Z" stroke="currentColor" stroke-width="1.6"/>
+                  <path d="M9.5 21v-7.2h5V21" stroke="currentColor" stroke-width="1.6" opacity=".75"/>
+                </svg>
+              </div>
               <h3 class="card__title">Szállás</h3>
               <p class="card__meta"><strong>150 RON</strong> / fő (reggeli/morzsa benne)</p>
               <p class="card__text">Saját kis házikó, másnap <strong>12–13</strong> óra között kijelentkezés.</p>
