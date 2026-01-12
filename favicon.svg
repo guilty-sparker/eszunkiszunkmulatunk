@@ -1,15 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
-    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f0d0a5;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#d07a45;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#a87449;stop-opacity:1" />
+    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f4eadc;stop-opacity:1" />
     </linearGradient>
   </defs>
-  <!-- Outer ring -->
-  <circle cx="50" cy="50" r="35" fill="none" stroke="url(#ringGradient)" stroke-width="4" opacity="0.9"/>
-  <!-- Inner ring -->
-  <circle cx="50" cy="50" r="25" fill="none" stroke="url(#ringGradient)" stroke-width="3" opacity="0.7"/>
-  <!-- Gem/center -->
-  <circle cx="50" cy="50" r="8" fill="url(#ringGradient)" opacity="0.8"/>
+  <!-- White heart -->
+  <path d="M50,85 C50,85 20,60 20,40 C20,25 30,15 45,15 C50,15 50,20 50,20 C50,20 50,15 55,15 C70,15 80,25 80,40 C80,60 50,85 50,85 Z" 
+        fill="white" 
+        stroke="rgba(255,255,255,0.3)" 
+        stroke-width="1"/>
 </svg>
