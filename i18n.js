@@ -20,7 +20,7 @@ const translationsData = {
       "date": "2026. augusztus 22.",
       "names": "Bea és Gábor",
       "subtitle": "Esküvője",
-      "lead": "Tartsatok velünk ezen a különleges napon, amikor hivatalosan is összekötjük az életünket!",
+      "lead": "Tartsatok velünk ezen a különleges napon, amikor a közös életünk egy új fejezetébe lépünk. Legyen ez a nap tele olyan megható, boldog, vidám és szeretettel teli emlékekkel, amelyek egy életen át elkísérnek minket az utunkon.",
       "ctaRsvp": "Visszajelzés",
       "ctaLocation": "Helyszín"
     },
@@ -38,8 +38,8 @@ const translationsData = {
     },
     "rsvp": {
       "title": "Visszajelzés",
-      "description": "Segíts nekünk a szervezésben egy gyors visszajelzéssel! Kérjük, jelezd felénk résztvételi szándékod, illetve ha van bármilyen ételérzékenységed:",
-      "deadline": "Kérünk jelezz vissza az alábbi űrlapon vagy telefonon június 22-ig.",
+      "description": "A jókedv kötelező, a tánc ajánlott, mint ahogy a részvételi szándék visszajelzése is.",
+      "deadline": "Július 22-ig kérünk jelezz vissza az alábbi űrlapon.",
       "button": "Megnyitom a Google űrlapot"
     },
     "location": {
@@ -52,12 +52,12 @@ const translationsData = {
     "accommodation": {
       "title": "Szállás",
       "price": "150 RON / fő",
-      "description": "Amennyiben a helyszinen aludnátok, kérünk jelezzétek szándékotokat, a Magic Harghita Resort tud szállással szolgálni korlátozott számban. Minden további infót a szállásról itt találtok:",
+      "description": "A helyszínen szállást is lehet foglalni, amennyiben valaki a késői vezetés vagy a lehetséges busz helyett a kényelmesebb ott alvást választaná. A helyek száma korlátozott és a közelebbi családtagoknak előnyük van a foglalásban. További részletet a szállásról a következő oldalon lehet találni:",
       "button": "Tovább a szállás oldalára",
-      "includes": "Benne van:",
+      "includes": "Amit tartalmaz:",
       "breakfast": "reggeli / morzsa",
       "checkout": "Check‑out:",
-      "checkoutTime": "másnap 12 óra"
+      "checkoutTime": "másnap déli 12:00 óra"
     },
     "footer": {
       "text": "Bea & Gábor • 2026.08.22."
@@ -66,7 +66,7 @@ const translationsData = {
   en: {
     "meta": {
       "title": "Bea & Gábor — Wedding",
-      "description": "Bea & Gábor's wedding — 2026.08.22. • Ceremony 17:00 • Celebration 20:00 • Magic Harghita Resort"
+      "description": "Bea & Gábor's wedding — 2026.08.22. • Ceremony 17:30 • Celebration 19:30 • Magic Harghita Resort"
     },
     "nav": {
       "skipLink": "Skip to content",
@@ -79,7 +79,7 @@ const translationsData = {
       "date": "August 22, 2026",
       "names": "Bea and Gábor",
       "subtitle": "Wedding",
-      "lead": "Join us on this special day when we officially unite our lives!",
+      "lead": "Join us on this special day as we step into a new chapter of our life together. May this day be filled with touching, joyful, happy, and love-filled memories that will accompany us throughout our journey.",
       "ctaRsvp": "RSVP",
       "ctaLocation": "Location"
     },
@@ -97,8 +97,8 @@ const translationsData = {
     },
     "rsvp": {
       "title": "RSVP",
-      "description": "Help us with planning by sending a quick response! Please let us know your attendance intention and any dietary restrictions:",
-      "deadline": "Please respond via the form below or by phone by June 22.",
+      "description": "Good mood is mandatory, dancing is recommended, as is letting us know your attendance intention.",
+      "deadline": "Please respond via the form below by July 22.",
       "button": "Open Google Form"
     },
     "location": {
@@ -111,12 +111,12 @@ const translationsData = {
     "accommodation": {
       "title": "Accommodation",
       "price": "150 RON / person",
-      "description": "If you plan to stay at the venue, please let us know your intention, as Magic Harghita Resort can provide accommodation in limited numbers. Find all additional accommodation information here:",
+      "description": "Accommodation can also be booked at the venue, if someone would prefer the comfort of staying overnight instead of late driving or the possible bus. The number of places is limited and closer family members have priority in booking. Further details about accommodation can be found on the following page:",
       "button": "Go to accommodation page",
-      "includes": "Included:",
+      "includes": "What's included:",
       "breakfast": "breakfast / snack",
       "checkout": "Check-out:",
-      "checkoutTime": "next day at 12"
+      "checkoutTime": "next day at 12:00 PM"
     },
     "footer": {
       "text": "Bea & Gábor • 2026.08.22."
@@ -125,7 +125,7 @@ const translationsData = {
   ro: {
     "meta": {
       "title": "Bea & Gábor — Nuntă",
-      "description": "Nunta lui Bea & Gábor — 2026.08.22. • Ceremonie 17:00 • Sărbătoare 20:00 • Magic Harghita Resort"
+      "description": "Nunta lui Bea & Gábor — 2026.08.22. • Ceremonie 17:30 • Sărbătoare 19:30 • Magic Harghita Resort"
     },
     "nav": {
       "skipLink": "Sari la conținut",
@@ -138,7 +138,7 @@ const translationsData = {
       "date": "22 august 2026",
       "names": "Bea și Gábor",
       "subtitle": "Nunta",
-      "lead": "Alătură-te nouă în această zi specială când ne unim oficial viețile!",
+      "lead": "Alătură-te nouă în această zi specială când intrăm într-un nou capitol al vieții noastre comune. Fie ca această zi să fie plină de amintiri emoționante, fericite, vesele și pline de dragoste care ne vor însoți pe tot parcursul călătoriei noastre.",
       "ctaRsvp": "Confirmare",
       "ctaLocation": "Locație"
     },
@@ -156,8 +156,8 @@ const translationsData = {
     },
     "rsvp": {
       "title": "Confirmare",
-      "description": "Ajută-ne cu planificarea trimitând un răspuns rapid! Te rugăm să ne anunți intenția de participare și orice restricții alimentare:",
-      "deadline": "Te rugăm să răspunzi prin formularul de mai jos sau telefonic până pe 22 iunie.",
+      "description": "Buna dispoziție este obligatorie, dansul este recomandat, la fel ca și anunțarea intenției de participare.",
+      "deadline": "Te rugăm să răspunzi prin formularul de mai jos până pe 22 iulie.",
       "button": "Deschide formularul Google"
     },
     "location": {
@@ -170,12 +170,12 @@ const translationsData = {
     "accommodation": {
       "title": "Cazare",
       "price": "150 RON / persoană",
-      "description": "Dacă intenționați să rămâneți la locație, vă rugăm să ne anunțați intenția, deoarece Magic Harghita Resort poate oferi cazare în număr limitat. Găsiți toate informațiile suplimentare despre cazare aici:",
+      "description": "Se poate rezerva și cazare la locație, dacă cineva ar prefera confortul de a rămâne peste noapte în loc de condus târziu sau de autobuzul posibil. Numărul de locuri este limitat și membrii familiei mai apropiați au prioritate la rezervare. Detalii suplimentare despre cazare pot fi găsite pe următoarea pagină:",
       "button": "Mergi la pagina de cazare",
-      "includes": "Inclus:",
+      "includes": "Ce include:",
       "breakfast": "mic dejun / gustare",
       "checkout": "Check-out:",
-      "checkoutTime": "a doua zi la 12"
+      "checkoutTime": "a doua zi la 12:00"
     },
     "footer": {
       "text": "Bea & Gábor • 2026.08.22."
