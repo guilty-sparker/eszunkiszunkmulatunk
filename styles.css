@@ -770,7 +770,9 @@ a{color:inherit}
 }
 
 @media (max-width: 720px){
-  .topbar__inner{align-items:flex-start}
+  .topbar__inner{
+    align-items:center;
+  }
   .topbar__logo{
     filter:brightness(1.6) contrast(1.25);
   }
