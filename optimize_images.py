@@ -33,24 +33,43 @@ def optimize_image(input_path, output_path=None):
         img = Image.open(input_path)
         original_size = os.path.getsize(input_path)
         
-        # Convert RGBA to RGB for JPEG if needed
-        if img.mode in ('RGBA', 'LA', 'P'):
-            # Create white background
-            background = Image.new('RGB', img.size, (255, 255, 255))
+        # Determine output format
+        ext = os.path.splitext(output_path)[1].lower()
+        
+        # Handle different formats
+        if ext in ('.jpg', '.jpeg'):
+            # For JPEG, convert RGBA/LA/P to RGB with white background
+            if img.mode in ('RGBA', 'LA', 'P'):
+                # Create white background
+                background = Image.new('RGB', img.size, (255, 255, 255))
+                if img.mode == 'P':
+                    img = img.convert('RGBA')
+                background.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
+                img = background
+            elif img.mode != 'RGB':
+                img = img.convert('RGB')
+        elif ext == '.png':
+            # For PNG, preserve transparency - convert P to RGBA if needed
             if img.mode == 'P':
                 img = img.convert('RGBA')
-            background.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
-            img = background
-        elif img.mode != 'RGB':
-            img = img.convert('RGB')
+            elif img.mode == 'LA':
+                img = img.convert('RGBA')
+            # Keep RGBA as is for transparency
+        elif ext == '.webp':
+            # For WebP, preserve transparency if present
+            if img.mode == 'P':
+                img = img.convert('RGBA')
+            elif img.mode == 'LA':
+                img = img.convert('RGBA')
+            # Keep RGBA as is for transparency, convert RGB if needed
+            if img.mode not in ('RGBA', 'RGB'):
+                img = img.convert('RGB')
         
         # Resize if too large
         if img.width > MAX_WIDTH or img.height > MAX_HEIGHT:
             img.thumbnail((MAX_WIDTH, MAX_HEIGHT), Image.Resampling.LANCZOS)
         
-        # Determine output format and save
-        ext = os.path.splitext(output_path)[1].lower()
-        
+        # Save with appropriate format
         if ext in ('.jpg', '.jpeg'):
             img.save(output_path, 'JPEG', quality=JPEG_QUALITY, optimize=True)
         elif ext == '.webp':
