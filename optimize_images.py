@@ -54,7 +54,68 @@ def optimize_image(input_path, output_path=None):
                 img = img.convert('RGBA')
             elif img.mode == 'LA':
                 img = img.convert('RGBA')
-            # Keep RGBA as is for transparency
+            elif img.mode == 'RGB':
+                img = img.convert('RGBA')
+            
+            # Remove common background colors (white, light gray, dark gray)
+            # Use a smarter approach: detect background by checking corners and edges
+            if img.mode == 'RGBA' and 'route' in input_path.lower():
+                # Get corner pixels to determine background color
+                width, height = img.size
+                corners = [
+                    img.getpixel((0, 0)),  # top-left
+                    img.getpixel((width-1, 0)),  # top-right
+                    img.getpixel((0, height-1)),  # bottom-left
+                    img.getpixel((width-1, height-1)),  # bottom-right
+                ]
+                
+                # Find the most common corner color (likely the background)
+                corner_colors = {}
+                for corner in corners:
+                    r, g, b, a = corner
+                    # Round to nearest 10 to group similar colors
+                    key = (r//10*10, g//10*10, b//10*10)
+                    corner_colors[key] = corner_colors.get(key, 0) + 1
+                
+                # Get the most common background color
+                if corner_colors:
+                    bg_color = max(corner_colors.items(), key=lambda x: x[1])[0]
+                    bg_r, bg_g, bg_b = bg_color
+                    
+                    # Also check edge pixels for background
+                    edge_samples = []
+                    for x in [0, width//4, width//2, 3*width//4, width-1]:
+                        edge_samples.append(img.getpixel((x, 0)))
+                        edge_samples.append(img.getpixel((x, height-1)))
+                    for y in [0, height//4, height//2, 3*height//4, height-1]:
+                        edge_samples.append(img.getpixel((0, y)))
+                        edge_samples.append(img.getpixel((width-1, y)))
+                    
+                    # Find background color range from edges
+                    bg_colors = set()
+                    for r, g, b, a in edge_samples:
+                        if abs(r - g) < 15 and abs(g - b) < 15:  # Gray tones
+                            bg_colors.add((r//10*10, g//10*10, b//10*10))
+                    
+                    # Process all pixels
+                    data = img.getdata()
+                    new_data = []
+                    for item in data:
+                        r, g, b, a = item
+                        # Check if pixel matches background colors
+                        pixel_key = (r//10*10, g//10*10, b//10*10)
+                        is_gray = abs(r - g) < 15 and abs(g - b) < 15
+                        
+                        # Remove if it's a gray/white background color
+                        if (pixel_key in bg_colors or 
+                            (is_gray and (r > 150 or r < 50)) or  # Light or dark gray
+                            (r > 240 and g > 240 and b > 240)):  # White
+                            # Make transparent
+                            new_data.append((r, g, b, 0))
+                        else:
+                            new_data.append(item)
+                    
+                    img.putdata(new_data)
         elif ext == '.webp':
             # For WebP, preserve transparency if present
             if img.mode == 'P':
@@ -65,9 +126,10 @@ def optimize_image(input_path, output_path=None):
             if img.mode not in ('RGBA', 'RGB'):
                 img = img.convert('RGB')
         
-        # Resize if too large
-        if img.width > MAX_WIDTH or img.height > MAX_HEIGHT:
-            img.thumbnail((MAX_WIDTH, MAX_HEIGHT), Image.Resampling.LANCZOS)
+        # Resize if too large (but not for route icons - they should stay their original size)
+        if 'route' not in input_path.lower():
+            if img.width > MAX_WIDTH or img.height > MAX_HEIGHT:
+                img.thumbnail((MAX_WIDTH, MAX_HEIGHT), Image.Resampling.LANCZOS)
         
         # Save with appropriate format
         if ext in ('.jpg', '.jpeg'):
@@ -104,6 +166,11 @@ def main():
         'flags/hu.png',
         'flags/en.png',
         'flags/ro.png',
+        'route-stop-1.png',
+        'route-stop-2.png',
+        'route-stop-3.png',
+        'route-stop-4.png',
+        'route-bus.png',
     ]
     
     print("Starting image optimization...\n")

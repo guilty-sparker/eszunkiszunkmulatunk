@@ -47,17 +47,34 @@ const translationsData = {
       "description": "Az esküvő a <strong class=\"highlight\">Magic Harghita Resort</strong>ban lesz megtartva.",
       "detail": "Căpâlnița, jud. Harghita",
       "directions": "Így találtok meg a helyszint: Székelyudvarhely felől érkezve Kápolnásfalunál térjetek le balra a főútról. Innen egy 3 km-es út vezet át a mezőkön, egyenesen a Resort kapujáig.",
-      "button": "Útvonaltervezés Google Maps-ben"
+      "button": "Útvonaltervezés Google Maps-ben",
+      "travelHelp": "Az utazás megszervezésében is szívesen segítünk: kellő számú jelentkező esetén különbuszt indítunk. Amennyiben igénybe vennéd ezt a lehetőséget, kérjük, jelezd szándékodat az alábbi űrlapon:",
+      "travelButton": "Megnyitom a Google űrlapot"
+    },
+    "route": {
+      "stop1": "Magyarvalkó",
+      "stop2": "Kolozsvár",
+      "stop3": "Székelyudvarhely",
+      "stop4": "Magic Harghita Resort"
     },
     "accommodation": {
       "title": "Szállás",
       "price": "150 RON / fő",
-      "description": "A helyszínen szállást is lehet foglalni, amennyiben valaki a késői vezetés vagy a lehetséges busz helyett a kényelmesebb ott alvást választaná. A helyek száma korlátozott és a közelebbi családtagoknak előnyük van a foglalásban. További részletet a szállásról a következő oldalon lehet találni:",
+      "description": "A helyszínen szállást is lehet foglalni, amennyiben valaki a késői vezetés vagy a lehetséges busz helyett a kényelmesebb ott alvást választaná. A helyek száma korlátozott és a közelebbi családtagoknak előnyük van a foglalásban. További részletet a szallásról a következő oldalon lehet találni:",
       "button": "Tovább a szállás oldalára",
       "includes": "Amit tartalmaz:",
-      "breakfast": "reggeli / morzsa",
-      "checkout": "Check‑out:",
+      "breakfast": "reggeli/morzsa",
+      "checkout": "Check-out:",
       "checkoutTime": "másnap déli 12:00 óra"
+    },
+    "location": {
+      "title": "Helyszín",
+      "description": "Az esküvő a <strong class=\"highlight\">Magic Harghita Resort</strong>ban lesz megtartva.",
+      "detail": "Căpâlnița, jud. Harghita",
+      "directions": "Így találtok meg a helyszint: Székelyudvarhely felől érkezve Kápolnásfalunál térjetek le balra a főútról. Innen egy 3 km-es út vezet át a mezőkön, egyenesen a Resort kapujáig.",
+      "button": "Útvonaltervezés Google Maps-ben",
+      "travelHelp": "Az utazás megszervezésében is szívesen segítünk: kellő számú jelentkező esetén különbuszt indítunk. Amennyiben igénybe vennéd ezt a lehetőséget, kérjük, jelezd szándékodat az alábbi űrlapon:",
+      "travelButton": "Megnyitom a Google űrlapot"
     },
     "footer": {
       "text": "Bea & Gábor • 2026.08.22."
@@ -106,7 +123,15 @@ const translationsData = {
       "description": "The wedding will be held at <strong class=\"highlight\">Magic Harghita Resort</strong>.",
       "detail": "Căpâlnița, Harghita County",
       "directions": "How to find the venue: Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the fields, straight to the Resort gate.",
-      "button": "Get directions on Google Maps"
+      "button": "Get directions on Google Maps",
+      "travelHelp": "We are also happy to help organize the trip: if there are enough participants, we will arrange a separate bus. If you would like to use this option, please indicate your intention in the form below:",
+      "travelButton": "Open Google Form"
+    },
+    "route": {
+      "stop1": "Văleni (Călățele)",
+      "stop2": "Cluj-Napoca",
+      "stop3": "Odorheiu Secuiesc",
+      "stop4": "Magic Harghita Resort"
     },
     "accommodation": {
       "title": "Accommodation",
@@ -166,6 +191,12 @@ const translationsData = {
       "detail": "Căpâlnița, jud. Harghita",
       "directions": "Cum să ajungi la locație: Venind din Odorheiu Secuiesc, virați la stânga la Căpâlnița de pe drumul principal. De acolo, un drum de 3 km duce prin câmpuri, direct la poarta Resort-ului.",
       "button": "Obține direcții pe Google Maps"
+    },
+    "route": {
+      "stop1": "Văleni (Călățele)",
+      "stop2": "Cluj-Napoca",
+      "stop3": "Odorheiu Secuiesc",
+      "stop4": "Magic Harghita Resort"
     },
     "accommodation": {
       "title": "Cazare",
@@ -336,6 +367,16 @@ async function initI18n() {
         rsvpFormLink.href = 'https://forms.gle/hxEey31YVZisD2sk6';
       } else {
         rsvpFormLink.href = 'https://forms.gle/uVE2jtpvvESLX4g57';
+      }
+    }
+    
+    // Set initial travel form link
+    const travelFormLink = document.getElementById('travelFormLink');
+    if (travelFormLink) {
+      if (savedLang === 'hu') {
+        travelFormLink.href = 'https://forms.gle/hxEey31YVZisD2sk6';
+      } else {
+        travelFormLink.href = 'https://forms.gle/uVE2jtpvvESLX4g57';
       }
     }
   

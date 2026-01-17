@@ -24,21 +24,29 @@
     
     <!-- Load fonts asynchronously with font-display: swap -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.media='all';this.onload=null"
     />
     <noscript>
       <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
     </noscript>
     
-    <!-- Load CSS asynchronously -->
-    <link rel="stylesheet" href="./styles.css" media="print" onload="this.media='all';this.onload=null" />
-    <noscript><link rel="stylesheet" href="./styles.css" /></noscript>
+    <!-- Load CSS synchronously to prevent FOUC -->
+    <link rel="stylesheet" href="./styles.css" />
+    
+    <!-- Inline critical CSS to prevent white flash -->
+    <style>
+      body {
+        background: #160f0b;
+        color: #f4eadc;
+        margin: 0;
+      }
+    </style>
   </head>
 
   <body>
@@ -54,9 +62,9 @@
                 <stop offset="100%" style="stop-color:#d9b089;stop-opacity:1" />
               </linearGradient>
             </defs>
-            <text x="25" y="62" font-family="var(--font-serif)" font-size="42" font-weight="700" text-anchor="middle" fill="url(#logoGradient)" letter-spacing="-0.03em">B</text>
-            <text x="60" y="62" font-family="var(--font-serif)" font-size="32" font-weight="600" text-anchor="middle" fill="url(#logoGradient)" opacity="0.85">&amp;</text>
-            <text x="95" y="62" font-family="var(--font-serif)" font-size="42" font-weight="700" text-anchor="middle" fill="url(#logoGradient)" letter-spacing="-0.03em">G</text>
+            <text x="25" y="62" font-family="var(--font-main)" font-size="42" font-weight="700" text-anchor="middle" fill="url(#logoGradient)" letter-spacing="-0.03em">B</text>
+            <text x="60" y="62" font-family="var(--font-main)" font-size="32" font-weight="600" text-anchor="middle" fill="url(#logoGradient)" opacity="0.85">&amp;</text>
+            <text x="95" y="62" font-family="var(--font-main)" font-size="42" font-weight="700" text-anchor="middle" fill="url(#logoGradient)" letter-spacing="-0.03em">G</text>
           </svg>
         </a>
         <div class="topbar__right">
@@ -229,6 +237,52 @@
             </div>
           </div>
         </div>
+        
+        <div class="route-section">
+          <p class="route-section__intro" data-i18n="location.travelHelp">
+            Az utazás megszervezésében is szívesen segítünk: kellő számú jelentkező esetén különbuszt indítunk. Amennyiben igénybe vennéd ezt a lehetőséget, kérjük, jelezd szándékodat az alábbi űrlapon:
+          </p>
+          
+          <div class="route-animation" id="routeAnimation" aria-label="Útvonal animáció">
+            <div class="route-path">
+              <div class="route-stop">
+                <img class="route-stop__icon" src="./route-stop-1.png" alt="" width="160" height="160" />
+                <span class="route-stop__label" data-i18n="route.stop1">Magyarvalkó/Văleni (Călățele)</span>
+              </div>
+              <div class="route-line route-line--1"></div>
+              <div class="route-stop route-stop--2">
+                <img class="route-stop__icon" src="./route-stop-2.png" alt="" width="243" height="243" />
+                <span class="route-stop__label" data-i18n="route.stop2">Kolozsvár/Cluj-Napoca</span>
+              </div>
+              <div class="route-line route-line--2"></div>
+              <div class="route-stop">
+                <img class="route-stop__icon" src="./route-stop-3.png" alt="" width="160" height="160" />
+                <span class="route-stop__label" data-i18n="route.stop3">Székelyudvarhely/Odorheiu-Secuiesc</span>
+              </div>
+              <div class="route-line route-line--3"></div>
+              <div class="route-stop route-stop--end">
+                <img class="route-stop__icon" src="./route-stop-4.png" alt="" width="48" height="48" />
+                <span class="route-stop__label" data-i18n="route.stop4">Magic Harghita Resort</span>
+              </div>
+              <div class="route-bus" id="routeBus">
+                <img src="./route-bus.png" alt="Bus" width="65" height="65" />
+              </div>
+            </div>
+          </div>
+          
+          <div class="actions actions--center" style="margin-top: 8px;">
+            <a
+              class="btn btn--primary"
+              id="travelFormLink"
+              href="https://forms.gle/hxEey31YVZisD2sk6"
+              target="_blank"
+              rel="noreferrer"
+              data-i18n="location.travelButton"
+            >
+              Megnyitom a Google űrlapot
+            </a>
+          </div>
+        </div>
       </section>
 
       <section class="section section--accommodation section--bg section--bg-szallas" id="szallas" aria-labelledby="szallas-cim">
@@ -255,29 +309,18 @@
                 <strong data-i18n="accommodation.includes">Amit tartalmaz:</strong> <span data-i18n="accommodation.breakfast">reggeli / morzsa</span> • <strong data-i18n="accommodation.checkout">Check‑out:</strong> <span data-i18n="accommodation.checkoutTime">másnap déli 12:00 óra</span>
               </p>
             </div>
-          </div>
-          
-          <div class="accommodation-gallery">
-            <figure class="accommodation-photo">
-              <img
-                alt="Szállás 1"
-                loading="lazy"
-                decoding="async"
-                src="./accomodation_1.webp"
-                width="600"
-                height="450"
-              />
-            </figure>
-            <figure class="accommodation-photo">
-              <img
-                alt="Szállás 2"
-                loading="lazy"
-                decoding="async"
-                src="./accomodation_2.webp"
-                width="600"
-                height="450"
-              />
-            </figure>
+            <div class="accommodation-gallery">
+              <figure class="accommodation-photo">
+                <img
+                  alt="Szállás"
+                  loading="lazy"
+                  decoding="async"
+                  src="./accomodation_2.webp"
+                  width="600"
+                  height="450"
+                />
+              </figure>
+            </div>
           </div>
         </div>
       </section>
@@ -384,6 +427,45 @@
           document.addEventListener('DOMContentLoaded', lazyLoadMap);
         } else {
           lazyLoadMap();
+        }
+      })();
+    </script>
+    <script defer>
+      // Lazy load and animate route when Location section is visible
+      (function() {
+        function initRouteAnimation() {
+          const routeAnimation = document.getElementById('routeAnimation');
+          const routeBus = document.getElementById('routeBus');
+          if (!routeAnimation || !routeBus) return;
+          
+          let hasAnimated = false;
+          
+          const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                routeAnimation.classList.add('route-animation--visible');
+                
+                // Start bus animation after a short delay
+                setTimeout(function() {
+                  routeBus.classList.add('route-bus--visible');
+                  setTimeout(function() {
+                    routeBus.classList.add('route-bus--moving');
+                  }, 200);
+                }, 300);
+                
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { rootMargin: '100px' });
+          
+          observer.observe(routeAnimation);
+        }
+        
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initRouteAnimation);
+        } else {
+          initRouteAnimation();
         }
       })();
     </script>
