@@ -73,11 +73,14 @@ a{color:inherit}
   display:flex;
   align-items:center;
   justify-content:center;
+  position:relative;
+  z-index:35;
 }
 .topbar__logo{
   width:80px;
   height:64px;
   display:block;
+  filter:brightness(1.1);
 }
 .topbar__nav{
   display:flex;
@@ -246,6 +249,7 @@ a{color:inherit}
   padding:54px 0 44px;
   overflow:hidden;
   border-bottom:1px solid var(--line);
+  min-height:60vh;
 }
 .hero__bg{
   position:absolute;
@@ -255,9 +259,9 @@ a{color:inherit}
     linear-gradient(180deg, rgba(22,15,11,.18), rgba(22,15,11,.82)),
     url("./event_buiding.webp");
   background-size:cover;
-  background-position:center;
+  background-position:center 25%;
   filter:saturate(1.03) contrast(1.08);
-  transform:scale(1.05);
+  transform:scale(1.02);
   will-change:transform;
 }
 .hero__content{position:relative}
@@ -356,7 +360,7 @@ a{color:inherit}
   grid-template-columns: repeat(4, minmax(0,1fr));
   gap:16px;
   max-width:800px;
-  margin:0 auto;
+  margin:0 auto 60px auto;
 }
 .countdown__item{
   text-align:center;
@@ -376,6 +380,10 @@ a{color:inherit}
   line-height:1.1;
   margin-bottom:6px;
   text-shadow: 0 4px 12px rgba(0,0,0,.3);
+  min-height:1.2em;
+  display:inline-block;
+  min-width:2ch;
+  text-align:center;
 }
 .countdown__label{
   font-size:.9rem;
@@ -397,6 +405,11 @@ a{color:inherit}
 .section--cards{background:rgba(0,0,0,.10)}
 
 /* Background images with overlays */
+.section--bg{
+  min-height:400px;
+  position:relative;
+  overflow:hidden;
+}
 .section--bg::before{
   content:"";
   position:absolute;
@@ -404,9 +417,10 @@ a{color:inherit}
   background-size:cover;
   background-position:center;
   background-attachment:scroll;
-  opacity:0.12;
+  opacity:0.10;
   z-index:0;
   pointer-events:none;
+  aspect-ratio:16 / 9;
 }
 .section--bg > *{
   position:relative;
@@ -419,11 +433,13 @@ a{color:inherit}
 .section--bg-szallas::before{
   background-image:url("./wedding_pic_1.jpg");
   background-position:center 50%;
+  opacity:0.10;
+  height:100%;
 }
 .section--bg-rsvp::before{
   background-image:url("./rings.jpg");
   background-position:center;
-  opacity:0.08;
+  opacity:0.10;
 }
 
 .cards{
@@ -587,33 +603,45 @@ a{color:inherit}
 .accommodation-gallery{
   display:grid;
   grid-template-columns: repeat(2, minmax(0,1fr));
-  gap:12px;
+  gap:20px;
+  max-width:900px;
+  margin:50px auto 0 auto;
+  padding:0 20px;
 }
 .accommodation-photo{
   margin:0;
-  border-radius:var(--radius);
+  border-radius:var(--radius2);
   overflow:hidden;
-  border:1px solid rgba(244,234,220,.12);
-  background:rgba(0,0,0,.15);
-  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+  border:2px solid rgba(244,234,220,.18);
+  background:rgba(0,0,0,.2);
+  box-shadow: 0 16px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(244,234,220,.1) inset;
   aspect-ratio: 4 / 3;
-  max-height: 400px;
+  transition:transform .3s ease, box-shadow .3s ease;
+}
+.accommodation-photo:hover{
+  transform:translateY(-4px);
+  box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 0 1px rgba(244,234,220,.15) inset;
 }
 .accommodation-photo img{
   width:100%;
   height:100%;
   display:block;
   object-fit:cover;
-  filter:saturate(1.05) contrast(1.03);
+  filter:saturate(1.08) contrast(1.05) brightness(0.98);
+  transition:filter .3s ease;
+}
+.accommodation-photo:hover img{
+  filter:saturate(1.12) contrast(1.08) brightness(1.02);
 }
 
 /* RSVP */
 .section--rsvp{
-  padding:100px 0;
+  padding:80px 0;
 }
 .rsvp{
   display:flex;
   justify-content:center;
+  margin-top:60px;
 }
 .rsvp__box{
   width:min(820px, 100%);
@@ -635,6 +663,38 @@ a{color:inherit}
 }
 .actions--center{
   justify-content:center;
+}
+
+/* Accommodation */
+.section--accommodation{
+  padding:100px 0;
+}
+.accommodation{
+  display:flex;
+  justify-content:center;
+}
+.accommodation__box{
+  width:min(820px, 100%);
+  border-radius:32px;
+  padding:32px 24px;
+  background:
+    radial-gradient(900px 420px at 20% 0%, rgba(240,208,165,.20), transparent 60%),
+    linear-gradient(180deg, rgba(247,240,230,.09), rgba(247,240,230,.05));
+  border:1px solid rgba(244,234,220,.16);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+.accommodation__box h2{
+  margin:0 0 12px;
+  text-align:center;
+}
+.accommodation__box p{
+  text-align:center;
+}
+.accommodation__box .pill{
+  display:flex;
+  justify-content:center;
+  margin:0 auto 12px auto;
 }
 
 /* Footer */
@@ -662,7 +722,11 @@ a{color:inherit}
   .photo:nth-child(1),
   .photo:nth-child(2),
   .photo:nth-child(3){grid-column: span 12}
-  .accommodation-gallery{grid-template-columns:1fr}
+  .accommodation-gallery{
+    grid-template-columns:1fr;
+    gap:16px;
+    padding:0 10px;
+  }
   .accommodation-photo{max-height: 300px}
   .topbar__nav{gap:8px}
   .topbar__nav a{padding:7px 9px}
@@ -670,6 +734,12 @@ a{color:inherit}
   .section--bg::before{background-attachment:scroll}
   .countdown{grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px}
   .mobile-menu__toggle{display:flex}
+  .topbar{
+    background: rgba(18,12,9,.85);
+  }
+  .topbar__logo{
+    filter:brightness(1.2) contrast(1.1);
+  }
   .topbar__nav{
     position:absolute;
     top:100%;
@@ -701,6 +771,9 @@ a{color:inherit}
 
 @media (max-width: 720px){
   .topbar__inner{align-items:flex-start}
+  .topbar__logo{
+    filter:brightness(1.3) contrast(1.15);
+  }
   .topbar__nav{
     flex-wrap:nowrap;
     overflow-x:auto;

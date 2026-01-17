@@ -17,7 +17,10 @@
     
     <!-- Preload critical resources -->
     <link rel="preload" href="./styles.css" as="style" />
-    <link rel="preload" href="./event_buiding.webp" as="image" />
+    <link rel="preload" href="./event_buiding.webp" as="image" fetchpriority="high" />
+    
+    <!-- Cache control -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable" />
     
     <!-- Load fonts asynchronously with font-display: swap -->
     <link
@@ -59,22 +62,22 @@
         <div class="topbar__right">
           <div class="lang-switcher">
             <button class="lang-switcher__btn" id="langBtn" aria-label="Select language">
-              <img class="lang-switcher__flag" id="langFlag" src="./flags/hu.png" alt="Language flag" onerror="this.src='./flags/hu.svg'; this.onerror=null;" />
+              <img class="lang-switcher__flag" id="langFlag" src="./flags/hu.png" alt="Language flag" width="24" height="18" onerror="this.src='./flags/hu.svg'; this.onerror=null;" />
               <svg class="lang-switcher__icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             <div class="lang-switcher__dropdown" id="langDropdown">
               <button class="lang-switcher__option" data-lang="hu" data-flag-png="./flags/hu.png" data-flag-svg="./flags/hu.svg">
-                <img class="lang-switcher__option-flag" src="./flags/hu.png" alt="HU" onerror="this.src='./flags/hu.svg'; this.onerror=null;" />
+                <img class="lang-switcher__option-flag" src="./flags/hu.png" alt="HU" width="24" height="18" onerror="this.src='./flags/hu.svg'; this.onerror=null;" />
                 <span>Magyar</span>
               </button>
               <button class="lang-switcher__option" data-lang="en" data-flag-png="./flags/en.png" data-flag-svg="./flags/en.svg">
-                <img class="lang-switcher__option-flag" src="./flags/en.png" alt="EN" onerror="this.src='./flags/en.svg'; this.onerror=null;" />
+                <img class="lang-switcher__option-flag" src="./flags/en.png" alt="EN" width="24" height="18" onerror="this.src='./flags/en.svg'; this.onerror=null;" />
                 <span>English</span>
               </button>
               <button class="lang-switcher__option" data-lang="ro" data-flag-png="./flags/ro.png" data-flag-svg="./flags/ro.svg">
-                <img class="lang-switcher__option-flag" src="./flags/ro.png" alt="RO" onerror="this.src='./flags/ro.svg'; this.onerror=null;" />
+                <img class="lang-switcher__option-flag" src="./flags/ro.png" alt="RO" width="24" height="18" onerror="this.src='./flags/ro.svg'; this.onerror=null;" />
                 <span>Română</span>
               </button>
             </div>
@@ -136,52 +139,50 @@
     </header>
 
     <main id="tartalom">
-      <section class="section section--countdown" aria-label="Visszaszámlálás">
+      <section class="section section--rsvp section--bg section--bg-rsvp" id="rsvp" aria-labelledby="rsvp-cim">
         <div class="container">
           <div class="countdown">
             <div class="countdown__item">
-              <div class="countdown__value" id="days">0</div>
+              <div class="countdown__value" id="days">--</div>
               <div class="countdown__label" data-i18n="countdown.days">Nap</div>
             </div>
             <div class="countdown__item">
-              <div class="countdown__value" id="hours">0</div>
+              <div class="countdown__value" id="hours">--</div>
               <div class="countdown__label" data-i18n="countdown.hours">Óra</div>
             </div>
             <div class="countdown__item">
-              <div class="countdown__value" id="minutes">0</div>
+              <div class="countdown__value" id="minutes">--</div>
               <div class="countdown__label" data-i18n="countdown.minutes">Perc</div>
             </div>
             <div class="countdown__item">
-              <div class="countdown__value" id="seconds">0</div>
+              <div class="countdown__value" id="seconds">--</div>
               <div class="countdown__label" data-i18n="countdown.seconds">Másodperc</div>
             </div>
           </div>
-        </div>
-      </section>
+          
+          <div class="rsvp">
+            <div class="rsvp__box">
+              <h2 id="rsvp-cim" data-i18n="rsvp.title">Visszajelzés</h2>
+              <p class="muted" data-i18n="rsvp.description">A jókedv kötelező, a tánc ajánlott, mint ahogy a részvételi szándék visszajelzése is.</p>
+              
+              <p class="rsvp__deadline" data-i18n="rsvp.deadline">
+                Július 22-ig kérünk jelezz vissza az alábbi űrlapon.
+              </p>
 
-      <section class="section section--rsvp section--bg section--bg-rsvp" id="rsvp" aria-labelledby="rsvp-cim">
-        <div class="container rsvp">
-          <div class="rsvp__box">
-            <h2 id="rsvp-cim" data-i18n="rsvp.title">Visszajelzés</h2>
-            <p class="muted" data-i18n="rsvp.description">A jókedv kötelező, a tánc ajánlott, mint ahogy a részvételi szándék visszajelzése is.</p>
-            
-            <p class="rsvp__deadline" data-i18n="rsvp.deadline">
-              Július 22-ig kérünk jelezz vissza az alábbi űrlapon.
-            </p>
+              <div class="actions actions--center">
+                <a
+                  class="btn btn--primary btn--big"
+                  id="rsvpFormLink"
+                  href="https://forms.gle/hxEey31YVZisD2sk6"
+                  target="_blank"
+                  rel="noreferrer"
+                  data-i18n="rsvp.button"
+                >
+                  Megnyitom a Google űrlapot
+                </a>
+              </div>
 
-            <div class="actions actions--center">
-              <a
-                class="btn btn--primary btn--big"
-                id="rsvpFormLink"
-                href="https://forms.gle/hxEey31YVZisD2sk6"
-                target="_blank"
-                rel="noreferrer"
-                data-i18n="rsvp.button"
-              >
-                Megnyitom a Google űrlapot
-              </a>
             </div>
-
           </div>
         </div>
       </section>
@@ -230,55 +231,53 @@
         </div>
       </section>
 
-      <section class="section section--split section--bg section--bg-szallas" id="szallas" aria-labelledby="szallas-cim">
-        <div class="container split split--reverse">
-          <div class="split__text">
-            <h2 id="szallas-cim" data-i18n="accommodation.title">Szállás</h2>
-            <div class="pill" data-i18n="accommodation.price">150 RON / fő</div>
-            <p data-i18n="accommodation.description">
-              A helyszínen szállást is lehet foglalni, amennyiben valaki a késői vezetés vagy a lehetséges busz helyett a kényelmesebb ott alvást választaná. A helyek száma korlátozott és a közelebbi családtagoknak előnyük van a foglalásban. További részletet a szállásról a következő oldalon lehet találni:
-            </p>
-            <div class="actions">
-              <a
-                class="btn btn--primary"
-                href="https://magicharghita.ro/szallas/"
-                target="_blank"
-                rel="noreferrer"
-                data-i18n="accommodation.button"
-              >
-                Tovább a szállás oldalára
-              </a>
-            </div>
-            <p class="muted" style="margin-top: 12px;">
-              <strong data-i18n="accommodation.includes">Amit tartalmaz:</strong> <span data-i18n="accommodation.breakfast">reggeli / morzsa</span> • <strong data-i18n="accommodation.checkout">Check‑out:</strong> <span data-i18n="accommodation.checkoutTime">másnap déli 12:00 óra</span>
-            </p>
-          </div>
-
-          <div class="split__media">
-            <div class="cabin" aria-label="Szállás képek">
-              <div class="accommodation-gallery">
-                <figure class="accommodation-photo">
-                  <img
-                    alt="Szállás 1"
-                    loading="lazy"
-                    decoding="async"
-                    src="./accomodation_1.webp"
-                    width="600"
-                    height="450"
-                  />
-                </figure>
-                <figure class="accommodation-photo">
-                  <img
-                    alt="Szállás 2"
-                    loading="lazy"
-                    decoding="async"
-                    src="./accomodation_2.webp"
-                    width="600"
-                    height="450"
-                  />
-                </figure>
+      <section class="section section--accommodation section--bg section--bg-szallas" id="szallas" aria-labelledby="szallas-cim">
+        <div class="container">
+          <div class="accommodation">
+            <div class="accommodation__box">
+              <h2 id="szallas-cim" data-i18n="accommodation.title">Szállás</h2>
+              <div class="pill" data-i18n="accommodation.price">150 RON / fő</div>
+              <p data-i18n="accommodation.description">
+                A helyszínen szállást is lehet foglalni, amennyiben valaki a késői vezetés vagy a lehetséges busz helyett a kényelmesebb ott alvást választaná. A helyek száma korlátozott és a közelebbi családtagoknak előnyük van a foglalásban. További részletet a szállásról a következő oldalon lehet találni:
+              </p>
+              <div class="actions actions--center">
+                <a
+                  class="btn btn--primary"
+                  href="https://magicharghita.ro/szallas/"
+                  target="_blank"
+                  rel="noreferrer"
+                  data-i18n="accommodation.button"
+                >
+                  Tovább a szállás oldalára
+                </a>
               </div>
+              <p class="muted" style="margin-top: 12px; text-align: center;">
+                <strong data-i18n="accommodation.includes">Amit tartalmaz:</strong> <span data-i18n="accommodation.breakfast">reggeli / morzsa</span> • <strong data-i18n="accommodation.checkout">Check‑out:</strong> <span data-i18n="accommodation.checkoutTime">másnap déli 12:00 óra</span>
+              </p>
             </div>
+          </div>
+          
+          <div class="accommodation-gallery">
+            <figure class="accommodation-photo">
+              <img
+                alt="Szállás 1"
+                loading="lazy"
+                decoding="async"
+                src="./accomodation_1.webp"
+                width="600"
+                height="450"
+              />
+            </figure>
+            <figure class="accommodation-photo">
+              <img
+                alt="Szállás 2"
+                loading="lazy"
+                decoding="async"
+                src="./accomodation_2.webp"
+                width="600"
+                height="450"
+              />
+            </figure>
           </div>
         </div>
       </section>
@@ -389,24 +388,30 @@
       })();
     </script>
     <script defer>
-      // Countdown to August 22, 2026, 17:00 (5:00 PM)
+      // Countdown to August 22, 2026, 17:30 (5:30 PM)
       (function() {
-        const targetDate = new Date('2026-08-22T17:00:00').getTime();
+        const targetDate = new Date('2026-08-22T17:30:00').getTime();
+        
+        // Format numbers with leading zeros to prevent width shift
+        function formatNumber(num, minDigits) {
+          return String(num).padStart(minDigits || 2, '0');
+        }
         
         function updateCountdown() {
           const now = new Date().getTime();
           const distance = targetDate - now;
           
+          const daysEl = document.getElementById('days');
+          const hoursEl = document.getElementById('hours');
+          const minutesEl = document.getElementById('minutes');
+          const secondsEl = document.getElementById('seconds');
+          
           if (distance < 0) {
             // Wedding day has arrived!
-            const daysEl = document.getElementById('days');
-            const hoursEl = document.getElementById('hours');
-            const minutesEl = document.getElementById('minutes');
-            const secondsEl = document.getElementById('seconds');
-            if (daysEl) daysEl.textContent = '0';
-            if (hoursEl) hoursEl.textContent = '0';
-            if (minutesEl) minutesEl.textContent = '0';
-            if (secondsEl) secondsEl.textContent = '0';
+            if (daysEl) daysEl.textContent = '00';
+            if (hoursEl) hoursEl.textContent = '00';
+            if (minutesEl) minutesEl.textContent = '00';
+            if (secondsEl) secondsEl.textContent = '00';
             return;
           }
           
@@ -415,14 +420,11 @@
           const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((distance % (1000 * 60)) / 1000);
           
-          const daysEl = document.getElementById('days');
-          const hoursEl = document.getElementById('hours');
-          const minutesEl = document.getElementById('minutes');
-          const secondsEl = document.getElementById('seconds');
-          if (daysEl) daysEl.textContent = days;
-          if (hoursEl) hoursEl.textContent = hours;
-          if (minutesEl) minutesEl.textContent = minutes;
-          if (secondsEl) secondsEl.textContent = seconds;
+          // Format with appropriate padding to prevent layout shift
+          if (daysEl) daysEl.textContent = days > 99 ? String(days) : formatNumber(days, 2);
+          if (hoursEl) hoursEl.textContent = formatNumber(hours);
+          if (minutesEl) minutesEl.textContent = formatNumber(minutes);
+          if (secondsEl) secondsEl.textContent = formatNumber(seconds);
         }
         
         // Wait for DOM to be ready
