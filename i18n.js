@@ -217,7 +217,7 @@ function t(key, lang = currentLang) {
 window.updateTranslations = async function updateTranslations(lang) {
   currentLang = lang;
   
-  // Load translation if not already loaded
+  // Load translation if not already loaded (lazy loading)
   if (!translations[lang]) {
     loadTranslations(lang);
   }
@@ -323,13 +323,11 @@ async function initI18n() {
   // Get saved language or default to Hungarian
   const savedLang = localStorage.getItem('preferredLang') || 'hu';
   
-  // Load all languages (now synchronous)
-  loadTranslations('hu');
-  loadTranslations('en');
-  loadTranslations('ro');
+  // Load only the initial language first (lazy load others when needed)
+  loadTranslations(savedLang);
   
-    // Set initial language
-    await updateTranslations(savedLang);
+  // Set initial language
+  await updateTranslations(savedLang);
     
     // Set initial form link
     const rsvpFormLink = document.getElementById('rsvpFormLink');
@@ -384,13 +382,9 @@ function initMobileMenu() {
 
 // Initialize when DOM is ready
 (function() {
-  console.log('i18n.js loaded, DOM state:', document.readyState);
-  
   async function init() {
-    console.log('Initializing i18n...');
     await initI18n();
     initMobileMenu();
-    console.log('i18n initialized');
   }
 
   // Wait for DOM to be fully ready

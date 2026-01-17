@@ -7,14 +7,35 @@
     <meta name="description" content="Bea & Gábor esküvője — 2026.08.22. • Ceremónia 17:00 • Lakodalom 20:00 • Magic Harghita Resort" />
     <title>Bea & Gábor — Esküvő</title>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    
+    <!-- Performance hints -->
+    <meta http-equiv="x-dns-prefetch-control" content="on" />
 
+    <!-- Preconnect to font domains for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="./styles.css" as="style" />
+    <link rel="preload" href="./event_buiding.webp" as="image" />
+    
+    <!-- Load fonts asynchronously with font-display: swap -->
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all';this.onload=null"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    
+    <!-- Load CSS asynchronously -->
+    <link rel="stylesheet" href="./styles.css" media="print" onload="this.media='all';this.onload=null" />
+    <noscript><link rel="stylesheet" href="./styles.css" /></noscript>
   </head>
 
   <body>
@@ -198,7 +219,9 @@
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
                   allowfullscreen
-                  src="https://www.google.com/maps?q=Magic+Harghita+Resort,+Căpâlnița,+Romania&output=embed&zoom=15&t=k"
+                  src=""
+                  data-src="https://www.google.com/maps?q=Magic+Harghita+Resort,+Căpâlnița,+Romania&output=embed&zoom=15&t=k"
+                  aria-hidden="true"
                 ></iframe>
                 <div class="map__overlay"></div>
               </div>
@@ -238,14 +261,20 @@
                   <img
                     alt="Szállás 1"
                     loading="lazy"
+                    decoding="async"
                     src="./accomodation_1.webp"
+                    width="600"
+                    height="450"
                   />
                 </figure>
                 <figure class="accommodation-photo">
                   <img
                     alt="Szállás 2"
                     loading="lazy"
+                    decoding="async"
                     src="./accomodation_2.webp"
+                    width="600"
+                    height="450"
                   />
                 </figure>
               </div>
@@ -262,7 +291,7 @@
       </div>
     </footer>
 
-    <script>
+    <script defer>
       // Simple, reliable language switcher with flags
       (function() {
         const langBtn = document.getElementById('langBtn');
@@ -330,38 +359,83 @@
       })();
     </script>
     
-    <script src="./i18n.js"></script>
-    <script>
-      // Countdown to August 22, 2026, 17:00 (5:00 PM)
-      const targetDate = new Date('2026-08-22T17:00:00').getTime();
-      
-      function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
-        
-        if (distance < 0) {
-          // Wedding day has arrived!
-          document.getElementById('days').textContent = '0';
-          document.getElementById('hours').textContent = '0';
-          document.getElementById('minutes').textContent = '0';
-          document.getElementById('seconds').textContent = '0';
-          return;
+    <!-- Defer non-critical JavaScript -->
+    <script src="./i18n.js" defer></script>
+    <script defer>
+      // Lazy load Google Maps iframe when it comes into view
+      (function() {
+        function lazyLoadMap() {
+          const iframe = document.querySelector('.map__frame iframe[data-src]');
+          if (!iframe) return;
+          
+          const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                iframe.src = iframe.getAttribute('data-src');
+                iframe.removeAttribute('data-src');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { rootMargin: '50px' });
+          
+          observer.observe(iframe);
         }
         
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', lazyLoadMap);
+        } else {
+          lazyLoadMap();
+        }
+      })();
+    </script>
+    <script defer>
+      // Countdown to August 22, 2026, 17:00 (5:00 PM)
+      (function() {
+        const targetDate = new Date('2026-08-22T17:00:00').getTime();
         
-        document.getElementById('days').textContent = days;
-        document.getElementById('hours').textContent = hours;
-        document.getElementById('minutes').textContent = minutes;
-        document.getElementById('seconds').textContent = seconds;
-      }
-      
-      // Update immediately and then every second
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
+        function updateCountdown() {
+          const now = new Date().getTime();
+          const distance = targetDate - now;
+          
+          if (distance < 0) {
+            // Wedding day has arrived!
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+            if (daysEl) daysEl.textContent = '0';
+            if (hoursEl) hoursEl.textContent = '0';
+            if (minutesEl) minutesEl.textContent = '0';
+            if (secondsEl) secondsEl.textContent = '0';
+            return;
+          }
+          
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          
+          const daysEl = document.getElementById('days');
+          const hoursEl = document.getElementById('hours');
+          const minutesEl = document.getElementById('minutes');
+          const secondsEl = document.getElementById('seconds');
+          if (daysEl) daysEl.textContent = days;
+          if (hoursEl) hoursEl.textContent = hours;
+          if (minutesEl) minutesEl.textContent = minutes;
+          if (secondsEl) secondsEl.textContent = seconds;
+        }
+        
+        // Wait for DOM to be ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', function() {
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+          });
+        } else {
+          updateCountdown();
+          setInterval(updateCountdown, 1000);
+        }
+      })();
     </script>
     
     <!-- Floating Back to Top Button -->
@@ -371,32 +445,50 @@
       </svg>
     </button>
     
-    <script>
+    <script defer>
       // Floating back to top button
       (function() {
-        const backToTopBtn = document.getElementById('backToTop');
-        
-        // Show/hide button based on scroll position
-        function toggleBackToTop() {
-          if (window.scrollY > 300) {
-            backToTopBtn.classList.add('back-to-top--visible');
-          } else {
-            backToTopBtn.classList.remove('back-to-top--visible');
+        function initBackToTop() {
+          const backToTopBtn = document.getElementById('backToTop');
+          if (!backToTopBtn) return;
+          
+          // Show/hide button based on scroll position
+          function toggleBackToTop() {
+            if (window.scrollY > 300) {
+              backToTopBtn.classList.add('back-to-top--visible');
+            } else {
+              backToTopBtn.classList.remove('back-to-top--visible');
+            }
           }
+          
+          // Smooth scroll to top
+          backToTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          });
+          
+          // Listen to scroll events (throttled)
+          let ticking = false;
+          window.addEventListener('scroll', function() {
+            if (!ticking) {
+              window.requestAnimationFrame(function() {
+                toggleBackToTop();
+                ticking = false;
+              });
+              ticking = true;
+            }
+          });
+          toggleBackToTop(); // Check initial state
         }
         
-        // Smooth scroll to top
-        backToTopBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
-        });
-        
-        // Listen to scroll events
-        window.addEventListener('scroll', toggleBackToTop);
-        toggleBackToTop(); // Check initial state
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initBackToTop);
+        } else {
+          initBackToTop();
+        }
       })();
     </script>
   </body>

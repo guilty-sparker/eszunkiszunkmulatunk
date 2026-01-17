@@ -49,6 +49,7 @@ a{color:inherit}
   border-bottom: 1px solid rgba(244,234,220,.12);
   box-shadow: 0 10px 24px rgba(0,0,0,.25);
   overflow:visible;
+  contain:layout style paint;
 }
 .topbar__inner{
   display:flex;
@@ -257,6 +258,7 @@ a{color:inherit}
   background-position:center;
   filter:saturate(1.03) contrast(1.08);
   transform:scale(1.05);
+  will-change:transform;
 }
 .hero__content{position:relative}
 .badge{
@@ -401,7 +403,7 @@ a{color:inherit}
   inset:0;
   background-size:cover;
   background-position:center;
-  background-attachment:fixed;
+  background-attachment:scroll;
   opacity:0.12;
   z-index:0;
   pointer-events:none;
