@@ -727,44 +727,95 @@ a{color:inherit}
 }
 @media (max-width: 720px){
   .route-path{
-    flex-direction:column;
-    gap:24px;
-    max-width:300px;
+    flex-direction:row;
+    gap:8px;
+    max-width:100%;
+    padding:0 10px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
   }
   .route-line{
-    width:2px;
-    height:40px;
+    width:20px;
+    height:2px;
     flex:none;
-    min-width:2px;
+    min-width:20px;
   }
   .route-line::after{
-    top:-100%;
-    left:0;
+    top:0;
+    left:-100%;
     width:100%;
     height:100%;
-    background:linear-gradient(180deg, 
+    background:linear-gradient(90deg, 
       transparent 0%, 
       rgba(240,208,165,.8) 50%, 
       transparent 100%);
-    animation:routePulseVertical 3s ease-in-out infinite;
+    animation:routePulse 3s ease-in-out infinite;
   }
   .route-bus{
-    left:50%;
-    top:200px;
+    left:24px;
+    top:24px !important;
     transform:translateX(-50%);
   }
   .route-bus--moving{
-    animation:routeMoveVertical 6s ease-in-out forwards;
+    animation:routeMoveMobile 6s ease-in-out forwards;
+  }
+  @keyframes routeMoveMobile{
+    0%{
+      left:24px;
+      top:24px;
+      transform:translateX(-50%);
+    }
+    33.33%{
+      left:calc(70px + 20px);
+      top:24px;
+      transform:translateX(-50%);
+    }
+    66.66%{
+      left:calc(140px + 20px);
+      top:24px;
+      transform:translateX(-50%);
+    }
+    100%{
+      left:calc(210px + 20px);
+      top:24px;
+      transform:translateX(-50%);
+    }
   }
   .route-stop{
-    min-width:auto;
-    width:100%;
-    min-height:500px;
+    min-width:70px;
+    width:auto;
+    min-height:280px;
+    flex-shrink:0;
+  }
+  .route-stop__icon{
+    width:48px !important;
+    height:48px !important;
+    top:24px !important;
+  }
+  .route-stop--2 .route-stop__icon{
+    width:56px !important;
+    height:56px !important;
+    top:28px !important;
+  }
+  .route-stop--end .route-stop__icon{
+    width:36px !important;
+    height:36px !important;
+    top:18px !important;
   }
   .route-stop__label{
-    font-size:.95rem;
-    padding:5px 10px;
-    top:260px;
+    font-size:.7rem;
+    padding:4px 6px;
+    top:100px;
+    max-width:80px;
+    white-space:normal;
+    line-height:1.2;
+  }
+  .route-bus{
+    top:24px !important;
+  }
+  .route-bus img{
+    width:28px;
+    height:28px;
   }
 }
 @keyframes routeMoveVertical{
