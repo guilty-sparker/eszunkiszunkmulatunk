@@ -516,11 +516,11 @@
             const pathRect = routePath.getBoundingClientRect();
             
             if (isMobile) {
-              // Mobile: bus moves vertically along right side
-              // Bus is positioned absolutely with right: 10px, top: 40px
+              // Mobile: bus moves vertically along left side (separate lane)
+              // Bus is positioned absolutely with left: 10px, top: 40px
               // Path should use absolute coordinates relative to route-path container
               // Adjust bus offset based on screen size
-              const busRightOffset = window.innerWidth <= 390 ? 5 : 10; // Smaller on very small screens
+              const busLeftOffset = window.innerWidth <= 390 ? 5 : 10; // Smaller on very small screens
               const busStartTop = 40; // CSS top: 40px
               
               stops.forEach(function(stop) {
@@ -531,9 +531,9 @@
                 // Calculate stop icon center Y relative to route-path container
                 const stopCenterY = iconRect.top + iconRect.height / 2 - pathRect.top;
                 
-                // X is at right edge (5px from right), Y is at icon center
-                const rightX = routePath.offsetWidth - busRightOffset;
-                points.push({ x: rightX, y: stopCenterY });
+                // X is at left edge (10px from left), Y is at icon center
+                const leftX = busLeftOffset;
+                points.push({ x: leftX, y: stopCenterY });
               });
             } else {
               // Desktop: bus moves horizontally along top
@@ -592,6 +592,7 @@
               if (isMobile) {
                 // Mobile: point.y is absolute position relative to container
                 // Bus starts at top: 40px, so transform is point.y - 40px
+                // X is already positioned at left: 10px via CSS, so no X translation needed
                 const translateY = point.y - busStartTop;
                 busElement.style.transform = `translate3d(0, ${translateY}px, 0)`;
               } else {
