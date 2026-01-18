@@ -41,17 +41,19 @@
     "description": "The wedding will be held at <strong class=\"highlight\">Magic Harghita Resort</strong>.",
     "detail": "Căpâlnița, Harghita County",
     "directions": "How to find the venue: Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the fields, straight to the Resort gate.",
-    "button": "Get directions on Google Maps"
+    "button": "Get directions on Google Maps",
+    "travelHelp": "We are also happy to help organize travel: if there are enough participants, we will arrange a private bus. If you would like to take advantage of this option, please indicate your intention on the form below:",
+    "travelButton": "Open Google Form"
   },
   "accommodation": {
     "title": "Accommodation",
     "price": "150 RON / person",
-    "description": "If you plan to stay at the venue, please let us know your intention, as Magic Harghita Resort can provide accommodation in limited numbers. Find all additional accommodation information here:",
+    "description": "Accommodation can be booked at the venue for those who prefer the comfort of staying overnight rather than late-night driving or the possible bus option. The number of places is limited and close family members have priority in booking. Further details about accommodation can be found on the following page:",
     "button": "Go to accommodation page",
-    "includes": "Included:",
+    "includes": "What's included:",
     "breakfast": "breakfast / snack",
     "checkout": "Check-out:",
-    "checkoutTime": "next day at 12"
+    "checkoutTime": "next day at 12:00 PM"
   },
   "footer": {
     "text": "Bea & Gábor • 2026.08.22."

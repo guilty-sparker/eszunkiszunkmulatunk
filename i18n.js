@@ -44,9 +44,8 @@ const translationsData = {
     },
     "location": {
       "title": "Helyszín",
-      "description": "Az esküvő a <strong class=\"highlight\">Magic Harghita Resort</strong>ban lesz megtartva.",
       "detail": "Căpâlnița, jud. Harghita",
-      "directions": "Így találtok meg a helyszint: Székelyudvarhely felől érkezve Kápolnásfalunál térjetek le balra a főútról. Innen egy 3 km-es út vezet át a mezőkön, egyenesen a Resort kapujáig.",
+      "directions": "A ceremóniára, a koktélpercekre és az ünnepségre is a varázslatos Magic Harghita Resortban kerül majd sor, amely az erdő mélyén, ahol a nap sugarai áttörnek a zöld koronák között, egy csendes tisztáson vár ránk.  Székelyudvarhely felől érkezve majd Kápolnásfalunál kell letérni balra a főútról. Onnan egy 3 km-es út vezet át a tisztáson, egyenesen a Resort kapujáig ahol parkolási lehetőség is van.",
       "button": "Útvonaltervezés Google Maps-ben",
       "travelHelp": "Az utazás megszervezésében is szívesen segítünk: kellő számú jelentkező esetén különbuszt indítunk. Amennyiben igénybe vennéd ezt a lehetőséget, kérjük, jelezd szándékodat az alábbi űrlapon:",
       "travelButton": "Megnyitom a Google űrlapot"
@@ -66,15 +65,6 @@ const translationsData = {
       "breakfast": "reggeli/morzsa",
       "checkout": "Check-out:",
       "checkoutTime": "másnap déli 12:00 óra"
-    },
-    "location": {
-      "title": "Helyszín",
-      "description": "Az esküvő a <strong class=\"highlight\">Magic Harghita Resort</strong>ban lesz megtartva.",
-      "detail": "Căpâlnița, jud. Harghita",
-      "directions": "Így találtok meg a helyszint: Székelyudvarhely felől érkezve Kápolnásfalunál térjetek le balra a főútról. Innen egy 3 km-es út vezet át a mezőkön, egyenesen a Resort kapujáig.",
-      "button": "Útvonaltervezés Google Maps-ben",
-      "travelHelp": "Az utazás megszervezésében is szívesen segítünk: kellő számú jelentkező esetén különbuszt indítunk. Amennyiben igénybe vennéd ezt a lehetőséget, kérjük, jelezd szándékodat az alábbi űrlapon:",
-      "travelButton": "Megnyitom a Google űrlapot"
     },
     "footer": {
       "text": "Bea & Gábor • 2026.08.22."
@@ -120,9 +110,8 @@ const translationsData = {
     },
     "location": {
       "title": "Location",
-      "description": "The wedding will be held at <strong class=\"highlight\">Magic Harghita Resort</strong>.",
       "detail": "Căpâlnița, Harghita County",
-      "directions": "How to find the venue: Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the fields, straight to the Resort gate.",
+      "directions": "The ceremony, cocktail hour, and celebration will all take place at the magical Magic Harghita Resort, which awaits us deep in the forest, where the sun's rays break through the green canopies, on a quiet clearing. Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the clearing, straight to the Resort gate where parking is also available.",
       "button": "Get directions on Google Maps",
       "travelHelp": "We are also happy to help organize the trip: if there are enough participants, we will arrange a separate bus. If you would like to use this option, please indicate your intention in the form below:",
       "travelButton": "Open Google Form"
@@ -136,7 +125,7 @@ const translationsData = {
     "accommodation": {
       "title": "Accommodation",
       "price": "150 RON / person",
-      "description": "Accommodation can also be booked at the venue, if someone would prefer the comfort of staying overnight instead of late driving or the possible bus. The number of places is limited and closer family members have priority in booking. Further details about accommodation can be found on the following page:",
+      "description": "Accommodation can be booked at the venue for those who prefer the comfort of staying overnight rather than late-night driving or the possible bus option. The number of places is limited and close family members have priority in booking. Further details about accommodation can be found on the following page:",
       "button": "Go to accommodation page",
       "includes": "What's included:",
       "breakfast": "breakfast / snack",
@@ -187,9 +176,8 @@ const translationsData = {
     },
     "location": {
       "title": "Locație",
-      "description": "Nunta va avea loc la <strong class=\"highlight\">Magic Harghita Resort</strong>.",
       "detail": "Căpâlnița, jud. Harghita",
-      "directions": "Cum să ajungi la locație: Venind din Odorheiu Secuiesc, virați la stânga la Căpâlnița de pe drumul principal. De acolo, un drum de 3 km duce prin câmpuri, direct la poarta Resort-ului.",
+      "directions": "Ceremonia, ora cocktailurilor și celebrarea vor avea loc la minunatul Magic Harghita Resort, care ne așteaptă adânc în pădure, unde razele soarelui străpung coroanele verzi, pe o poiană liniștită. Venind din Odorheiu Secuiesc, virați la stânga la Căpâlnița de pe drumul principal. De acolo, un drum de 3 km duce prin poiană, direct la poarta Resort-ului unde este disponibil și parcare.",
       "button": "Obține direcții pe Google Maps"
     },
     "route": {

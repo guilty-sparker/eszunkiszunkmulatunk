@@ -41,17 +41,19 @@
     "description": "Az esküvő a <strong class=\"highlight\">Magic Harghita Resort</strong>ban lesz megtartva.",
     "detail": "Căpâlnița, jud. Harghita",
     "directions": "Így találtok meg a helyszint: Székelyudvarhely felől érkezve Kápolnásfalunál térjetek le balra a főútról. Innen egy 3 km-es út vezet át a mezőkön, egyenesen a Resort kapujáig.",
-    "button": "Útvonaltervezés Google Maps-ben"
+    "button": "Útvonaltervezés Google Maps-ben",
+    "travelHelp": "Az utazás megszervezésében is szívesen segítünk: kellő számú jelentkező esetén különbuszt indítunk. Amennyiben igénybe vennéd ezt a lehetőséget, kérjük, jelezd szándékodat az alábbi űrlapon:",
+    "travelButton": "Megnyitom a Google űrlapot"
   },
   "accommodation": {
     "title": "Szállás",
     "price": "150 RON / fő",
-    "description": "Amennyiben a helyszinen aludnátok, kérünk jelezzétek szándékotokat, a Magic Harghita Resort tud szállással szolgálni korlátozott számban. Minden további infót a szállásról itt találtok:",
+    "description": "A helyszínen szállást is lehet foglalni, amennyiben valaki a késői vezetés vagy a lehetséges busz helyett a kényelmesebb ott alvást választaná. A helyek száma korlátozott és a közelebbi családtagoknak előnyük van a foglalásban. További részletet a szallásról a következő oldalon lehet találni:",
     "button": "Tovább a szállás oldalára",
-    "includes": "Benne van:",
+    "includes": "Amit tartalmaz:",
     "breakfast": "reggeli / morzsa",
     "checkout": "Check‑out:",
-    "checkoutTime": "másnap 12 óra"
+    "checkoutTime": "másnap déli 12:00 óra"
   },
   "footer": {
     "text": "Bea & Gábor • 2026.08.22."

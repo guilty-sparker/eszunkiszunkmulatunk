@@ -41,17 +41,19 @@
     "description": "Nunta va avea loc la <strong class=\"highlight\">Magic Harghita Resort</strong>.",
     "detail": "Căpâlnița, jud. Harghita",
     "directions": "Cum să ajungi la locație: Venind din Odorheiu Secuiesc, virați la stânga la Căpâlnița de pe drumul principal. De acolo, un drum de 3 km duce prin câmpuri, direct la poarta Resort-ului.",
-    "button": "Obține direcții pe Google Maps"
+    "button": "Obține direcții pe Google Maps",
+    "travelHelp": "Suntem, de asemenea, bucuroși să ajutăm la organizarea călătoriei: dacă există suficienți participanți, vom organiza un autobuz privat. Dacă doriți să profitați de această opțiune, vă rugăm să indicați intenția în formularul de mai jos:",
+    "travelButton": "Deschide formularul Google"
   },
   "accommodation": {
     "title": "Cazare",
     "price": "150 RON / persoană",
-    "description": "Dacă intenționați să rămâneți la locație, vă rugăm să ne anunțați intenția, deoarece Magic Harghita Resort poate oferi cazare în număr limitat. Găsiți toate informațiile suplimentare despre cazare aici:",
+    "description": "Cazarea poate fi rezervată la locație pentru cei care preferă confortul de a rămâne peste noapte în loc de condus târziu sau opțiunea posibilă de autobuz. Numărul de locuri este limitat și membrii apropiați ai familiei au prioritate la rezervare. Detalii suplimentare despre cazare pot fi găsite pe următoarea pagină:",
     "button": "Mergi la pagina de cazare",
-    "includes": "Inclus:",
+    "includes": "Ce include:",
     "breakfast": "mic dejun / gustare",
     "checkout": "Check-out:",
-    "checkoutTime": "a doua zi la 12"
+    "checkoutTime": "a doua zi la ora 12:00"
   },
   "footer": {
     "text": "Bea & Gábor • 2026.08.22."

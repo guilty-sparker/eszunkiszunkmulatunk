@@ -229,12 +229,9 @@
         <div class="container split">
           <div class="split__text">
             <h2 id="helyszin-cim" data-i18n="location.title">Helyszín</h2>
-            <p data-i18n="location.description">
-              Az esküvő a <strong class="highlight">Magic Harghita Resort</strong>ban lesz megtartva.
-            </p>
             <p class="location-detail" data-i18n="location.detail">Căpâlnița, jud. Harghita</p>
             <p class="muted" data-i18n="location.directions">
-              Így találtok meg a helyszint: Székelyudvarhely felől érkezve Kápolnásfalunál térjetek le balra a főútról. Innen egy 3 km-es út vezet át a mezőkön, egyenesen a Resort kapujáig.
+              A ceremóniára, a koktélpercekre és az ünnepségre is a varázslatos Magic Harghita Resortban kerül majd sor, amely az erdő mélyén, ahol a nap sugarai áttörnek a zöld koronák között, egy csendes tisztáson vár ránk.  Székelyudvarhely felől érkezve majd Kápolnásfalunál kell letérni balra a főútról. Onnan egy 3 km-es út vezet át a tisztáson, egyenesen a Resort kapujáig ahol parkolási lehetőség is van.
             </p>
 
             <div class="actions">
@@ -326,9 +323,7 @@
             <div class="accommodation__box">
               <h2 id="szallas-cim" data-i18n="accommodation.title">Szállás</h2>
               <div class="pill" data-i18n="accommodation.price">150 RON / fő</div>
-              <p data-i18n="accommodation.description">
-                A helyszínen szállást is lehet foglalni, amennyiben valaki a késői vezetés vagy a lehetséges busz helyett a kényelmesebb ott alvást választaná. A helyek száma korlátozott és a közelebbi családtagoknak előnyük van a foglalásban. További részletet a szállásról a következő oldalon lehet találni:
-              </p>
+              <p data-i18n="accommodation.description">A helyszínen szállást is lehet foglalni, amennyiben valaki a késői vezetés vagy a lehetséges busz helyett a kényelmesebb ott alvást választaná. A helyek száma korlátozott és a közelebbi családtagoknak előnyük van a foglalásban. További részletet a szallásról a következő oldalon lehet találni:</p>
               <div class="actions actions--center">
                 <a
                   class="btn btn--primary"
@@ -437,7 +432,7 @@
     </script>
     
     <!-- Defer non-critical JavaScript -->
-    <script src="./i18n.js" defer></script>
+    <script src="./i18n.js?v=5" defer></script>
     <script defer>
       // Lazy load Google Maps iframe when it comes into view
       (function() {
@@ -653,7 +648,7 @@
                 }, 100);
               }
             });
-          }, { rootMargin: '100px' });
+          }, { rootMargin: '0px', threshold: 0.1 });
           
           observer.observe(routeAnimation);
         }
