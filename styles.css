@@ -743,7 +743,7 @@ a{color:inherit}
 @media (max-width: 720px){
   .route-path{
     display:grid;
-    grid-template-columns:auto auto 1fr;
+    grid-template-columns:60px auto 1fr;
     gap:0 12px;
     max-width:100%;
     padding:20px 10px;
@@ -820,6 +820,7 @@ a{color:inherit}
     z-index:5;
     width:48px;
     height:48px;
+    max-width:48px;
   }
   .route-bus img{
     width:48px;
@@ -857,6 +858,7 @@ a{color:inherit}
 }
 @media (max-width: 390px){
   .route-path{
+    grid-template-columns:55px auto 1fr;
     gap:0 8px;
     padding:20px 8px;
   }
