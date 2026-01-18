@@ -256,13 +256,18 @@ a{color:inherit}
   inset:-40px;
   background:
     radial-gradient(900px 520px at 18% 12%, rgba(240,208,165,.18), transparent 60%),
-    linear-gradient(180deg, rgba(22,15,11,.18), rgba(22,15,11,.82)),
-    url("./event_buiding.webp");
+    linear-gradient(180deg, rgba(22,15,11,.18), rgba(22,15,11,.82));
   background-size:cover;
   background-position:center 25%;
   filter:saturate(1.03) contrast(1.08);
   transform:scale(1.02);
   will-change:transform;
+}
+.hero__bg.loaded{
+  background-image:
+    radial-gradient(900px 520px at 18% 12%, rgba(240,208,165,.18), transparent 60%),
+    linear-gradient(180deg, rgba(22,15,11,.18), rgba(22,15,11,.82)),
+    url("./event_buiding.webp");
 }
 .hero__content{position:relative}
 .badge{
@@ -427,20 +432,23 @@ a{color:inherit}
   z-index:1;
 }
 .section--bg-helyszin::before{
-  background-image:url("./wedding_pic_2.jpg");
+  background-image:url("./wedding_pic_2.webp");
   background-position:center 30%;
   opacity:0.06;
+  content-visibility:auto;
 }
 .section--bg-szallas::before{
-  background-image:url("./wedding_pic_1.jpg");
+  background-image:url("./wedding_pic_1.webp");
   background-position:center 50%;
   opacity:0.10;
   height:100%;
+  content-visibility:auto;
 }
 .section--bg-rsvp::before{
-  background-image:url("./rings.jpg");
+  background-image:url("./rings.webp");
   background-position:center;
   opacity:0.10;
+  content-visibility:auto;
 }
 
 .cards{
@@ -628,7 +636,14 @@ a{color:inherit}
   opacity:1;
 }
 .route-bus--moving{
-  animation:routeMove 6s ease-in-out forwards;
+  /* Animation handled by JavaScript with dynamic path calculation */
+  /* animation:routeMove 6s ease-in-out forwards; */
+}
+@media (max-width: 720px){
+  .route-bus--moving{
+    /* Animation handled by JavaScript with dynamic path calculation */
+    /* animation:routeMoveVerticalMobile 6s ease-in-out forwards; */
+  }
 }
 .route-stop{
   display:flex;
@@ -656,12 +671,12 @@ a{color:inherit}
   transform:translate(-50%, -50%);
 }
 .route-stop:not(.route-stop--end):not(.route-stop--2) .route-stop__icon{
-  width:160px;
-  height:160px;
+  width:216px;
+  height:216px;
 }
 .route-stop--2 .route-stop__icon{
-  width:243px;
-  height:243px;
+  width:216px;
+  height:216px;
 }
 .route-stop--end .route-stop__icon{
   width:48px;
@@ -727,58 +742,61 @@ a{color:inherit}
 }
 @media (max-width: 720px){
   .route-path{
-    flex-direction:column;
-    gap:16px;
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:0 12px;
     max-width:100%;
     padding:20px 10px;
     align-items:center;
+    position:relative;
   }
   .route-stop{
-    min-width:auto;
-    width:100%;
-    max-width:280px;
-    min-height:auto;
-    flex-direction:row;
-    align-items:center;
-    gap:16px;
-    position:relative;
-    padding:12px 0;
+    display:contents;
   }
   .route-stop__icon{
+    grid-column:1;
     position:static !important;
     transform:none !important;
-    width:80px !important;
-    height:80px !important;
-    flex-shrink:0;
+    width:110px !important;
+    height:110px !important;
+    margin:0 auto;
+    align-self:center;
+    justify-self:center;
   }
   .route-stop--2 .route-stop__icon{
-    width:100px !important;
-    height:100px !important;
+    width:110px !important;
+    height:110px !important;
+    margin:0 auto;
   }
   .route-stop--end .route-stop__icon{
-    width:60px !important;
-    height:60px !important;
+    width:36px !important;
+    height:36px !important;
+    margin:0 auto;
   }
   .route-stop__label{
+    grid-column:2;
     position:static !important;
     transform:none !important;
     top:auto !important;
     left:auto !important;
     margin:0;
-    flex:1;
-    max-width:none;
-    text-align:left;
-    font-size:.9rem;
-    padding:8px 12px;
+    text-align:center;
+    font-size:.8rem;
+    padding:6px 8px;
     white-space:normal;
+    align-self:center;
+    max-width:140px;
+    width:auto;
+    line-height:1.3;
   }
   .route-line{
+    grid-column:1;
     width:2px;
-    height:30px;
-    flex:none;
+    height:40px;
     min-width:2px;
-    min-height:30px;
+    min-height:40px;
     margin:0 auto;
+    justify-self:center;
   }
   .route-line::after{
     top:-100%;
@@ -792,37 +810,40 @@ a{color:inherit}
     animation:routePulseVertical 3s ease-in-out infinite;
   }
   .route-bus{
-    left:50% !important;
-    top:0 !important;
-    transform:translateX(-50%);
+    grid-column:3;
+    position:absolute !important;
+    left:auto !important;
+    right:10px !important;
+    top:40px !important;
+    bottom:auto !important;
+    transform:translateY(0);
+    z-index:5;
+    width:36px;
+    height:36px;
   }
   .route-bus img{
-    width:40px;
-    height:40px;
+    width:36px;
+    height:36px;
+    display:block;
+  }
+  .route-bus--visible{
+    opacity:1 !important;
   }
   .route-bus--moving{
     animation:routeMoveVerticalMobile 6s ease-in-out forwards;
   }
   @keyframes routeMoveVerticalMobile{
     0%{
-      left:50%;
-      top:40px;
-      transform:translateX(-50%);
+      transform:translateY(0);
     }
     33.33%{
-      left:50%;
-      top:calc(40px + 120px);
-      transform:translateX(-50%);
+      transform:translateY(150px);
     }
     66.66%{
-      left:50%;
-      top:calc(40px + 240px);
-      transform:translateX(-50%);
+      transform:translateY(300px);
     }
     100%{
-      left:50%;
-      top:calc(40px + 360px);
-      transform:translateX(-50%);
+      transform:translateY(450px);
     }
   }
   @keyframes routePulseVertical{
@@ -832,6 +853,34 @@ a{color:inherit}
     50%{
       top:100%;
     }
+  }
+}
+@media (max-width: 390px){
+  .route-path{
+    gap:0 8px;
+    padding:20px 8px;
+  }
+  .route-stop__label{
+    max-width:120px;
+    font-size:.75rem;
+    padding:5px 6px;
+  }
+  .route-bus{
+    right:5px !important;
+    width:32px !important;
+    height:32px !important;
+  }
+  .route-bus img{
+    width:32px !important;
+    height:32px !important;
+  }
+  .route-stop__icon{
+    width:90px !important;
+    height:90px !important;
+  }
+  .route-stop--2 .route-stop__icon{
+    width:90px !important;
+    height:90px !important;
   }
 }
 @keyframes routeMoveVertical{
@@ -862,6 +911,18 @@ a{color:inherit}
   }
   50%{
     top:100%;
+  }
+}
+/* Phase 2: SVG offset-path keyframes (uncomment to use) */
+/* @keyframes busMovePath {
+  0% { offset-distance: 0%; }
+  33.33% { offset-distance: 33.33%; }
+  66.66% { offset-distance: 66.66%; }
+  100% { offset-distance: 100%; }
+} */
+@media (prefers-reduced-motion: reduce) {
+  .route-bus--moving {
+    animation: none;
   }
 }
 
@@ -958,6 +1019,8 @@ a{color:inherit}
 
 /* RSVP */
 .section--rsvp{
+  padding:100px 0;
+  min-height:600px;
   padding:80px 0;
 }
 .rsvp{

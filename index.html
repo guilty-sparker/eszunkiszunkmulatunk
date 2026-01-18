@@ -16,7 +16,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="./styles.css" as="style" />
+    <link rel="preload" href="./styles.min.css" as="style" />
+    <!-- Only preload hero image, defer others -->
     <link rel="preload" href="./event_buiding.webp" as="image" fetchpriority="high" />
     
     <!-- Cache control -->
@@ -37,14 +38,43 @@
     </noscript>
     
     <!-- Load CSS synchronously to prevent FOUC -->
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.min.css" />
     
     <!-- Inline critical CSS to prevent white flash -->
     <style>
-      body {
-        background: #160f0b;
-        color: #f4eadc;
-        margin: 0;
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{
+        margin:0;
+        color:#f4eadc;
+        font-family:"Cormorant Garamond",ui-serif,Georgia,"Times New Roman",Times,serif;
+        font-size:1.25rem;
+        line-height:1.55;
+        background:radial-gradient(1400px 800px at 10% 0%,rgba(233,198,156,.18),transparent 60%),radial-gradient(1000px 700px at 90% 10%,rgba(189,118,64,.22),transparent 55%),radial-gradient(900px 600px at 60% 90%,rgba(120,72,42,.22),transparent 60%),linear-gradient(115deg,rgba(176,122,78,.16),transparent 45%),linear-gradient(245deg,rgba(103,63,38,.22),transparent 55%),linear-gradient(180deg,#160f0b,#1b120d);
+      }
+      .container{width:min(1120px,calc(100% - 40px));margin:0 auto}
+      .topbar{
+        position:sticky;
+        top:0;
+        z-index:30;
+        background:rgba(18,12,9,.78);
+        backdrop-filter:blur(12px);
+        border-bottom:1px solid rgba(244,234,220,.12);
+        box-shadow:0 10px 24px rgba(0,0,0,.25);
+      }
+      .topbar__inner{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:12px 0;
+        gap:16px;
+      }
+      .hero{
+        position:relative;
+        padding:54px 0 44px;
+        overflow:hidden;
+        border-bottom:1px solid rgba(244,234,220,.14);
+        min-height:60vh;
       }
     </style>
   </head>
@@ -70,22 +100,22 @@
         <div class="topbar__right">
           <div class="lang-switcher">
             <button class="lang-switcher__btn" id="langBtn" aria-label="Select language">
-              <img class="lang-switcher__flag" id="langFlag" src="./flags/hu.png" alt="Language flag" width="24" height="18" onerror="this.src='./flags/hu.svg'; this.onerror=null;" />
+              <img class="lang-switcher__flag" id="langFlag" src="./flags/hu.png" alt="Language flag" width="24" height="18" loading="lazy" decoding="async" onerror="this.src='./flags/hu.svg'; this.onerror=null;" />
               <svg class="lang-switcher__icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             <div class="lang-switcher__dropdown" id="langDropdown">
               <button class="lang-switcher__option" data-lang="hu" data-flag-png="./flags/hu.png" data-flag-svg="./flags/hu.svg">
-                <img class="lang-switcher__option-flag" src="./flags/hu.png" alt="HU" width="24" height="18" onerror="this.src='./flags/hu.svg'; this.onerror=null;" />
+                <img class="lang-switcher__option-flag" src="./flags/hu.png" alt="HU" width="24" height="18" loading="lazy" decoding="async" onerror="this.src='./flags/hu.svg'; this.onerror=null;" />
                 <span>Magyar</span>
               </button>
               <button class="lang-switcher__option" data-lang="en" data-flag-png="./flags/en.png" data-flag-svg="./flags/en.svg">
-                <img class="lang-switcher__option-flag" src="./flags/en.png" alt="EN" width="24" height="18" onerror="this.src='./flags/en.svg'; this.onerror=null;" />
+                <img class="lang-switcher__option-flag" src="./flags/en.png" alt="EN" width="24" height="18" loading="lazy" decoding="async" onerror="this.src='./flags/en.svg'; this.onerror=null;" />
                 <span>English</span>
               </button>
               <button class="lang-switcher__option" data-lang="ro" data-flag-png="./flags/ro.png" data-flag-svg="./flags/ro.svg">
-                <img class="lang-switcher__option-flag" src="./flags/ro.png" alt="RO" width="24" height="18" onerror="this.src='./flags/ro.svg'; this.onerror=null;" />
+                <img class="lang-switcher__option-flag" src="./flags/ro.png" alt="RO" width="24" height="18" loading="lazy" decoding="async" onerror="this.src='./flags/ro.svg'; this.onerror=null;" />
                 <span>Română</span>
               </button>
             </div>
@@ -105,7 +135,7 @@
     </div>
 
     <header class="hero" id="top">
-      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__bg" aria-hidden="true" data-bg-src="./event_buiding.webp"></div>
       <div class="container hero__content">
         <div class="badge">
           <span class="badge__dot" aria-hidden="true"></span>
@@ -244,28 +274,33 @@
           </p>
           
           <div class="route-animation" id="routeAnimation" aria-label="Útvonal animáció">
+            <!-- SVG path (invisible, used for animation only) - Phase 2 -->
+            <svg class="route-svg" aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;">
+              <path id="routePath" d="M60 200 L360 160 L760 160 L1140 200" fill="none"/>
+              <path id="routePathMobile" d="M50 40 L50 190 L50 340 L50 490" fill="none"/>
+            </svg>
             <div class="route-path">
               <div class="route-stop">
-                <img class="route-stop__icon" src="./route-stop-1.png" alt="" width="160" height="160" />
+                <img class="route-stop__icon" src="./svgs/route-stop-1.svg" alt="" width="160" height="160" loading="lazy" decoding="async" />
                 <span class="route-stop__label" data-i18n="route.stop1">Magyarvalkó/Văleni (Călățele)</span>
               </div>
               <div class="route-line route-line--1"></div>
               <div class="route-stop route-stop--2">
-                <img class="route-stop__icon" src="./route-stop-2.png" alt="" width="243" height="243" />
+                <img class="route-stop__icon" src="./svgs/route-stop-2.svg" alt="" width="243" height="243" loading="lazy" decoding="async" />
                 <span class="route-stop__label" data-i18n="route.stop2">Kolozsvár/Cluj-Napoca</span>
               </div>
               <div class="route-line route-line--2"></div>
               <div class="route-stop">
-                <img class="route-stop__icon" src="./route-stop-3.png" alt="" width="160" height="160" />
+                <img class="route-stop__icon" src="./svgs/route-stop-3.svg" alt="" width="160" height="160" loading="lazy" decoding="async" />
                 <span class="route-stop__label" data-i18n="route.stop3">Székelyudvarhely/Odorheiu-Secuiesc</span>
               </div>
               <div class="route-line route-line--3"></div>
               <div class="route-stop route-stop--end">
-                <img class="route-stop__icon" src="./route-stop-4.png" alt="" width="48" height="48" />
+                <img class="route-stop__icon" src="./svgs/route-stop-4.svg" alt="" width="48" height="48" loading="lazy" decoding="async" />
                 <span class="route-stop__label" data-i18n="route.stop4">Magic Harghita Resort</span>
               </div>
               <div class="route-bus" id="routeBus">
-                <img src="./route-bus.png" alt="Bus" width="65" height="65" />
+                <img src="./svgs/route-bus.svg" alt="Bus" width="65" height="65" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -431,30 +466,190 @@
       })();
     </script>
     <script defer>
+      // Load hero background image immediately (above the fold, critical)
+      (function() {
+        const heroBg = document.querySelector('.hero__bg');
+        if (heroBg && heroBg.dataset.bgSrc) {
+          const img = new Image();
+          img.onload = function() {
+            heroBg.classList.add('loaded');
+          };
+          img.src = heroBg.dataset.bgSrc;
+        }
+      })();
+      
+      // Lazy load section background images sequentially
+      (function() {
+        const sections = document.querySelectorAll('.section--bg');
+        const sectionObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Mark as loading to prevent re-processing
+              entry.target.setAttribute('data-bg-loading', 'true');
+              sectionObserver.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '200px' });
+        sections.forEach(section => sectionObserver.observe(section));
+      })();
+      
       // Lazy load and animate route when Location section is visible
       (function() {
         function initRouteAnimation() {
           const routeAnimation = document.getElementById('routeAnimation');
           const routeBus = document.getElementById('routeBus');
-          if (!routeAnimation || !routeBus) return;
+          const routePath = document.querySelector('.route-path');
+          if (!routeAnimation || !routeBus || !routePath) return;
           
           let hasAnimated = false;
+          
+          // Feature detection for CSS offset-path support
+          const supportsOffsetPath = CSS && CSS.supports && 
+            CSS.supports('offset-path', 'path("M0 0 L10 10")');
+          
+          // Measure stop positions and create SVG path dynamically
+          function createPathFromStops() {
+            const stops = routePath.querySelectorAll('.route-stop');
+            const busElement = document.getElementById('routeBus');
+            const isMobile = window.innerWidth <= 720;
+            const points = [];
+            const pathRect = routePath.getBoundingClientRect();
+            
+            if (isMobile) {
+              // Mobile: bus moves vertically along right side
+              // Bus is positioned absolutely with right: 10px, top: 40px
+              // Path should use absolute coordinates relative to route-path container
+              // Adjust bus offset based on screen size
+              const busRightOffset = window.innerWidth <= 390 ? 5 : 10; // Smaller on very small screens
+              const busStartTop = 40; // CSS top: 40px
+              
+              stops.forEach(function(stop) {
+                const icon = stop.querySelector('.route-stop__icon');
+                if (!icon) return;
+                
+                const iconRect = icon.getBoundingClientRect();
+                // Calculate stop icon center Y relative to route-path container
+                const stopCenterY = iconRect.top + iconRect.height / 2 - pathRect.top;
+                
+                // X is at right edge (5px from right), Y is at icon center
+                const rightX = routePath.offsetWidth - busRightOffset;
+                points.push({ x: rightX, y: stopCenterY });
+              });
+            } else {
+              // Desktop: bus moves horizontally along top
+              stops.forEach(function(stop) {
+                const icon = stop.querySelector('.route-stop__icon');
+                if (!icon) return;
+                
+                const stopRect = stop.getBoundingClientRect();
+                
+                // Horizontal path: use center X of icon, fixed Y for bus
+                const centerX = stopRect.left + stopRect.width / 2 - pathRect.left;
+                const busY = 200; // Fixed Y position (matches CSS top: 200px)
+                points.push({ x: centerX, y: busY });
+              });
+            }
+            
+            if (points.length === 0) return null;
+            
+            // Create path string
+            let pathString = 'M ' + points[0].x + ' ' + points[0].y;
+            for (let i = 1; i < points.length; i++) {
+              pathString += ' L ' + points[i].x + ' ' + points[i].y;
+            }
+            
+            return { pathString: pathString, isMobile: isMobile, points: points };
+          }
+          
+          // JS fallback: animate using requestAnimationFrame
+          function startJsFallback(pathData, busElement) {
+            const pathString = pathData.pathString;
+            const isMobile = pathData.isMobile;
+            const points = pathData.points;
+            
+            // Create temporary SVG path element for getPointAtLength
+            const tempSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            tempSvg.setAttribute('style', 'position: absolute; width: 0; height: 0;');
+            const tempPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            tempPath.setAttribute('d', pathString);
+            tempSvg.appendChild(tempPath);
+            document.body.appendChild(tempSvg);
+            
+            const pathLength = tempPath.getTotalLength();
+            const duration = 6000;
+            const start = performance.now();
+            const busStartTop = isMobile ? 40 : 200; // CSS top values
+            
+            routeAnimation.classList.add('route-animation--visible');
+            busElement.classList.add('route-bus--visible');
+            
+            function step(now) {
+              const t = Math.min((now - start) / duration, 1);
+              // ease-in-out cubic
+              const eased = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2;
+              const point = tempPath.getPointAtLength(pathLength * eased);
+              
+              if (isMobile) {
+                // Mobile: point.y is absolute position relative to container
+                // Bus starts at top: 40px, so transform is point.y - 40px
+                const translateY = point.y - busStartTop;
+                busElement.style.transform = `translate3d(0, ${translateY}px, 0)`;
+              } else {
+                // Desktop: X is center of icon, bus needs to center itself
+                busElement.style.transform = `translate3d(${point.x - (busElement.offsetWidth / 2)}px, 0, 0)`;
+              }
+              
+              if (t < 1) {
+                requestAnimationFrame(step);
+              } else {
+                document.body.removeChild(tempSvg);
+              }
+            }
+            requestAnimationFrame(step);
+          }
           
           const observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
               if (entry.isIntersecting && !hasAnimated) {
                 hasAnimated = true;
-                routeAnimation.classList.add('route-animation--visible');
                 
-                // Start bus animation after a short delay
+                // Wait for layout to settle, then measure positions
                 setTimeout(function() {
-                  routeBus.classList.add('route-bus--visible');
-                  setTimeout(function() {
-                    routeBus.classList.add('route-bus--moving');
-                  }, 200);
-                }, 300);
-                
-                observer.unobserve(entry.target);
+                  const pathData = createPathFromStops();
+                  if (!pathData || !pathData.pathString) return;
+                  
+                  // Update SVG path elements
+                  const svgPath = document.getElementById('routePath');
+                  const svgPathMobile = document.getElementById('routePathMobile');
+                  const isMobile = pathData.isMobile;
+                  
+                  if (isMobile && svgPathMobile) {
+                    svgPathMobile.setAttribute('d', pathData.pathString);
+                  } else if (!isMobile && svgPath) {
+                    svgPath.setAttribute('d', pathData.pathString);
+                  }
+                  
+                  routeAnimation.classList.add('route-animation--visible');
+                  
+                  // Use JS fallback for all browsers (more reliable)
+                  // Or use CSS offset-path if supported
+                  if (supportsOffsetPath && false) { // Disabled for now, using JS fallback
+                    // CSS animation approach
+                    setTimeout(function() {
+                      routeBus.classList.add('route-bus--visible');
+                      setTimeout(function() {
+                        routeBus.classList.add('route-bus--moving');
+                      }, 200);
+                    }, 300);
+                  } else {
+                    // JS fallback approach
+                    setTimeout(function() {
+                      startJsFallback(pathData, routeBus);
+                    }, 300);
+                  }
+                  
+                  observer.unobserve(entry.target);
+                }, 100);
               }
             });
           }, { rootMargin: '100px' });
