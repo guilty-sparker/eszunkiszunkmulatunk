@@ -7,7 +7,7 @@ const translationsData = {
   hu: {
     "meta": {
       "title": "Bea & Gábor — Esküvő",
-      "description": "Bea & Gábor esküvője — 2026.08.22. • Ceremónia 17:00 • Ünnepség 20:00 • Magic Harghita Resort"
+      "description": "Bea & Gábor esküvője — 2026.08.22. • Ceremónia 17:00 • Ünnepség 19:00 • Magic Harghita Resort"
     },
     "nav": {
       "skipLink": "Ugrás a tartalomra",
@@ -47,7 +47,6 @@ const translationsData = {
       "detail": "Căpâlnița, jud. Harghita",
       "directions": "A ceremóniára, a koktélpercekre és az ünnepségre is a varázslatos Magic Harghita Resortban kerül majd sor, amely az erdő mélyén, ahol a nap sugarai áttörnek a zöld koronák között, egy csendes tisztáson vár ránk.  Székelyudvarhely felől érkezve majd Kápolnásfalunál kell letérni balra a főútról. Onnan egy 3 km-es út vezet át a tisztáson, egyenesen a Resort kapujáig ahol parkolási lehetőség is van.",
       "button": "Útvonaltervezés Google Maps-ben",
-      "travelHelp": "Az utazás megszervezésében is szívesen segítünk: kellő számú jelentkező esetén különbuszt indítunk. Amennyiben igénybe vennéd ezt a lehetőséget, kérjük, jelezd szándékodat az alábbi űrlapon:",
       "travelButton": "Megnyitom a Google űrlapot"
     },
     "route": {
@@ -73,7 +72,7 @@ const translationsData = {
   en: {
     "meta": {
       "title": "Bea & Gábor — Wedding",
-      "description": "Bea & Gábor's wedding — 2026.08.22. • Ceremony 17:30 • Celebration 19:30 • Magic Harghita Resort"
+      "description": "Bea & Gábor's wedding — 2026.08.22. • Ceremony 17:00 • Celebration 19:00 • Magic Harghita Resort"
     },
     "nav": {
       "skipLink": "Skip to content",
@@ -113,7 +112,6 @@ const translationsData = {
       "detail": "Căpâlnița, Harghita County",
       "directions": "The ceremony, cocktail hour, and celebration will all take place at the magical Magic Harghita Resort, which awaits us deep in the forest, where the sun's rays break through the green canopies, on a quiet clearing. Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the clearing, straight to the Resort gate where parking is also available.",
       "button": "Get directions on Google Maps",
-      "travelHelp": "We are also happy to help organize the trip: if there are enough participants, we will arrange a separate bus. If you would like to use this option, please indicate your intention in the form below:",
       "travelButton": "Open Google Form"
     },
     "route": {
@@ -139,7 +137,7 @@ const translationsData = {
   ro: {
     "meta": {
       "title": "Bea & Gábor — Nuntă",
-      "description": "Nunta lui Bea & Gábor — 2026.08.22. • Ceremonie 17:30 • Sărbătoare 19:30 • Magic Harghita Resort"
+      "description": "Nunta lui Bea & Gábor — 2026.08.22. • Ceremonie 17:00 • Sărbătoare 19:00 • Magic Harghita Resort"
     },
     "nav": {
       "skipLink": "Sari la conținut",
@@ -178,7 +176,8 @@ const translationsData = {
       "title": "Locație",
       "detail": "Căpâlnița, jud. Harghita",
       "directions": "Ceremonia, ora cocktailurilor și celebrarea vor avea loc la minunatul Magic Harghita Resort, care ne așteaptă adânc în pădure, unde razele soarelui străpung coroanele verzi, pe o poiană liniștită. Venind din Odorheiu Secuiesc, virați la stânga la Căpâlnița de pe drumul principal. De acolo, un drum de 3 km duce prin poiană, direct la poarta Resort-ului unde este disponibil și parcare.",
-      "button": "Obține direcții pe Google Maps"
+      "button": "Obține direcții pe Google Maps",
+      "travelButton": "Deschid formularul Google"
     },
     "route": {
       "stop1": "Văleni (Călățele)",
