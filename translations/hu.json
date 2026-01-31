@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Bea & Gábor — Esküvő",
-    "description": "Bea & Gábor esküvője — 2026.08.22. • Ceremónia 17:00 • Ünnepség 19:00 • Magic Harghita Resort"
+    "description": "Bea & Gábor... ahol a történetünk új fejezete kezdődik. — 2026.08.22. • Ceremónia 17:00 • Ünnepség 19:00 • Magic Harghita Resort"
   },
   "nav": {
     "skipLink": "Ugrás a tartalomra",
@@ -13,7 +13,7 @@
   "hero": {
     "date": "2026. augusztus 22.",
     "names": "Bea és Gábor",
-    "subtitle": "Esküvője",
+    "subtitle": "... ahol a történetünk új fejezete kezdődik.",
     "lead": "Tartsatok velünk ezen a különleges napon, amikor hivatalosan is összekötjük az életünket!",
     "ctaRsvp": "Visszajelzés",
     "ctaLocation": "Helyszín"
@@ -47,7 +47,9 @@
   "accommodation": {
     "title": "Szállás",
     "price": "150 RON / fő",
-    "description": "A helyszínen szállást is lehet foglalni, amennyiben valaki a késői vezetés vagy a lehetséges busz helyett a kényelmesebb ott alvást választaná. A helyek száma korlátozott és a közelebbi családtagoknak előnyük van a foglalásban. További részletet a szallásról a következő oldalon lehet találni:",
+    "intro": "A helyszínen egy éjszakára szállást is lehet foglalni, amennyiben valaki a késői vezetés helyett a kényelmesebb ott alvást választaná.",
+    "costs": "A szállásköltségek a vendégek által, önállóan rendezendők.",
+    "moreDetails": "További részletet a szallásról a következő oldalon lehet találni:",
     "button": "Tovább a szállás oldalára",
     "includes": "Amit tartalmaz:",
     "breakfast": "reggeli / morzsa",

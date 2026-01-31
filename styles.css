@@ -1073,15 +1073,47 @@ a{color:inherit}
 }
 .accommodation__box h2{
   margin:0 0 12px;
-  text-align:center;
+  text-align:right;
 }
 .accommodation__box p{
-  text-align:center;
+  text-align:right;
+}
+.accommodation__block{
+  margin:0 0 12px;
 }
 .accommodation__box .pill{
   display:flex;
-  justify-content:center;
-  margin:0 auto 12px auto;
+  justify-content:flex-end;
+  margin:0 0 12px 0;
+}
+.accommodation__details-wrap{
+  display:flex;
+  justify-content:flex-end;
+  width:100%;
+  margin:16px 0 20px;
+}
+.accommodation__details{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  padding:14px 20px;
+  max-width:min(100%, 420px);
+  text-align:right;
+  color:var(--cream);
+  background:rgba(244,234,220,.12);
+  border:1px solid rgba(244,234,220,.28);
+  border-radius:var(--radius);
+  font-size:1.1em;
+}
+.accommodation__details > div{
+  text-align:right;
+  width:100%;
+}
+.accommodation__details > div + div{
+  margin-top:6px;
+}
+.accommodation__box .actions--center{
+  justify-content:flex-end;
 }
 
 /* Footer */

@@ -47,7 +47,9 @@
   "accommodation": {
     "title": "Cazare",
     "price": "150 RON / persoană",
-    "description": "Cazarea poate fi rezervată la locație pentru cei care preferă confortul de a rămâne peste noapte în loc de condus târziu sau opțiunea posibilă de autobuz. Numărul de locuri este limitat și membrii apropiați ai familiei au prioritate la rezervare. Detalii suplimentare despre cazare pot fi găsite pe următoarea pagină:",
+    "intro": "Se poate rezerva cazare pentru o noapte la locație, dacă cineva preferă confortul de a rămâne peste noapte în loc de condus târziu.",
+    "costs": "Costurile cazării sunt suportate de oaspeți, în mod independent.",
+    "moreDetails": "Detalii suplimentare despre cazare pot fi găsite pe următoarea pagină:",
     "button": "Mergi la pagina de cazare",
     "includes": "Ce include:",
     "breakfast": "mic dejun / gustare",

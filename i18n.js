@@ -7,7 +7,7 @@ const translationsData = {
   hu: {
     "meta": {
       "title": "Bea & Gábor — Esküvő",
-      "description": "Bea & Gábor esküvője — 2026.08.22. • Ceremónia 17:00 • Ünnepség 19:00 • Magic Harghita Resort"
+      "description": "Bea & Gábor... ahol a történetünk új fejezete kezdődik. — 2026.08.22. • Ceremónia 17:00 • Ünnepség 19:00 • Magic Harghita Resort"
     },
     "nav": {
       "skipLink": "Ugrás a tartalomra",
@@ -19,7 +19,7 @@ const translationsData = {
     "hero": {
       "date": "2026. augusztus 22.",
       "names": "Bea és Gábor",
-      "subtitle": "Esküvője",
+      "subtitle": "... ahol a történetünk új fejezete kezdődik.",
       "lead": "Tartsatok velünk ezen a különleges napon, amikor a közös életünk egy új fejezetébe lépünk. Legyen ez a nap tele olyan megható, boldog, vidám és szeretettel teli emlékekkel, amelyek egy életen át elkísérnek minket az utunkon.",
       "ctaRsvp": "Visszajelzés",
       "ctaLocation": "Helyszín"
@@ -58,7 +58,9 @@ const translationsData = {
     "accommodation": {
       "title": "Szállás",
       "price": "150 RON / fő",
-      "description": "A helyszínen szállást is lehet foglalni, amennyiben valaki a késői vezetés vagy a lehetséges busz helyett a kényelmesebb ott alvást választaná. A helyek száma korlátozott és a közelebbi családtagoknak előnyük van a foglalásban. További részletet a szallásról a következő oldalon lehet találni:",
+      "intro": "A helyszínen egy éjszakára szállást is lehet foglalni, amennyiben valaki a késői vezetés helyett a kényelmesebb ott alvást választaná.",
+      "costs": "A szállásköltségek a vendégek által, önállóan rendezendők.",
+      "moreDetails": "További részletet a szallásról a következő oldalon lehet találni:",
       "button": "Tovább a szállás oldalára",
       "includes": "Amit tartalmaz:",
       "breakfast": "reggeli/morzsa",
@@ -84,7 +86,7 @@ const translationsData = {
     "hero": {
       "date": "August 22, 2026",
       "names": "Bea and Gábor",
-      "subtitle": "Wedding",
+      "subtitle": "... where a new chapter of our story begins.",
       "lead": "Join us on this special day as we step into a new chapter of our life together. May this day be filled with touching, joyful, happy, and love-filled memories that will accompany us throughout our journey.",
       "ctaRsvp": "RSVP",
       "ctaLocation": "Location"
@@ -123,7 +125,9 @@ const translationsData = {
     "accommodation": {
       "title": "Accommodation",
       "price": "150 RON / person",
-      "description": "Accommodation can be booked at the venue for those who prefer the comfort of staying overnight rather than late-night driving or the possible bus option. The number of places is limited and close family members have priority in booking. Further details about accommodation can be found on the following page:",
+      "intro": "Accommodation for one night can be booked at the venue for those who prefer the comfort of staying overnight rather than driving late.",
+      "costs": "Accommodation costs are to be covered by guests independently.",
+      "moreDetails": "Further details about accommodation can be found on the following page:",
       "button": "Go to accommodation page",
       "includes": "What's included:",
       "breakfast": "breakfast / snack",
@@ -149,7 +153,7 @@ const translationsData = {
     "hero": {
       "date": "22 august 2026",
       "names": "Bea și Gábor",
-      "subtitle": "Nunta",
+      "subtitle": "... unde începe un nou capitol al poveștii noastre.",
       "lead": "Alătură-te nouă în această zi specială când intrăm într-un nou capitol al vieții noastre comune. Fie ca această zi să fie plină de amintiri emoționante, fericite, vesele și pline de dragoste care ne vor însoți pe tot parcursul călătoriei noastre.",
       "ctaRsvp": "Confirmare",
       "ctaLocation": "Locație"
@@ -188,7 +192,9 @@ const translationsData = {
     "accommodation": {
       "title": "Cazare",
       "price": "150 RON / persoană",
-      "description": "Se poate rezerva și cazare la locație, dacă cineva ar prefera confortul de a rămâne peste noapte în loc de condus târziu sau de autobuzul posibil. Numărul de locuri este limitat și membrii familiei mai apropiați au prioritate la rezervare. Detalii suplimentare despre cazare pot fi găsite pe următoarea pagină:",
+      "intro": "Se poate rezerva cazare pentru o noapte la locație, dacă cineva preferă confortul de a rămâne peste noapte în loc de condus târziu.",
+      "costs": "Costurile cazării sunt suportate de oaspeți, în mod independent.",
+      "moreDetails": "Detalii suplimentare despre cazare pot fi găsite pe următoarea pagină:",
       "button": "Mergi la pagina de cazare",
       "includes": "Ce include:",
       "breakfast": "mic dejun / gustare",

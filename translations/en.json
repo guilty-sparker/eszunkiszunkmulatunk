@@ -47,7 +47,9 @@
   "accommodation": {
     "title": "Accommodation",
     "price": "150 RON / person",
-    "description": "Accommodation can be booked at the venue for those who prefer the comfort of staying overnight rather than late-night driving or the possible bus option. The number of places is limited and close family members have priority in booking. Further details about accommodation can be found on the following page:",
+    "intro": "Accommodation for one night can be booked at the venue for those who prefer the comfort of staying overnight rather than driving late.",
+    "costs": "Accommodation costs are to be covered by guests independently.",
+    "moreDetails": "Further details about accommodation can be found on the following page:",
     "button": "Go to accommodation page",
     "includes": "What's included:",
     "breakfast": "breakfast / snack",
