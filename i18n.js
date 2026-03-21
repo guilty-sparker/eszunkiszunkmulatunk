@@ -15,7 +15,8 @@ const translationsData = {
       "location": "Helyszínek",
       "accommodation": "Szállás",
       "rsvp": "Visszajelzés",
-      "calendar": "Mentés naptárba"
+      "calendar": "Mentés naptárba",
+      "calendarShort": "Naptár"
     },
     "hero": {
       "date": "2026. augusztus 22.",
@@ -94,7 +95,8 @@ const translationsData = {
       "location": "Locations",
       "accommodation": "Accommodation",
       "rsvp": "RSVP",
-      "calendar": "Save the date"
+      "calendar": "Save the date",
+      "calendarShort": "Calendar"
     },
     "hero": {
       "date": "August 22, 2026",
@@ -173,7 +175,8 @@ const translationsData = {
       "location": "Locații",
       "accommodation": "Cazare",
       "rsvp": "Confirmare",
-      "calendar": "Salvează data"
+      "calendar": "Salvează data",
+      "calendarShort": "Calendar"
     },
     "hero": {
       "date": "22 august 2026",

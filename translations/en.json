@@ -9,7 +9,8 @@
     "location": "Locations",
     "accommodation": "Accommodation",
     "rsvp": "RSVP",
-    "calendar": "Save the date"
+    "calendar": "Save the date",
+    "calendarShort": "Calendar"
   },
   "hero": {
     "date": "August 22, 2026",

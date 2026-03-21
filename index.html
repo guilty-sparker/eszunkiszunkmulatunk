@@ -129,6 +129,21 @@
               </button>
             </div>
           </div>
+          <a
+            class="topbar__cal-quick"
+            id="calendarTopQuick"
+            href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Bea+%26+G%C3%A1bor+%E2%80%94+Esk%C3%BCv%C5%91&amp;dates=20260822T180000/20260823T060000&amp;details=Szertart%C3%A1s%3A+16%3A00+%E2%80%94+Belv%C3%A1rosi+Reform%C3%A1tus+Templom%2C+Sz%C3%A9kelyudvarhely%0A%C3%9Cnneps%C3%A9g%3A+18%3A00+%E2%80%94+Magic+Harghita+Resort%2C+C%C4%83p%C3%A2lni%C8%9Ba&amp;location=Magic+Harghita+Resort%2C+C%C4%83p%C3%A2lni%C8%9Ba&amp;ctz=Europe%2FBucharest"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg class="topbar__cal-quick-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <span class="calendar-fab__label" data-i18n="nav.calendarShort">Naptár</span>
+          </a>
           <button class="mobile-menu__toggle" aria-label="Menu" id="mobileMenuToggle">
             <span></span>
             <span></span>
@@ -137,7 +152,6 @@
         </div>
         <nav class="topbar__nav" aria-label="Oldal navigáció" id="topbarNav">
           <a class="topbar__cta" href="#rsvp" data-i18n="nav.rsvp">Visszajelzés</a>
-          <a class="topbar__cal" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Bea+%26+G%C3%A1bor+%E2%80%94+Esk%C3%BCv%C5%91&amp;dates=20260822T180000/20260823T020000&amp;details=%C3%9Cnneps%C3%A9g+%2F+Celebration%3A+18%3A00+%E2%80%94+Magic+Harghita+Resort%2C+C%C4%83p%C3%A2lni%C8%9Ba&amp;location=Magic+Harghita+Resort%2C+C%C4%83p%C3%A2lni%C8%9Ba&amp;ctz=Europe%2FBucharest" target="_blank" rel="noopener" data-i18n="nav.calendar"><svg class="cal-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Mentés naptárba</a>
           <a href="#helyszin" data-i18n="nav.location">Helyszínek</a>
           <a href="#szallas" data-i18n="nav.accommodation">Szállás</a>
         </nav>
@@ -415,6 +429,22 @@
 
     </main>
 
+    <a
+      class="calendar-fab"
+      id="calendarFab"
+      href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Bea+%26+G%C3%A1bor+%E2%80%94+Esk%C3%BCv%C5%91&amp;dates=20260822T180000/20260823T060000&amp;details=Szertart%C3%A1s%3A+16%3A00+%E2%80%94+Belv%C3%A1rosi+Reform%C3%A1tus+Templom%2C+Sz%C3%A9kelyudvarhely%0A%C3%9Cnneps%C3%A9g%3A+18%3A00+%E2%80%94+Magic+Harghita+Resort%2C+C%C4%83p%C3%A2lni%C8%9Ba&amp;location=Magic+Harghita+Resort%2C+C%C4%83p%C3%A2lni%C8%9Ba&amp;ctz=Europe%2FBucharest"
+      target="_blank"
+      rel="noopener"
+    >
+      <svg class="calendar-fab__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="18" rx="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <span class="calendar-fab__label" data-i18n="nav.calendar">Mentés naptárba</span>
+    </a>
+
     <footer class="footer">
       <div class="container footer__inner">
         <div class="footer__left" data-i18n="footer.text">Bea &amp; Gábor • 2026.08.22.</div>
@@ -490,7 +520,7 @@
     </script>
     
     <!-- Defer non-critical JavaScript -->
-    <script src="./i18n.js?v=10" defer></script>
+    <script src="./i18n.js?v=11" defer></script>
     <script defer>
       // Load hero background image immediately (above the fold, critical)
       (function() {
@@ -809,39 +839,58 @@
       // Floating back to top button
       (function() {
         function initBackToTop() {
+          const topbar = document.querySelector('.topbar');
           const backToTopBtn = document.getElementById('backToTop');
-          if (!backToTopBtn) return;
-          
-          // Show/hide button based on scroll position
-          function toggleBackToTop() {
-            if (window.scrollY > 300) {
-              backToTopBtn.classList.add('back-to-top--visible');
-            } else {
-              backToTopBtn.classList.remove('back-to-top--visible');
+          const calendarFab = document.getElementById('calendarFab');
+          const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+          const topbarNav = document.getElementById('topbarNav');
+          if (!topbar && !backToTopBtn && !calendarFab) return;
+
+          function syncFloatingActions() {
+            const scrollY = window.scrollY;
+            const isNearTop = scrollY <= 24;
+            const isMobileLayout = window.innerWidth <= 980;
+            const shouldHideMobileTopbar = isMobileLayout && !isNearTop;
+
+            if (topbar) {
+              topbar.classList.toggle('topbar--mobile-hidden', shouldHideMobileTopbar);
+            }
+            if (shouldHideMobileTopbar && mobileMenuToggle && topbarNav) {
+              mobileMenuToggle.classList.remove('mobile-menu__toggle--active');
+              topbarNav.classList.remove('topbar__nav--open');
+            }
+
+            if (backToTopBtn) {
+              backToTopBtn.classList.toggle('back-to-top--visible', scrollY > 300);
+            }
+            if (calendarFab) {
+              calendarFab.classList.toggle('calendar-fab--visible', shouldHideMobileTopbar);
             }
           }
-          
-          // Smooth scroll to top
-          backToTopBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth'
+
+          if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', function(e) {
+              e.preventDefault();
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+              });
             });
-          });
-          
+          }
+
           // Listen to scroll events (throttled)
           let ticking = false;
           window.addEventListener('scroll', function() {
             if (!ticking) {
               window.requestAnimationFrame(function() {
-                toggleBackToTop();
+                syncFloatingActions();
                 ticking = false;
               });
               ticking = true;
             }
           });
-          toggleBackToTop(); // Check initial state
+          window.addEventListener('resize', syncFloatingActions);
+          syncFloatingActions();
         }
         
         if (document.readyState === 'loading') {

@@ -9,7 +9,8 @@
     "location": "Locații",
     "accommodation": "Cazare",
     "rsvp": "Confirmare",
-    "calendar": "Salvează data"
+    "calendar": "Salvează data",
+    "calendarShort": "Calendar"
   },
   "hero": {
     "date": "22 august 2026",

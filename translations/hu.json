@@ -9,7 +9,8 @@
     "location": "Helyszínek",
     "accommodation": "Szállás",
     "rsvp": "Visszajelzés",
-    "calendar": "Mentés naptárba"
+    "calendar": "Mentés naptárba",
+    "calendarShort": "Naptár"
   },
   "hero": {
     "date": "2026. augusztus 22.",
