@@ -7,14 +7,15 @@ const translationsData = {
   hu: {
     "meta": {
       "title": "Bea & Gábor — Esküvő",
-      "description": "Bea & Gábor... ahol a történetünk új fejezete kezdődik. — 2026.08.22. • Ceremónia 17:00 • Ünnepség 19:00 • Magic Harghita Resort"
+      "description": "Bea & Gábor... ahol a történetünk új fejezete kezdődik. — 2026.08.22. • Ceremónia 16:00 • Ünnepség 18:00 • Magic Harghita Resort"
     },
     "nav": {
       "skipLink": "Ugrás a tartalomra",
       "brand": "Bea & Gábor",
-      "location": "Helyszín",
+      "location": "Helyszínek",
       "accommodation": "Szállás",
-      "rsvp": "Visszajelzés"
+      "rsvp": "Visszajelzés",
+      "calendar": "Mentés naptárba"
     },
     "hero": {
       "date": "2026. augusztus 22.",
@@ -22,12 +23,14 @@ const translationsData = {
       "subtitle": "... ahol a történetünk új fejezete kezdődik.",
       "lead": "Tartsatok velünk ezen a különleges napon, amikor a közös életünk egy új fejezetébe lépünk. Legyen ez a nap tele olyan megható, boldog, vidám és szeretettel teli emlékekkel, amelyek egy életen át elkísérnek minket az utunkon.",
       "ctaRsvp": "Visszajelzés",
-      "ctaLocation": "Helyszín"
+      "ctaLocation": "Helyszínek"
     },
     "quickfacts": {
       "ceremony": "Ceremónia",
       "celebration": "Ünnepség",
-      "location": "Helyszín",
+      "location": "Helyszínek",
+      "locationValue": "Belvárosi Református Templom",
+      "locationDetail": "Székelyudvarhely • Magic Harghita Resort",
       "date": "2026 augusztus 22"
     },
     "countdown": {
@@ -39,14 +42,22 @@ const translationsData = {
     "rsvp": {
       "title": "Visszajelzés",
       "description": "A jókedv kötelező, a tánc ajánlott, mint ahogy a részvételi szándék visszajelzése is.",
-      "deadline": "Július 22-ig kérünk jelezz vissza az alábbi űrlapon.",
+      "deadline": "Július 1-ig kérünk jelezz vissza az alábbi űrlapon.",
       "button": "Megnyitom a Google űrlapot"
     },
     "location": {
-      "title": "Helyszín",
-      "detail": "Căpâlnița, jud. Harghita",
-      "directions": "A ceremóniára, a koktélpercekre és az ünnepségre is a varázslatos Magic Harghita Resortban kerül majd sor, amely az erdő mélyén, ahol a nap sugarai áttörnek a zöld koronák között, egy csendes tisztáson vár ránk.  Székelyudvarhely felől érkezve majd Kápolnásfalunál kell letérni balra a főútról. Onnan egy 3 km-es út vezet át a tisztáson, egyenesen a Resort kapujáig ahol parkolási lehetőség is van.",
-      "button": "Útvonaltervezés Google Maps-ben",
+      "title": "Helyszínek",
+      "ceremonyTitle": "Ceremónia — 16:00",
+      "ceremonyPlace": "Belvárosi Református Templom",
+      "ceremonyDetail": "Székelyudvarhely",
+      "ceremonyDirections": "A szertartásra a székelyudvarhelyi Belvárosi Református Templomban kerül sor, 16:00 órakor.",
+      "ceremonyButton": "Útvonaltervezés a templomhoz",
+      "loadMap": "Térkép betöltése",
+      "celebrationTitle": "Ünnepség — 18:00",
+      "celebrationPlace": "Magic Harghita Resort",
+      "celebrationDetail": "Căpâlnița, jud. Harghita",
+      "celebrationDirections": "Az ünnepségre a varázslatos Magic Harghita Resortban kerül sor, amely az erdő mélyén, egy csendes tisztáson vár ránk. Székelyudvarhely felől érkezve Kápolnásfalunál kell letérni balra a főútról. Onnan egy 3 km-es út vezet át a tisztáson, egyenesen a Resort kapujáig, ahol parkolási lehetőség is van.",
+      "celebrationButton": "Útvonal a Resorthoz",
       "travelButton": "Megnyitom a Google űrlapot"
     },
     "route": {
@@ -58,9 +69,10 @@ const translationsData = {
     "accommodation": {
       "title": "Szállás",
       "price": "150 RON / fő",
-      "intro": "A helyszínen egy éjszakára szállást is lehet foglalni, amennyiben valaki a késői vezetés helyett a kényelmesebb ott alvást választaná.",
-      "costs": "A szállásköltségek a vendégek által, önállóan rendezendők.",
-      "moreDetails": "További részletet a szallásról a következő oldalon lehet találni:",
+      "limited": "A férőhelyek száma korlátozott!",
+      "intro": "A korlátozott számú helyet elsősorban a családtagjaink számára tartjuk fenn.",
+      "costs": "Ha július 1-ig visszajelzel, a helyszín 1 éjszakára tud szállást biztosítani a közeli Kápolnásfaluban.",
+      "moreDetails": "A szállásköltségeket a vendégek önállóan rendezik; további részleteket az alábbi oldalon találsz.",
       "button": "Tovább a szállás oldalára",
       "includes": "Amit tartalmaz:",
       "breakfast": "reggeli/morzsa",
@@ -74,14 +86,15 @@ const translationsData = {
   en: {
     "meta": {
       "title": "Bea & Gábor — Wedding",
-      "description": "Bea & Gábor's wedding — 2026.08.22. • Ceremony 17:00 • Celebration 19:00 • Magic Harghita Resort"
+      "description": "Bea & Gábor's wedding — 2026.08.22. • Ceremony 16:00 • Celebration 18:00 • Magic Harghita Resort"
     },
     "nav": {
       "skipLink": "Skip to content",
       "brand": "Bea & Gábor",
-      "location": "Location",
+      "location": "Locations",
       "accommodation": "Accommodation",
-      "rsvp": "RSVP"
+      "rsvp": "RSVP",
+      "calendar": "Save the date"
     },
     "hero": {
       "date": "August 22, 2026",
@@ -89,12 +102,14 @@ const translationsData = {
       "subtitle": "... where a new chapter of our story begins.",
       "lead": "Join us on this special day as we step into a new chapter of our life together. May this day be filled with touching, joyful, happy, and love-filled memories that will accompany us throughout our journey.",
       "ctaRsvp": "RSVP",
-      "ctaLocation": "Location"
+      "ctaLocation": "Locations"
     },
     "quickfacts": {
       "ceremony": "Ceremony",
       "celebration": "Celebration",
-      "location": "Location",
+      "location": "Locations",
+      "locationValue": "Reformed Church",
+      "locationDetail": "Odorheiu Secuiesc • Magic Harghita Resort",
       "date": "August 22, 2026"
     },
     "countdown": {
@@ -106,14 +121,22 @@ const translationsData = {
     "rsvp": {
       "title": "RSVP",
       "description": "Good mood is mandatory, dancing is recommended, as is letting us know your attendance intention.",
-      "deadline": "Please respond via the form below by July 22.",
+      "deadline": "Please respond via the form below by July 1.",
       "button": "Open Google Form"
     },
     "location": {
-      "title": "Location",
-      "detail": "Căpâlnița, Harghita County",
-      "directions": "The ceremony, cocktail hour, and celebration will all take place at the magical Magic Harghita Resort, which awaits us deep in the forest, where the sun's rays break through the green canopies, on a quiet clearing. Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the clearing, straight to the Resort gate where parking is also available.",
-      "button": "Get directions on Google Maps",
+      "title": "Locations",
+      "ceremonyTitle": "Ceremony — 16:00",
+      "ceremonyPlace": "Reformed Church (Downtown)",
+      "ceremonyDetail": "Odorheiu Secuiesc",
+      "ceremonyDirections": "The ceremony will take place at the Reformed Church in downtown Odorheiu Secuiesc at 16:00.",
+      "ceremonyButton": "Directions to the church",
+      "loadMap": "Load map",
+      "celebrationTitle": "Celebration — 18:00",
+      "celebrationPlace": "Magic Harghita Resort",
+      "celebrationDetail": "Căpâlnița, Harghita County",
+      "celebrationDirections": "The celebration will take place at the magical Magic Harghita Resort, which awaits us deep in the forest, on a quiet clearing. Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the clearing, straight to the Resort gate where parking is also available.",
+      "celebrationButton": "Directions to the Resort",
       "travelButton": "Open Google Form"
     },
     "route": {
@@ -125,9 +148,10 @@ const translationsData = {
     "accommodation": {
       "title": "Accommodation",
       "price": "150 RON / person",
-      "intro": "Accommodation for one night can be booked at the venue for those who prefer the comfort of staying overnight rather than driving late.",
-      "costs": "Accommodation costs are to be covered by guests independently.",
-      "moreDetails": "Further details about accommodation can be found on the following page:",
+      "limited": "Availability is limited!",
+      "intro": "The limited number of places is reserved primarily for our family members.",
+      "costs": "If you send us your feedback by July 1, the venue can offer one night of accommodation nearby in the village of Căpâlnița.",
+      "moreDetails": "Accommodation costs are to be arranged individually by guests; more details are available on the page below.",
       "button": "Go to accommodation page",
       "includes": "What's included:",
       "breakfast": "breakfast / snack",
@@ -141,14 +165,15 @@ const translationsData = {
   ro: {
     "meta": {
       "title": "Bea & Gábor — Nuntă",
-      "description": "Nunta lui Bea & Gábor — 2026.08.22. • Ceremonie 17:00 • Sărbătoare 19:00 • Magic Harghita Resort"
+      "description": "Nunta lui Bea & Gábor — 2026.08.22. • Ceremonie 16:00 • Sărbătoare 18:00 • Magic Harghita Resort"
     },
     "nav": {
       "skipLink": "Sari la conținut",
       "brand": "Bea & Gábor",
-      "location": "Locație",
+      "location": "Locații",
       "accommodation": "Cazare",
-      "rsvp": "Confirmare"
+      "rsvp": "Confirmare",
+      "calendar": "Salvează data"
     },
     "hero": {
       "date": "22 august 2026",
@@ -156,12 +181,14 @@ const translationsData = {
       "subtitle": "... unde începe un nou capitol al poveștii noastre.",
       "lead": "Alătură-te nouă în această zi specială când intrăm într-un nou capitol al vieții noastre comune. Fie ca această zi să fie plină de amintiri emoționante, fericite, vesele și pline de dragoste care ne vor însoți pe tot parcursul călătoriei noastre.",
       "ctaRsvp": "Confirmare",
-      "ctaLocation": "Locație"
+      "ctaLocation": "Locații"
     },
     "quickfacts": {
       "ceremony": "Ceremonie",
       "celebration": "Sărbătoare",
-      "location": "Locație",
+      "location": "Locații",
+      "locationValue": "Biserica Reformată",
+      "locationDetail": "Odorheiu Secuiesc • Magic Harghita Resort",
       "date": "22 august 2026"
     },
     "countdown": {
@@ -173,14 +200,22 @@ const translationsData = {
     "rsvp": {
       "title": "Confirmare",
       "description": "Buna dispoziție este obligatorie, dansul este recomandat, la fel ca și anunțarea intenției de participare.",
-      "deadline": "Te rugăm să răspunzi prin formularul de mai jos până pe 22 iulie.",
+      "deadline": "Te rugăm să răspunzi prin formularul de mai jos până pe 1 iulie.",
       "button": "Deschide formularul Google"
     },
     "location": {
-      "title": "Locație",
-      "detail": "Căpâlnița, jud. Harghita",
-      "directions": "Ceremonia, ora cocktailurilor și celebrarea vor avea loc la minunatul Magic Harghita Resort, care ne așteaptă adânc în pădure, unde razele soarelui străpung coroanele verzi, pe o poiană liniștită. Venind din Odorheiu Secuiesc, virați la stânga la Căpâlnița de pe drumul principal. De acolo, un drum de 3 km duce prin poiană, direct la poarta Resort-ului unde este disponibil și parcare.",
-      "button": "Obține direcții pe Google Maps",
+      "title": "Locații",
+      "ceremonyTitle": "Ceremonie — 16:00",
+      "ceremonyPlace": "Biserica Reformată (Centru)",
+      "ceremonyDetail": "Odorheiu Secuiesc",
+      "ceremonyDirections": "Ceremonia va avea loc la Biserica Reformată din centrul orașului Odorheiu Secuiesc, la ora 16:00.",
+      "ceremonyButton": "Direcții către biserică",
+      "loadMap": "Încarcă harta",
+      "celebrationTitle": "Sărbătoare — 18:00",
+      "celebrationPlace": "Magic Harghita Resort",
+      "celebrationDetail": "Căpâlnița, jud. Harghita",
+      "celebrationDirections": "Sărbătoarea va avea loc la minunatul Magic Harghita Resort, care ne așteaptă adânc în pădure, pe o poiană liniștită. Venind din Odorheiu Secuiesc, virați la stânga la Căpâlnița de pe drumul principal. De acolo, un drum de 3 km duce prin poiană, direct la poarta Resort-ului unde este disponibil și parcare.",
+      "celebrationButton": "Direcții către Resort",
       "travelButton": "Deschid formularul Google"
     },
     "route": {
@@ -192,9 +227,10 @@ const translationsData = {
     "accommodation": {
       "title": "Cazare",
       "price": "150 RON / persoană",
-      "intro": "Se poate rezerva cazare pentru o noapte la locație, dacă cineva preferă confortul de a rămâne peste noapte în loc de condus târziu.",
-      "costs": "Costurile cazării sunt suportate de oaspeți, în mod independent.",
-      "moreDetails": "Detalii suplimentare despre cazare pot fi găsite pe următoarea pagină:",
+      "limited": "Locurile sunt limitate!",
+      "intro": "Numărul redus de locuri este rezervat în principal pentru membrii familiei noastre.",
+      "costs": "Dacă ne trimiți răspunsul până la 1 iulie, locația poate oferi o noapte de cazare în apropiere, în satul Căpâlnița.",
+      "moreDetails": "Costurile cazării sunt suportate individual de către oaspeți; mai multe detalii sunt disponibile pe pagina de mai jos.",
       "button": "Mergi la pagina de cazare",
       "includes": "Ce include:",
       "breakfast": "mic dejun / gustare",

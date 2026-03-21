@@ -1,14 +1,15 @@
 {
   "meta": {
     "title": "Bea & Gábor — Esküvő",
-    "description": "Bea & Gábor... ahol a történetünk új fejezete kezdődik. — 2026.08.22. • Ceremónia 17:00 • Ünnepség 19:00 • Magic Harghita Resort"
+    "description": "Bea & Gábor... ahol a történetünk új fejezete kezdődik. — 2026.08.22. • Ceremónia 16:00 • Ünnepség 18:00 • Magic Harghita Resort"
   },
   "nav": {
     "skipLink": "Ugrás a tartalomra",
     "brand": "Bea & Gábor",
-    "location": "Helyszín",
+    "location": "Helyszínek",
     "accommodation": "Szállás",
-    "rsvp": "Visszajelzés"
+    "rsvp": "Visszajelzés",
+    "calendar": "Mentés naptárba"
   },
   "hero": {
     "date": "2026. augusztus 22.",
@@ -16,12 +17,14 @@
     "subtitle": "... ahol a történetünk új fejezete kezdődik.",
     "lead": "Tartsatok velünk ezen a különleges napon, amikor hivatalosan is összekötjük az életünket!",
     "ctaRsvp": "Visszajelzés",
-    "ctaLocation": "Helyszín"
+    "ctaLocation": "Helyszínek"
   },
   "quickfacts": {
     "ceremony": "Ceremónia",
     "celebration": "Ünnepség",
-    "location": "Helyszín",
+    "location": "Helyszínek",
+    "locationValue": "Belvárosi Református Templom",
+    "locationDetail": "Székelyudvarhely • Magic Harghita Resort",
     "date": "2026 augusztus 22"
   },
   "countdown": {
@@ -33,23 +36,31 @@
   "rsvp": {
     "title": "Visszajelzés",
     "description": "Segíts nekünk a szervezésben egy gyors visszajelzéssel! Kérjük, jelezd felénk résztvételi szándékod, illetve ha van bármilyen ételérzékenységed:",
-    "deadline": "Kérünk jelezz vissza az alábbi űrlapon vagy telefonon június 22-ig.",
+    "deadline": "Július 1-ig kérünk jelezz vissza az alábbi űrlapon.",
     "button": "Megnyitom a Google űrlapot"
   },
   "location": {
-    "title": "Helyszín",
-    "description": "Az esküvő a <strong class=\"highlight\">Magic Harghita Resort</strong>ban lesz megtartva.",
-    "detail": "Căpâlnița, jud. Harghita",
-    "directions": "Így találtok meg a helyszint: Székelyudvarhely felől érkezve Kápolnásfalunál térjetek le balra a főútról. Innen egy 3 km-es út vezet át a mezőkön, egyenesen a Resort kapujáig.",
-    "button": "Útvonaltervezés Google Maps-ben",
+    "title": "Helyszínek",
+    "ceremonyTitle": "Ceremónia — 16:00",
+    "ceremonyPlace": "Belvárosi Református Templom",
+    "ceremonyDetail": "Székelyudvarhely",
+    "ceremonyDirections": "A szertartásra a székelyudvarhelyi Belvárosi Református Templomban kerül sor, 16:00 órakor.",
+    "ceremonyButton": "Útvonaltervezés a templomhoz",
+    "loadMap": "Térkép betöltése",
+    "celebrationTitle": "Ünnepség — 18:00",
+    "celebrationPlace": "Magic Harghita Resort",
+    "celebrationDetail": "Căpâlnița, jud. Harghita",
+    "celebrationDirections": "Az ünnepségre a varázslatos Magic Harghita Resortban kerül sor, amely az erdő mélyén, egy csendes tisztáson vár ránk. Székelyudvarhely felől érkezve Kápolnásfalunál kell letérni balra a főútról. Onnan egy 3 km-es út vezet át a tisztáson, egyenesen a Resort kapujáig, ahol parkolási lehetőség is van.",
+    "celebrationButton": "Útvonal a Resorthoz",
     "travelButton": "Megnyitom a Google űrlapot"
   },
   "accommodation": {
     "title": "Szállás",
     "price": "150 RON / fő",
-    "intro": "A helyszínen egy éjszakára szállást is lehet foglalni, amennyiben valaki a késői vezetés helyett a kényelmesebb ott alvást választaná.",
-    "costs": "A szállásköltségek a vendégek által, önállóan rendezendők.",
-    "moreDetails": "További részletet a szallásról a következő oldalon lehet találni:",
+    "limited": "A férőhelyek száma korlátozott!",
+    "intro": "A korlátozott számú helyet elsősorban a családtagjaink számára tartjuk fenn.",
+    "costs": "Ha július 1-ig visszajelzel, a helyszín 1 éjszakára tud szállást biztosítani a közeli Kápolnásfaluban.",
+    "moreDetails": "A szállásköltségeket a vendégek önállóan rendezik; további részleteket az alábbi oldalon találsz.",
     "button": "Tovább a szállás oldalára",
     "includes": "Amit tartalmaz:",
     "breakfast": "reggeli / morzsa",

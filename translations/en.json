@@ -1,14 +1,15 @@
 {
   "meta": {
     "title": "Bea & Gábor — Wedding",
-    "description": "Bea & Gábor's wedding — 2026.08.22. • Ceremony 17:00 • Celebration 19:00 • Magic Harghita Resort"
+    "description": "Bea & Gábor's wedding — 2026.08.22. • Ceremony 16:00 • Celebration 18:00 • Magic Harghita Resort"
   },
   "nav": {
     "skipLink": "Skip to content",
     "brand": "Bea & Gábor",
-    "location": "Location",
+    "location": "Locations",
     "accommodation": "Accommodation",
-    "rsvp": "RSVP"
+    "rsvp": "RSVP",
+    "calendar": "Save the date"
   },
   "hero": {
     "date": "August 22, 2026",
@@ -16,12 +17,14 @@
     "subtitle": "Wedding",
     "lead": "Join us on this special day when we officially unite our lives!",
     "ctaRsvp": "RSVP",
-    "ctaLocation": "Location"
+    "ctaLocation": "Locations"
   },
   "quickfacts": {
     "ceremony": "Ceremony",
     "celebration": "Celebration",
-    "location": "Location",
+    "location": "Locations",
+    "locationValue": "Reformed Church",
+    "locationDetail": "Odorheiu Secuiesc • Magic Harghita Resort",
     "date": "August 22, 2026"
   },
   "countdown": {
@@ -33,23 +36,31 @@
   "rsvp": {
     "title": "RSVP",
     "description": "Help us with planning by sending a quick response! Please let us know your attendance intention and any dietary restrictions:",
-    "deadline": "Please respond via the form below or by phone by June 22.",
+    "deadline": "Please respond via the form below by July 1.",
     "button": "Open Google Form"
   },
   "location": {
-    "title": "Location",
-    "description": "The wedding will be held at <strong class=\"highlight\">Magic Harghita Resort</strong>.",
-    "detail": "Căpâlnița, Harghita County",
-    "directions": "How to find the venue: Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the fields, straight to the Resort gate.",
-    "button": "Get directions on Google Maps",
+    "title": "Locations",
+    "ceremonyTitle": "Ceremony — 16:00",
+    "ceremonyPlace": "Reformed Church (Downtown)",
+    "ceremonyDetail": "Odorheiu Secuiesc",
+    "ceremonyDirections": "The ceremony will take place at the Reformed Church in downtown Odorheiu Secuiesc at 16:00.",
+    "ceremonyButton": "Directions to the church",
+    "loadMap": "Load map",
+    "celebrationTitle": "Celebration — 18:00",
+    "celebrationPlace": "Magic Harghita Resort",
+    "celebrationDetail": "Căpâlnița, Harghita County",
+    "celebrationDirections": "The celebration will take place at the magical Magic Harghita Resort, which awaits us deep in the forest, on a quiet clearing. Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the clearing, straight to the Resort gate where parking is also available.",
+    "celebrationButton": "Directions to the Resort",
     "travelButton": "Open Google Form"
   },
   "accommodation": {
     "title": "Accommodation",
     "price": "150 RON / person",
-    "intro": "Accommodation for one night can be booked at the venue for those who prefer the comfort of staying overnight rather than driving late.",
-    "costs": "Accommodation costs are to be covered by guests independently.",
-    "moreDetails": "Further details about accommodation can be found on the following page:",
+    "limited": "Availability is limited!",
+    "intro": "The limited number of places is reserved primarily for our family members.",
+    "costs": "If you send us your feedback by July 1, the venue can offer one night of accommodation nearby in the village of Căpâlnița.",
+    "moreDetails": "Accommodation costs are to be arranged individually by guests; more details are available on the page below.",
     "button": "Go to accommodation page",
     "includes": "What's included:",
     "breakfast": "breakfast / snack",

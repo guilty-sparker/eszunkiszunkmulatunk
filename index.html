@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://www.google.com https://maps.google.com; connect-src 'self';" />
-    <meta name="description" content="Bea & Gábor... ahol a történetünk új fejezete kezdődik. — 2026.08.22. • Ceremónia 17:00 • Ünnepség 19:00 • Magic Harghita Resort" />
+    <meta name="description" content="Bea & Gábor... ahol a történetünk új fejezete kezdődik. — 2026.08.22. • Ceremónia 16:00 • Ünnepség 18:00 • Magic Harghita Resort" />
     <title>Bea & Gábor — Esküvő</title>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Bea & Gábor — Esküvő" />
-    <meta property="og:description" content="Bea & Gábor... ahol a történetünk új fejezete kezdődik. — 2026.08.22. • Ceremónia 17:00 • Ünnepség 19:00 • Magic Harghita Resort" />
+    <meta property="og:description" content="Bea & Gábor... ahol a történetünk új fejezete kezdődik. — 2026.08.22. • Ceremónia 16:00 • Ünnepség 18:00 • Magic Harghita Resort" />
     <meta property="og:image" content="./rings.webp" />
     <meta property="og:url" content="" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -137,7 +137,8 @@
         </div>
         <nav class="topbar__nav" aria-label="Oldal navigáció" id="topbarNav">
           <a class="topbar__cta" href="#rsvp" data-i18n="nav.rsvp">Visszajelzés</a>
-          <a href="#helyszin" data-i18n="nav.location">Helyszín</a>
+          <a class="topbar__cal" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Bea+%26+G%C3%A1bor+%E2%80%94+Esk%C3%BCv%C5%91&amp;dates=20260822T180000/20260823T020000&amp;details=%C3%9Cnneps%C3%A9g+%2F+Celebration%3A+18%3A00+%E2%80%94+Magic+Harghita+Resort%2C+C%C4%83p%C3%A2lni%C8%9Ba&amp;location=Magic+Harghita+Resort%2C+C%C4%83p%C3%A2lni%C8%9Ba&amp;ctz=Europe%2FBucharest" target="_blank" rel="noopener" data-i18n="nav.calendar"><svg class="cal-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Mentés naptárba</a>
+          <a href="#helyszin" data-i18n="nav.location">Helyszínek</a>
           <a href="#szallas" data-i18n="nav.accommodation">Szállás</a>
         </nav>
       </div>
@@ -162,24 +163,21 @@
 
         <div class="hero__cta">
           <a class="btn btn--primary" href="#rsvp" data-i18n="hero.ctaRsvp">Visszajelzés</a>
-          <a class="btn btn--ghost" href="#helyszin" data-i18n="hero.ctaLocation">Helyszín</a>
+          <a class="btn btn--ghost" href="#helyszin" data-i18n="hero.ctaLocation">Helyszínek</a>
         </div>
 
         <div class="quickfacts" role="list" aria-label="Gyors információk">
           <div class="quickfacts__item" role="listitem">
             <div class="quickfacts__k" data-i18n="quickfacts.ceremony">Ceremónia</div>
-            <div class="quickfacts__v">17:00</div>
+            <div class="quickfacts__v">16:00</div>
+            <div class="quickfacts__place" data-i18n="location.ceremonyPlace">Belvárosi Református Templom</div>
             <div class="quickfacts__date" data-i18n="quickfacts.date">2026 augusztus 22</div>
           </div>
           <div class="quickfacts__item" role="listitem">
             <div class="quickfacts__k" data-i18n="quickfacts.celebration">Ünnepség</div>
-            <div class="quickfacts__v">19:00</div>
+            <div class="quickfacts__v">18:00</div>
+            <div class="quickfacts__place" data-i18n="location.celebrationPlace">Magic Harghita Resort</div>
             <div class="quickfacts__date" data-i18n="quickfacts.date">2026 augusztus 22</div>
-          </div>
-          <div class="quickfacts__item" role="listitem">
-            <div class="quickfacts__k" data-i18n="quickfacts.location">Helyszín</div>
-            <div class="quickfacts__v">Magic Harghita Resort</div>
-            <div class="quickfacts__detail">Căpâlnița, jud. Harghita</div>
           </div>
         </div>
       </div>
@@ -213,7 +211,7 @@
               <p class="muted" data-i18n="rsvp.description">A jókedv kötelező, a tánc ajánlott, mint ahogy a részvételi szándék visszajelzése is.</p>
               
               <p class="rsvp__deadline" data-i18n="rsvp.deadline">
-                Július 22-ig kérünk jelezz vissza az alábbi űrlapon.
+                Július 1-ig kérünk jelezz vissza az alábbi űrlapon.
               </p>
 
               <div class="actions actions--center">
@@ -234,43 +232,92 @@
         </div>
       </section>
 
-      <section class="section section--split section--bg section--bg-helyszin" id="helyszin" aria-labelledby="helyszin-cim">
-        <div class="container split">
-          <div class="split__text">
-            <h2 id="helyszin-cim" data-i18n="location.title">Helyszín</h2>
-            <p class="location-detail" data-i18n="location.detail">Căpâlnița, jud. Harghita</p>
-            <p class="muted" data-i18n="location.directions">
-              A ceremóniára, a koktélpercekre és az ünnepségre is a varázslatos Magic Harghita Resortban kerül majd sor, amely az erdő mélyén, ahol a nap sugarai áttörnek a zöld koronák között, egy csendes tisztáson vár ránk.  Székelyudvarhely felől érkezve majd Kápolnásfalunál kell letérni balra a főútról. Onnan egy 3 km-es út vezet át a tisztáson, egyenesen a Resort kapujáig ahol parkolási lehetőség is van.
-            </p>
+      <section class="section section--locations section--bg section--bg-helyszin" id="helyszin" aria-labelledby="helyszin-cim">
+        <div class="container">
+          <h2 id="helyszin-cim" class="locations__title" data-i18n="location.title">Helyszínek</h2>
 
-            <div class="actions">
-              <a
-                class="btn btn--primary"
-                href="https://www.google.com/maps/search/?api=1&query=Magic%20Harghita%20Resort"
-                target="_blank"
-                rel="noreferrer"
-                data-i18n="location.button"
-              >
-                Útvonaltervezés Google Maps-ben
-              </a>
-            </div>
-          </div>
-
-          <div class="split__media">
-            <div class="map" role="region" aria-label="Térkép: Magic Harghita Resort">
-              <div class="map__frame">
-                <iframe
-                  title="Google térkép: Magic Harghita Resort"
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
-                  allowfullscreen
-                  src=""
-                  data-src="https://www.google.com/maps?q=Magic+Harghita+Resort,+Căpâlnița,+Romania&output=embed&zoom=15&t=k"
-                  aria-hidden="true"
-                ></iframe>
-                <div class="map__overlay"></div>
+          <div class="locations-stack">
+            <article class="location-block location-block--left">
+              <div class="location-block__inner">
+                <p class="location-block__eyebrow" data-i18n="location.ceremonyTitle">Ceremónia — 16:00</p>
+                <h3 class="location-block__place" data-i18n="location.ceremonyPlace">Belvárosi Református Templom</h3>
+                <p class="location-block__detail" data-i18n="location.ceremonyDetail">Székelyudvarhely</p>
+                <p class="location-block__desc muted" data-i18n="location.ceremonyDirections">
+                  A szertartásra a székelyudvarhelyi Belvárosi Református Templomban kerül sor, 16:00 órakor.
+                </p>
+                <div class="location-map" data-map>
+                  <div class="location-map__shell">
+                    <div class="location-map__preview" data-map-preview>
+                      <button class="btn btn--ghost location-map__load" type="button" data-map-load data-i18n="location.loadMap">
+                        Térkép betöltése
+                      </button>
+                    </div>
+                    <div class="location-map__frame" data-map-frame hidden>
+                      <iframe
+                        title="Google térkép: Belvárosi Református Templom"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        allowfullscreen
+                        src=""
+                        data-map-src="https://www.google.com/maps?q=Reformed+Church,+Odorheiu+Secuiesc&output=embed&zoom=16"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+                <div class="actions">
+                  <a
+                    class="btn btn--primary"
+                    href="https://www.google.com/maps/place/Reformed+Church/@46.3035308,25.2928149,17z/data=!4m14!1m7!3m6!1s0x474b17b95efdbfd3:0xdd95313914972cf!2sReformed+Church!8m2!3d46.3035271!4d25.2953898!16s%2Fg%2F1tn4wz00!3m5!1s0x474b17b95efdbfd3:0xdd95313914972cf!8m2!3d46.3035271!4d25.2953898!16s%2Fg%2F1tn4wz00?entry=ttu&g_ep=EgoyMDI2MDMxOC4xIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    rel="noreferrer"
+                    data-i18n="location.ceremonyButton"
+                  >
+                    Útvonaltervezés a templomhoz
+                  </a>
+                </div>
               </div>
-            </div>
+            </article>
+
+            <article class="location-block location-block--right">
+              <div class="location-block__inner">
+                <p class="location-block__eyebrow" data-i18n="location.celebrationTitle">Ünnepség — 18:00</p>
+                <h3 class="location-block__place" data-i18n="location.celebrationPlace">Magic Harghita Resort</h3>
+                <p class="location-block__detail" data-i18n="location.celebrationDetail">Căpâlnița, jud. Harghita</p>
+                <p class="location-block__desc muted" data-i18n="location.celebrationDirections">
+                  Az ünnepségre a varázslatos Magic Harghita Resortban kerül sor, amely az erdő mélyén, egy csendes tisztáson vár ránk. Székelyudvarhely felől érkezve Kápolnásfalunál kell letérni balra a főútról. Onnan egy 3 km-es út vezet át a tisztáson, egyenesen a Resort kapujáig, ahol parkolási lehetőség is van.
+                </p>
+                <div class="location-map" data-map>
+                  <div class="location-map__shell">
+                    <div class="location-map__preview" data-map-preview>
+                      <button class="btn btn--ghost location-map__load" type="button" data-map-load data-i18n="location.loadMap">
+                        Térkép betöltése
+                      </button>
+                    </div>
+                    <div class="location-map__frame" data-map-frame hidden>
+                      <iframe
+                        title="Google térkép: Magic Harghita Resort"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        allowfullscreen
+                        src=""
+                        data-map-src="https://www.google.com/maps?q=Magic+Harghita+Resort,+Căpâlnița,+Romania&output=embed&zoom=15&t=k"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+                <div class="actions">
+                  <a
+                    class="btn btn--primary"
+                    href="https://www.google.com/maps/search/?api=1&query=Magic%20Harghita%20Resort"
+                    target="_blank"
+                    rel="noreferrer"
+                    data-i18n="location.celebrationButton"
+                  >
+                    Resort a Google Maps-en
+                  </a>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
         
@@ -327,16 +374,17 @@
           <div class="accommodation">
             <div class="accommodation__box">
               <h2 id="szallas-cim" data-i18n="accommodation.title">Szállás</h2>
-              <div class="pill" data-i18n="accommodation.price">150 RON / fő</div>
-              <p class="accommodation__block" data-i18n="accommodation.intro">A helyszínen egy éjszakára szállást is lehet foglalni, amennyiben valaki a késői vezetés helyett a kényelmesebb ott alvást választaná.</p>
-              <p class="accommodation__block" data-i18n="accommodation.costs">A szállásköltségek a vendégek által, önállóan rendezendők.</p>
+              <div class="accommodation__callout" data-i18n="accommodation.limited">A férőhelyek száma korlátozott!</div>
+              <p class="accommodation__block" data-i18n="accommodation.intro">A korlátozott számú helyet elsősorban a családtagjaink számára tartjuk fenn.</p>
+              <p class="accommodation__block" data-i18n="accommodation.costs">Ha július 1-ig visszajelzel, a helyszín 1 éjszakára tud szállást biztosítani a közeli Kápolnásfaluban.</p>
               <div class="accommodation__details-wrap">
                 <div class="accommodation__details" role="note" aria-label="Szállás részletei">
+                  <div class="accommodation__details-price"><span data-i18n="accommodation.price">150 RON / fő</span></div>
                   <div><strong data-i18n="accommodation.includes">Amit tartalmaz:</strong> <span data-i18n="accommodation.breakfast">reggeli / morzsa</span></div>
                   <div><strong data-i18n="accommodation.checkout">Check‑out:</strong> <span data-i18n="accommodation.checkoutTime">másnap déli 12:00 óra</span></div>
                 </div>
               </div>
-              <p class="accommodation__block" data-i18n="accommodation.moreDetails">További részletet a szallásról a következő oldalon lehet találni:</p>
+              <p class="accommodation__block" data-i18n="accommodation.moreDetails">A szállásköltségeket a vendégek önállóan rendezik; további részleteket az alábbi oldalon találsz.</p>
               <div class="actions actions--center">
                 <a
                   class="btn btn--primary"
@@ -442,34 +490,7 @@
     </script>
     
     <!-- Defer non-critical JavaScript -->
-    <script src="./i18n.js?v=6" defer></script>
-    <script defer>
-      // Lazy load Google Maps iframe when it comes into view
-      (function() {
-        function lazyLoadMap() {
-          const iframe = document.querySelector('.map__frame iframe[data-src]');
-          if (!iframe) return;
-          
-          const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-              if (entry.isIntersecting) {
-                iframe.src = iframe.getAttribute('data-src');
-                iframe.removeAttribute('data-src');
-                observer.unobserve(entry.target);
-              }
-            });
-          }, { rootMargin: '50px' });
-          
-          observer.observe(iframe);
-        }
-        
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', lazyLoadMap);
-        } else {
-          lazyLoadMap();
-        }
-      })();
-    </script>
+    <script src="./i18n.js?v=10" defer></script>
     <script defer>
       // Load hero background image immediately (above the fold, critical)
       (function() {
@@ -497,7 +518,61 @@
         }, { rootMargin: '200px' });
         sections.forEach(section => sectionObserver.observe(section));
       })();
-      
+
+      // Load interactive location maps on scroll or explicit click
+      (function() {
+        function loadMap(map) {
+          const button = map.querySelector('[data-map-load]');
+          const preview = map.querySelector('[data-map-preview]');
+          const frame = map.querySelector('[data-map-frame]');
+          const iframe = map.querySelector('iframe[data-map-src]');
+          if (!button || !preview || !frame || !iframe) return;
+          if (map.classList.contains('is-loading') || map.classList.contains('is-loaded')) return;
+
+          map.classList.add('is-loading');
+          button.disabled = true;
+          frame.hidden = false;
+          iframe.src = iframe.getAttribute('data-map-src');
+
+          iframe.addEventListener('load', function handleLoad() {
+            map.classList.remove('is-loading');
+            map.classList.add('is-loaded');
+            preview.setAttribute('aria-hidden', 'true');
+            iframe.removeEventListener('load', handleLoad);
+          }, { once: true });
+        }
+
+        function initDeferredMaps() {
+          const maps = document.querySelectorAll('[data-map]');
+          if (!maps.length) return;
+
+          const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (!entry.isIntersecting) return;
+              loadMap(entry.target);
+              observer.unobserve(entry.target);
+            });
+          }, { threshold: 0.35, rootMargin: '80px 0px' });
+
+          maps.forEach(function(map) {
+            const button = map.querySelector('[data-map-load]');
+            if (!button) return;
+
+            button.addEventListener('click', function() {
+              loadMap(map);
+            });
+
+            observer.observe(map);
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initDeferredMaps);
+        } else {
+          initDeferredMaps();
+        }
+      })();
+
       // Lazy load and animate route when Location section is visible
       (function() {
         function initRouteAnimation() {
@@ -671,9 +746,9 @@
       })();
     </script>
     <script defer>
-      // Countdown to August 22, 2026, 17:00 (5:00 PM)
+      // Countdown to August 22, 2026, 16:00 (4:00 PM)
       (function() {
-        const targetDate = new Date('2026-08-22T17:00:00').getTime();
+        const targetDate = new Date('2026-08-22T16:00:00').getTime();
         
         // Format numbers with leading zeros to prevent width shift
         function formatNumber(num, minDigits) {
