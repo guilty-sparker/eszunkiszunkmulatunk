@@ -57,16 +57,10 @@
   },
   "accommodation": {
     "title": "Szállás",
-    "price": "150 RON / fő",
-    "limited": "A Resortban elérhető férőhelyek száma korlátozott.",
-    "intro": "A korlátozott számú helyet elsősorban a családtagjaink számára tartjuk fenn.",
-    "costs": "Ha július 1-ig visszajelzel, a helyszín 1 éjszakára tud szállást biztosítani a közeli Kápolnásfaluban.",
+    "limited": "A Resortban a helyek száma korlátozott, amit elsősorban a családtagjaink számára tartjuk fenn.",
+    "costs": "Ha július 1-ig visszajelzel, tudunk szálláshelyet ajánlani saját költségre a közeli Kápolnásfaluban.",
     "moreDetails": "Ha szeretnél szállást igényelni, kérjük, ezt az alábbi űrlapon jelezd.",
-    "button": "Megnyitom az űrlapot",
-    "includes": "Amit tartalmaz:",
-    "breakfast": "reggeli / morzsa",
-    "checkout": "Check‑out:",
-    "checkoutTime": "másnap déli 12:00 óra"
+    "button": "Megnyitom az űrlapot"
   },
   "footer": {
     "text": "Bea & Gábor • 2026.08.22."

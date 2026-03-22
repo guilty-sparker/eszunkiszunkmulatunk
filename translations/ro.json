@@ -57,16 +57,10 @@
   },
   "accommodation": {
     "title": "Cazare",
-    "price": "150 RON / persoană",
-    "limited": "Numărul de locuri disponibile la Resort este limitat.",
-    "intro": "Numărul redus de locuri este rezervat în principal pentru membrii familiei noastre.",
-    "costs": "Dacă ne trimiți răspunsul până la 1 iulie, locația poate oferi o noapte de cazare în apropiere, în satul Căpâlnița.",
+    "limited": "Numărul de locuri la Resort este limitat, iar acestea sunt rezervate în principal membrilor familiei noastre.",
+    "costs": "Dacă ne trimiți răspunsul până la 1 iulie, îți putem recomanda cazare pe cheltuială proprie în apropiere, în satul Căpâlnița.",
     "moreDetails": "Dacă dorești cazare, te rugăm să menționezi acest lucru în formularul de mai jos.",
-    "button": "Deschide formularul",
-    "includes": "Ce include:",
-    "breakfast": "mic dejun / gustare",
-    "checkout": "Check-out:",
-    "checkoutTime": "a doua zi la ora 12:00"
+    "button": "Deschide formularul"
   },
   "footer": {
     "text": "Bea & Gábor • 2026.08.22."

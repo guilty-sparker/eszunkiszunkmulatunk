@@ -69,16 +69,10 @@ const translationsData = {
     },
     "accommodation": {
       "title": "Szállás",
-      "price": "150 RON / fő",
-      "limited": "A Resortban elérhető férőhelyek száma korlátozott.",
-      "intro": "A korlátozott számú helyet elsősorban a családtagjaink számára tartjuk fenn.",
-      "costs": "Ha július 1-ig visszajelzel, a helyszín 1 éjszakára tud szállást biztosítani a közeli Kápolnásfaluban.",
+      "limited": "A Resortban a helyek száma korlátozott, amit elsősorban a családtagjaink számára tartjuk fenn.",
+      "costs": "Ha július 1-ig visszajelzel, tudunk szálláshelyet ajánlani saját költségre a közeli Kápolnásfaluban.",
       "moreDetails": "Ha szeretnél szállást igényelni, kérjük, ezt az alábbi űrlapon jelezd.",
-      "button": "Megnyitom az űrlapot",
-      "includes": "Amit tartalmaz:",
-      "breakfast": "reggeli/morzsa",
-      "checkout": "Check-out:",
-      "checkoutTime": "másnap déli 12:00 óra"
+      "button": "Megnyitom az űrlapot"
     },
     "footer": {
       "text": "Bea & Gábor • 2026.08.22."
@@ -149,16 +143,10 @@ const translationsData = {
     },
     "accommodation": {
       "title": "Accommodation",
-      "price": "150 RON / person",
-      "limited": "The number of places at the Resort is limited.",
-      "intro": "The limited number of places is reserved primarily for our family members.",
-      "costs": "If you send us your feedback by July 1, the venue can offer one night of accommodation nearby in the village of Căpâlnița.",
+      "limited": "The number of places at the Resort is limited, and we reserve them primarily for our family members.",
+      "costs": "If you send us your feedback by July 1, we can recommend accommodation at your own expense in the nearby village of Căpâlnița.",
       "moreDetails": "If you would like accommodation, please indicate it in the form below.",
-      "button": "Open form",
-      "includes": "What's included:",
-      "breakfast": "breakfast / snack",
-      "checkout": "Check-out:",
-      "checkoutTime": "next day at 12:00 PM"
+      "button": "Open form"
     },
     "footer": {
       "text": "Bea & Gábor • 2026.08.22."
@@ -229,16 +217,10 @@ const translationsData = {
     },
     "accommodation": {
       "title": "Cazare",
-      "price": "150 RON / persoană",
-      "limited": "Numărul de locuri disponibile la Resort este limitat.",
-      "intro": "Numărul redus de locuri este rezervat în principal pentru membrii familiei noastre.",
-      "costs": "Dacă ne trimiți răspunsul până la 1 iulie, locația poate oferi o noapte de cazare în apropiere, în satul Căpâlnița.",
+      "limited": "Numărul de locuri la Resort este limitat, iar acestea sunt rezervate în principal membrilor familiei noastre.",
+      "costs": "Dacă ne trimiți răspunsul până la 1 iulie, îți putem recomanda cazare pe cheltuială proprie în apropiere, în satul Căpâlnița.",
       "moreDetails": "Dacă dorești cazare, te rugăm să menționezi acest lucru în formularul de mai jos.",
-      "button": "Deschide formularul",
-      "includes": "Ce include:",
-      "breakfast": "mic dejun / gustare",
-      "checkout": "Check-out:",
-      "checkoutTime": "a doua zi la 12:00"
+      "button": "Deschide formularul"
     },
     "footer": {
       "text": "Bea & Gábor • 2026.08.22."

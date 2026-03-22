@@ -85,6 +85,19 @@
         border-bottom:1px solid rgba(244,234,220,.14);
         min-height:60vh;
       }
+      .accommodation__callout--compact{
+        max-width:620px;
+        padding:14px 20px;
+        font-weight:600;
+        letter-spacing:0;
+        line-height:1.5;
+      }
+      .accommodation__callout--compact .accommodation__callout-text{
+        margin:0;
+      }
+      .accommodation__callout--compact .accommodation__callout-text + .accommodation__callout-text{
+        margin-top:6px;
+      }
     </style>
   </head>
 
@@ -376,17 +389,11 @@
           <div class="accommodation">
             <div class="accommodation__box">
               <h2 id="szallas-cim" data-i18n="accommodation.title">Szállás</h2>
-              <div class="accommodation__callout" data-i18n="accommodation.limited">A Resortban elérhető férőhelyek száma korlátozott.</div>
-              <p class="accommodation__block" data-i18n="accommodation.intro">A korlátozott számú helyet elsősorban a családtagjaink számára tartjuk fenn.</p>
-              <p class="accommodation__block" data-i18n="accommodation.costs">Ha július 1-ig visszajelzel, a helyszín 1 éjszakára tud szállást biztosítani a közeli Kápolnásfaluban.</p>
-              <div class="accommodation__details-wrap">
-                <div class="accommodation__details" role="note" aria-label="Szállás részletei">
-                  <div class="accommodation__details-price"><span data-i18n="accommodation.price">150 RON / fő</span></div>
-                  <div><strong data-i18n="accommodation.includes">Amit tartalmaz:</strong> <span data-i18n="accommodation.breakfast">reggeli / morzsa</span></div>
-                  <div><strong data-i18n="accommodation.checkout">Check‑out:</strong> <span data-i18n="accommodation.checkoutTime">másnap déli 12:00 óra</span></div>
-                </div>
+              <div class="accommodation__callout accommodation__callout--compact">
+                <p class="accommodation__callout-text" data-i18n="accommodation.limited">A Resortban a helyek száma korlátozott, amit elsősorban a családtagjaink számára tartjuk fenn.</p>
               </div>
-              <p class="accommodation__block" data-i18n="accommodation.moreDetails">Ha szeretnél szállást igényelni, kérjük, ezt az alábbi űrlapon jelezd.</p>
+              <p class="accommodation__block" data-i18n="accommodation.costs">Ha július 1-ig visszajelzel, tudunk szálláshelyet ajánlani saját költségre a közeli Kápolnásfaluban.</p>
+              <p class="accommodation__block"><strong data-i18n="accommodation.moreDetails">Ha szeretnél szállást igényelni, kérjük, ezt az alábbi űrlapon jelezd.</strong></p>
               <div class="actions actions--center">
                 <a
                   class="btn btn--primary"
