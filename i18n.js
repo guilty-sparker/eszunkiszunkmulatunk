@@ -71,7 +71,7 @@ const translationsData = {
       "title": "Szállás",
       "limited": "A Resortban a helyek száma korlátozott, amit elsősorban a családtagjaink számára tartjuk fenn.",
       "costs": "Ha július 1-ig visszajelzel, tudunk szálláshelyet ajánlani saját költségre a közeli Kápolnásfaluban.",
-      "moreDetails": "Ha szeretnél szállást igényelni, kérjük, ezt az alábbi űrlapon jelezd.",
+      "moreDetails": "Ha szükséged van szállás elérhetőségre, kérjük, ezt az alábbi űrlapon jelezd felénk",
       "button": "Megnyitom az űrlapot"
     },
     "footer": {
@@ -145,7 +145,7 @@ const translationsData = {
       "title": "Accommodation",
       "limited": "The number of places at the Resort is limited, and we reserve them primarily for our family members.",
       "costs": "If you send us your feedback by July 1, we can recommend accommodation at your own expense in the nearby village of Căpâlnița.",
-      "moreDetails": "If you would like accommodation, please indicate it in the form below.",
+      "moreDetails": "If you need accommodation contact details, please let us know via the form below",
       "button": "Open form"
     },
     "footer": {
@@ -219,7 +219,7 @@ const translationsData = {
       "title": "Cazare",
       "limited": "Numărul de locuri la Resort este limitat, iar acestea sunt rezervate în principal membrilor familiei noastre.",
       "costs": "Dacă ne trimiți răspunsul până la 1 iulie, îți putem recomanda cazare pe cheltuială proprie în apropiere, în satul Căpâlnița.",
-      "moreDetails": "Dacă dorești cazare, te rugăm să menționezi acest lucru în formularul de mai jos.",
+      "moreDetails": "Dacă ai nevoie de datele de contact pentru cazare, te rugăm să ne anunți prin formularul de mai jos",
       "button": "Deschide formularul"
     },
     "footer": {
