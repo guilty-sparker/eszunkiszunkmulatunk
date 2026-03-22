@@ -237,7 +237,7 @@
                   rel="noreferrer"
                   data-i18n="rsvp.button"
                 >
-                  Megnyitom a Google űrlapot
+                  Megnyitom az űrlapot
                 </a>
               </div>
 
@@ -368,18 +368,6 @@
             </div>
           </div>
           
-          <div class="actions actions--center" style="margin-top: 8px;">
-            <a
-              class="btn btn--primary"
-              id="travelFormLink"
-              href="https://forms.gle/hxEey31YVZisD2sk6"
-              target="_blank"
-              rel="noreferrer"
-              data-i18n="location.travelButton"
-            >
-              Megnyitom a Google űrlapot
-            </a>
-          </div>
         </div>
       </section>
 
@@ -388,7 +376,7 @@
           <div class="accommodation">
             <div class="accommodation__box">
               <h2 id="szallas-cim" data-i18n="accommodation.title">Szállás</h2>
-              <div class="accommodation__callout" data-i18n="accommodation.limited">A férőhelyek száma korlátozott!</div>
+              <div class="accommodation__callout" data-i18n="accommodation.limited">A Resortban elérhető férőhelyek száma korlátozott.</div>
               <p class="accommodation__block" data-i18n="accommodation.intro">A korlátozott számú helyet elsősorban a családtagjaink számára tartjuk fenn.</p>
               <p class="accommodation__block" data-i18n="accommodation.costs">Ha július 1-ig visszajelzel, a helyszín 1 éjszakára tud szállást biztosítani a közeli Kápolnásfaluban.</p>
               <div class="accommodation__details-wrap">
@@ -398,16 +386,17 @@
                   <div><strong data-i18n="accommodation.checkout">Check‑out:</strong> <span data-i18n="accommodation.checkoutTime">másnap déli 12:00 óra</span></div>
                 </div>
               </div>
-              <p class="accommodation__block" data-i18n="accommodation.moreDetails">A szállásköltségeket a vendégek önállóan rendezik; további részleteket az alábbi oldalon találsz.</p>
+              <p class="accommodation__block" data-i18n="accommodation.moreDetails">Ha szeretnél szállást igényelni, kérjük, ezt az alábbi űrlapon jelezd.</p>
               <div class="actions actions--center">
                 <a
                   class="btn btn--primary"
-                  href="https://magicharghita.ro/szallas/"
+                  id="accommodationFormLink"
+                  href="https://forms.gle/hxEey31YVZisD2sk6"
                   target="_blank"
                   rel="noreferrer"
                   data-i18n="accommodation.button"
                 >
-                  Tovább a szállás oldalára
+                  Megnyitom az űrlapot
                 </a>
               </div>
             </div>
@@ -520,7 +509,7 @@
     </script>
     
     <!-- Defer non-critical JavaScript -->
-    <script src="./i18n.js?v=11" defer></script>
+    <script src="./i18n.js?v=12" defer></script>
     <script defer>
       // Load hero background image immediately (above the fold, critical)
       (function() {

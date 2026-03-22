@@ -38,7 +38,7 @@
     "title": "Confirmare",
     "description": "Ajută-ne cu planificarea trimitând un răspuns rapid! Te rugăm să ne anunți intenția de participare și orice restricții alimentare:",
     "deadline": "Te rugăm să răspunzi prin formularul de mai jos până pe 1 iulie.",
-    "button": "Deschide formularul Google"
+    "button": "Deschide formularul"
   },
   "location": {
     "title": "Locații",
@@ -53,16 +53,16 @@
     "celebrationDetail": "Căpâlnița, jud. Harghita",
     "celebrationDirections": "Sărbătoarea va avea loc la minunatul Magic Harghita Resort, care ne așteaptă adânc în pădure, pe o poiană liniștită. Venind din Odorheiu Secuiesc, virați la stânga la Căpâlnița de pe drumul principal. De acolo, un drum de 3 km duce prin poiană, direct la poarta Resort-ului unde este disponibil și parcare.",
     "celebrationButton": "Direcții către Resort",
-    "travelButton": "Deschide formularul Google"
+    "travelButton": "Deschide formularul"
   },
   "accommodation": {
     "title": "Cazare",
     "price": "150 RON / persoană",
-    "limited": "Locurile sunt limitate!",
+    "limited": "Numărul de locuri disponibile la Resort este limitat.",
     "intro": "Numărul redus de locuri este rezervat în principal pentru membrii familiei noastre.",
     "costs": "Dacă ne trimiți răspunsul până la 1 iulie, locația poate oferi o noapte de cazare în apropiere, în satul Căpâlnița.",
-    "moreDetails": "Costurile cazării sunt suportate individual de către oaspeți; mai multe detalii sunt disponibile pe pagina de mai jos.",
-    "button": "Mergi la pagina de cazare",
+    "moreDetails": "Dacă dorești cazare, te rugăm să menționezi acest lucru în formularul de mai jos.",
+    "button": "Deschide formularul",
     "includes": "Ce include:",
     "breakfast": "mic dejun / gustare",
     "checkout": "Check-out:",

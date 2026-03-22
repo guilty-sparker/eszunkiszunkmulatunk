@@ -38,7 +38,7 @@
     "title": "RSVP",
     "description": "Help us with planning by sending a quick response! Please let us know your attendance intention and any dietary restrictions:",
     "deadline": "Please respond via the form below by July 1.",
-    "button": "Open Google Form"
+    "button": "Open form"
   },
   "location": {
     "title": "Locations",
@@ -53,16 +53,16 @@
     "celebrationDetail": "Căpâlnița, Harghita County",
     "celebrationDirections": "The celebration will take place at the magical Magic Harghita Resort, which awaits us deep in the forest, on a quiet clearing. Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the clearing, straight to the Resort gate where parking is also available.",
     "celebrationButton": "Directions to the Resort",
-    "travelButton": "Open Google Form"
+    "travelButton": "Open form"
   },
   "accommodation": {
     "title": "Accommodation",
     "price": "150 RON / person",
-    "limited": "Availability is limited!",
+    "limited": "The number of places at the Resort is limited.",
     "intro": "The limited number of places is reserved primarily for our family members.",
     "costs": "If you send us your feedback by July 1, the venue can offer one night of accommodation nearby in the village of Căpâlnița.",
-    "moreDetails": "Accommodation costs are to be arranged individually by guests; more details are available on the page below.",
-    "button": "Go to accommodation page",
+    "moreDetails": "If you would like accommodation, please indicate it in the form below.",
+    "button": "Open form",
     "includes": "What's included:",
     "breakfast": "breakfast / snack",
     "checkout": "Check-out:",

@@ -44,7 +44,7 @@ const translationsData = {
       "title": "Visszajelzés",
       "description": "A jókedv kötelező, a tánc ajánlott, mint ahogy a részvételi szándék visszajelzése is.",
       "deadline": "Július 1-ig kérünk jelezz vissza az alábbi űrlapon.",
-      "button": "Megnyitom a Google űrlapot"
+      "button": "Megnyitom az űrlapot"
     },
     "location": {
       "title": "Helyszínek",
@@ -59,7 +59,7 @@ const translationsData = {
       "celebrationDetail": "Căpâlnița, jud. Harghita",
       "celebrationDirections": "Az ünnepségre a varázslatos Magic Harghita Resortban kerül sor, amely az erdő mélyén, egy csendes tisztáson vár ránk. Székelyudvarhely felől érkezve Kápolnásfalunál kell letérni balra a főútról. Onnan egy 3 km-es út vezet át a tisztáson, egyenesen a Resort kapujáig, ahol parkolási lehetőség is van.",
       "celebrationButton": "Útvonal a Resorthoz",
-      "travelButton": "Megnyitom a Google űrlapot"
+      "travelButton": "Megnyitom az űrlapot"
     },
     "route": {
       "stop1": "Magyarvalkó",
@@ -70,11 +70,11 @@ const translationsData = {
     "accommodation": {
       "title": "Szállás",
       "price": "150 RON / fő",
-      "limited": "A férőhelyek száma korlátozott!",
+      "limited": "A Resortban elérhető férőhelyek száma korlátozott.",
       "intro": "A korlátozott számú helyet elsősorban a családtagjaink számára tartjuk fenn.",
       "costs": "Ha július 1-ig visszajelzel, a helyszín 1 éjszakára tud szállást biztosítani a közeli Kápolnásfaluban.",
-      "moreDetails": "A szállásköltségeket a vendégek önállóan rendezik; további részleteket az alábbi oldalon találsz.",
-      "button": "Tovább a szállás oldalára",
+      "moreDetails": "Ha szeretnél szállást igényelni, kérjük, ezt az alábbi űrlapon jelezd.",
+      "button": "Megnyitom az űrlapot",
       "includes": "Amit tartalmaz:",
       "breakfast": "reggeli/morzsa",
       "checkout": "Check-out:",
@@ -124,7 +124,7 @@ const translationsData = {
       "title": "RSVP",
       "description": "Good mood is mandatory, dancing is recommended, as is letting us know your attendance intention.",
       "deadline": "Please respond via the form below by July 1.",
-      "button": "Open Google Form"
+      "button": "Open form"
     },
     "location": {
       "title": "Locations",
@@ -139,7 +139,7 @@ const translationsData = {
       "celebrationDetail": "Căpâlnița, Harghita County",
       "celebrationDirections": "The celebration will take place at the magical Magic Harghita Resort, which awaits us deep in the forest, on a quiet clearing. Coming from Odorheiu Secuiesc, turn left at Căpâlnița from the main road. From there, a 3 km road leads through the clearing, straight to the Resort gate where parking is also available.",
       "celebrationButton": "Directions to the Resort",
-      "travelButton": "Open Google Form"
+      "travelButton": "Open form"
     },
     "route": {
       "stop1": "Văleni (Călățele)",
@@ -150,11 +150,11 @@ const translationsData = {
     "accommodation": {
       "title": "Accommodation",
       "price": "150 RON / person",
-      "limited": "Availability is limited!",
+      "limited": "The number of places at the Resort is limited.",
       "intro": "The limited number of places is reserved primarily for our family members.",
       "costs": "If you send us your feedback by July 1, the venue can offer one night of accommodation nearby in the village of Căpâlnița.",
-      "moreDetails": "Accommodation costs are to be arranged individually by guests; more details are available on the page below.",
-      "button": "Go to accommodation page",
+      "moreDetails": "If you would like accommodation, please indicate it in the form below.",
+      "button": "Open form",
       "includes": "What's included:",
       "breakfast": "breakfast / snack",
       "checkout": "Check-out:",
@@ -204,7 +204,7 @@ const translationsData = {
       "title": "Confirmare",
       "description": "Buna dispoziție este obligatorie, dansul este recomandat, la fel ca și anunțarea intenției de participare.",
       "deadline": "Te rugăm să răspunzi prin formularul de mai jos până pe 1 iulie.",
-      "button": "Deschide formularul Google"
+      "button": "Deschide formularul"
     },
     "location": {
       "title": "Locații",
@@ -219,7 +219,7 @@ const translationsData = {
       "celebrationDetail": "Căpâlnița, jud. Harghita",
       "celebrationDirections": "Sărbătoarea va avea loc la minunatul Magic Harghita Resort, care ne așteaptă adânc în pădure, pe o poiană liniștită. Venind din Odorheiu Secuiesc, virați la stânga la Căpâlnița de pe drumul principal. De acolo, un drum de 3 km duce prin poiană, direct la poarta Resort-ului unde este disponibil și parcare.",
       "celebrationButton": "Direcții către Resort",
-      "travelButton": "Deschid formularul Google"
+      "travelButton": "Deschide formularul"
     },
     "route": {
       "stop1": "Văleni (Călățele)",
@@ -230,11 +230,11 @@ const translationsData = {
     "accommodation": {
       "title": "Cazare",
       "price": "150 RON / persoană",
-      "limited": "Locurile sunt limitate!",
+      "limited": "Numărul de locuri disponibile la Resort este limitat.",
       "intro": "Numărul redus de locuri este rezervat în principal pentru membrii familiei noastre.",
       "costs": "Dacă ne trimiți răspunsul până la 1 iulie, locația poate oferi o noapte de cazare în apropiere, în satul Căpâlnița.",
-      "moreDetails": "Costurile cazării sunt suportate individual de către oaspeți; mai multe detalii sunt disponibile pe pagina de mai jos.",
-      "button": "Mergi la pagina de cazare",
+      "moreDetails": "Dacă dorești cazare, te rugăm să menționezi acest lucru în formularul de mai jos.",
+      "button": "Deschide formularul",
       "includes": "Ce include:",
       "breakfast": "mic dejun / gustare",
       "checkout": "Check-out:",
@@ -245,6 +245,24 @@ const translationsData = {
     }
   }
 };
+
+const HUNGARIAN_FORM_URL = 'https://forms.gle/hxEey31YVZisD2sk6';
+const ENGLISH_FORM_URL = 'https://forms.gle/uVE2jtpvvESLX4g57';
+
+function getFormUrl(lang) {
+  return lang === 'hu' ? HUNGARIAN_FORM_URL : ENGLISH_FORM_URL;
+}
+
+function updateFormLinks(lang) {
+  const formUrl = getFormUrl(lang);
+
+  ['rsvpFormLink', 'accommodationFormLink'].forEach(id => {
+    const link = document.getElementById(id);
+    if (link) {
+      link.href = formUrl;
+    }
+  });
+}
 
 // Load translations (now just assign from embedded data)
 function loadTranslations(lang) {
@@ -369,16 +387,8 @@ window.updateTranslations = async function updateTranslations(lang) {
     }
   }
   
-  // Update Google Form link based on language
-  const rsvpFormLink = document.getElementById('rsvpFormLink');
-  if (rsvpFormLink) {
-    // Hungarian uses one form, English and Romanian use another
-    if (lang === 'hu') {
-      rsvpFormLink.href = 'https://forms.gle/hxEey31YVZisD2sk6';
-    } else {
-      rsvpFormLink.href = 'https://forms.gle/uVE2jtpvvESLX4g57';
-    }
-  }
+  // Update form links based on language
+  updateFormLinks(lang);
 }
 
 // Initialize
@@ -392,25 +402,7 @@ async function initI18n() {
   // Set initial language
   await updateTranslations(savedLang);
     
-    // Set initial form link
-    const rsvpFormLink = document.getElementById('rsvpFormLink');
-    if (rsvpFormLink) {
-      if (savedLang === 'hu') {
-        rsvpFormLink.href = 'https://forms.gle/hxEey31YVZisD2sk6';
-      } else {
-        rsvpFormLink.href = 'https://forms.gle/uVE2jtpvvESLX4g57';
-      }
-    }
-    
-    // Set initial travel form link
-    const travelFormLink = document.getElementById('travelFormLink');
-    if (travelFormLink) {
-      if (savedLang === 'hu') {
-        travelFormLink.href = 'https://forms.gle/hxEey31YVZisD2sk6';
-      } else {
-        travelFormLink.href = 'https://forms.gle/uVE2jtpvvESLX4g57';
-      }
-    }
+    updateFormLinks(savedLang);
   
   // Update language button display if it exists
   const langFlag = document.getElementById('langFlag');
