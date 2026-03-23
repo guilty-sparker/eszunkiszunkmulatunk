@@ -229,7 +229,7 @@ const translationsData = {
 };
 
 const HUNGARIAN_FORM_URL = 'https://forms.gle/hxEey31YVZisD2sk6';
-const ENGLISH_FORM_URL = 'https://forms.gle/uVE2jtpvvESLX4g57';
+const ENGLISH_FORM_URL = 'https://forms.gle/MoJnAV8i195JRtkN8';
 
 function getFormUrl(lang) {
   return lang === 'hu' ? HUNGARIAN_FORM_URL : ENGLISH_FORM_URL;
