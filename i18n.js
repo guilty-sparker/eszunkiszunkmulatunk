@@ -43,7 +43,7 @@ const translationsData = {
     "rsvp": {
       "title": "Visszajelzés",
       "description": "A jókedv kötelező, a tánc ajánlott, mint ahogy a részvételi szándék visszajelzése is.",
-      "deadline": "Július 1-ig kérünk jelezz vissza az alábbi űrlapon.",
+      "deadline": "Augusztus 1-ig kérünk jelezz vissza az alábbi űrlapon.",
       "button": "Megnyitom az űrlapot"
     },
     "location": {
@@ -70,7 +70,7 @@ const translationsData = {
     "accommodation": {
       "title": "Szállás",
       "limited": "A Resortban a helyek száma korlátozott, amit elsősorban a családtagjaink számára tartjuk fenn.",
-      "costs": "Ha július 1-ig visszajelzel, tudunk szálláshelyet ajánlani saját költségre a közeli Kápolnásfaluban.",
+      "costs": "Ha augusztus 1-ig visszajelzel, tudunk szálláshelyet ajánlani saját költségre a közeli Kápolnásfaluban.",
       "moreDetails": "Ha szükséged van szállás elérhetőségre, kérjük, ezt az alábbi űrlapon jelezd felénk",
       "button": "Megnyitom az űrlapot"
     },
@@ -117,7 +117,7 @@ const translationsData = {
     "rsvp": {
       "title": "RSVP",
       "description": "Good mood is mandatory, dancing is recommended, as is letting us know your attendance intention.",
-      "deadline": "Please respond via the form below by July 1.",
+      "deadline": "Please respond via the form below by August 1.",
       "button": "Open form"
     },
     "location": {
@@ -144,7 +144,7 @@ const translationsData = {
     "accommodation": {
       "title": "Accommodation",
       "limited": "The number of places at the Resort is limited, and we reserve them primarily for our family members.",
-      "costs": "If you send us your feedback by July 1, we can recommend accommodation at your own expense in the nearby village of Căpâlnița.",
+      "costs": "If you send us your feedback by August 1, we can recommend accommodation at your own expense in the nearby village of Căpâlnița.",
       "moreDetails": "If you need accommodation contact details, please let us know via the form below",
       "button": "Open form"
     },
@@ -191,7 +191,7 @@ const translationsData = {
     "rsvp": {
       "title": "Confirmare",
       "description": "Buna dispoziție este obligatorie, dansul este recomandat, la fel ca și anunțarea intenției de participare.",
-      "deadline": "Te rugăm să răspunzi prin formularul de mai jos până pe 1 iulie.",
+      "deadline": "Te rugăm să răspunzi prin formularul de mai jos până pe 1 august.",
       "button": "Deschide formularul"
     },
     "location": {
@@ -218,7 +218,7 @@ const translationsData = {
     "accommodation": {
       "title": "Cazare",
       "limited": "Numărul de locuri la Resort este limitat, iar acestea sunt rezervate în principal membrilor familiei noastre.",
-      "costs": "Dacă ne trimiți răspunsul până la 1 iulie, îți putem recomanda cazare pe cheltuială proprie în apropiere, în satul Căpâlnița.",
+      "costs": "Dacă ne trimiți răspunsul până la 1 august, îți putem recomanda cazare pe cheltuială proprie în apropiere, în satul Căpâlnița.",
       "moreDetails": "Dacă ai nevoie de datele de contact pentru cazare, te rugăm să ne anunți prin formularul de mai jos",
       "button": "Deschide formularul"
     },

@@ -37,7 +37,7 @@
   "rsvp": {
     "title": "RSVP",
     "description": "Help us with planning by sending a quick response! Please let us know your attendance intention and any dietary restrictions:",
-    "deadline": "Please respond via the form below by July 1.",
+    "deadline": "Please respond via the form below by August 1.",
     "button": "Open form"
   },
   "location": {
@@ -58,7 +58,7 @@
   "accommodation": {
     "title": "Accommodation",
     "limited": "The number of places at the Resort is limited, and we reserve them primarily for our family members.",
-    "costs": "If you send us your feedback by July 1, we can recommend accommodation at your own expense in the nearby village of Căpâlnița.",
+    "costs": "If you send us your feedback by August 1, we can recommend accommodation at your own expense in the nearby village of Căpâlnița.",
     "moreDetails": "If you need accommodation contact details, please let us know via the form below",
     "button": "Open form"
   },
