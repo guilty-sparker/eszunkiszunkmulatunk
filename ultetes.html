@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'">
+<title>Ültetési rend — Bea &amp; Gábor</title>
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body:not(.unlocked) {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #160f0b;
+  color: #f4eadc;
+  font-family: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif;
+}
+.gate {
+  width: min(420px, 100%);
+  padding: 28px 24px;
+  border: 1px solid rgba(244, 234, 220, .14);
+  border-radius: 18px;
+  background: #1b120d;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .45);
+  text-align: center;
+}
+.gate h1 { margin: 0 0 6px; font-size: 1.7rem; font-weight: 600; }
+.gate p { margin: 0 0 18px; color: rgba(244, 234, 220, .72); font-size: 1.05rem; }
+.gate label { display: block; text-align: left; font-size: .95rem; margin-bottom: 6px; }
+.gate input, .gate button {
+  width: 100%;
+  font: inherit;
+  font-size: 1.05rem;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(244, 234, 220, .22);
+  background: #241811;
+  color: #f4eadc;
+}
+.gate button { margin-top: 12px; background: #8b5a34; border-color: #a87449; cursor: pointer; font-weight: 600; }
+.gate button:disabled { opacity: .6; cursor: progress; }
+.gate .error { margin: 12px 0 0; color: #e7a17a; min-height: 1.3em; font-size: .95rem; }
+.gate .back { display: inline-block; margin-top: 16px; color: rgba(244, 234, 220, .72); font-size: .95rem; }
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <h1>Ültetési rend</h1>
+  <p>Ez az oldal jelszóval védett.</p>
+  <form id="gate-form">
+    <label for="gate-password">Jelszó</label>
+    <input type="password" id="gate-password" autocomplete="current-password" autocapitalize="none" spellcheck="false" required>
+    <button type="submit" id="gate-submit">Belépés</button>
+  </form>
+  <p class="error" id="gate-error" role="alert"></p>
+  <a class="back" href="./">← Vissza a főoldalra</a>
+</div>
+<div id="seating-root"></div>
+<script>
+const gate = document.getElementById("gate");
+const form = document.getElementById("gate-form");
+const field = document.getElementById("gate-password");
+const submit = document.getElementById("gate-submit");
+const error = document.getElementById("gate-error");
+const SESSION_KEY = "seating-pass";
+
+function bytes(base64) {
+  return Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+}
+
+async function unlock(password) {
+  const payload = await (await fetch("./ultetes-data.enc.json", { cache: "no-store" })).json();
+  const material = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]
+  );
+  const key = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt: bytes(payload.salt), iterations: payload.iterations, hash: "SHA-256" },
+    material,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["decrypt"]
+  );
+  const plain = await crypto.subtle.decrypt(
+    { name: "AES-GCM", iv: bytes(payload.nonce) }, key, bytes(payload.data)
+  );
+  window.__SEATING_STATE__ = JSON.parse(new TextDecoder().decode(plain));
+  await import("./ultetes-app.js");
+  gate.remove();
+  document.body.classList.add("unlocked");
+}
+
+async function attempt(password, remember) {
+  submit.disabled = true;
+  error.textContent = "";
+  try {
+    await unlock(password);
+    if (remember) sessionStorage.setItem(SESSION_KEY, password);
+  } catch (failure) {
+    sessionStorage.removeItem(SESSION_KEY);
+    error.textContent = "Hibás jelszó.";
+    submit.disabled = false;
+    field.value = "";
+    field.focus();
+  }
+}
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  attempt(field.value, true);
+});
+
+const remembered = sessionStorage.getItem(SESSION_KEY);
+if (remembered) attempt(remembered, false);
+</script>
+</body>
+</html>

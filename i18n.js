@@ -14,6 +14,7 @@ const translationsData = {
       "brand": "Bea & Gábor",
       "location": "Helyszínek",
       "accommodation": "Szállás",
+      "seating": "Ültetés",
       "rsvp": "Visszajelzés",
       "calendar": "Mentés naptárba",
       "calendarShort": "Naptár"
@@ -88,6 +89,7 @@ const translationsData = {
       "brand": "Bea & Gábor",
       "location": "Locations",
       "accommodation": "Accommodation",
+      "seating": "Seating",
       "rsvp": "RSVP",
       "calendar": "Save the date",
       "calendarShort": "Calendar"
@@ -162,6 +164,7 @@ const translationsData = {
       "brand": "Bea & Gábor",
       "location": "Locații",
       "accommodation": "Cazare",
+      "seating": "Așezare",
       "rsvp": "Confirmare",
       "calendar": "Salvează data",
       "calendarShort": "Calendar"
