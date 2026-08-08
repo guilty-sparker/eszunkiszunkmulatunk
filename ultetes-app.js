@@ -109,6 +109,30 @@ li.readonly { cursor: default; opacity: .85; }
   touch-action: manipulation;
 }
 .seat.right { flex-direction: row-reverse; text-align: right; }
+.seat.renaming { cursor: default; }
+.row.edge-row { grid-template-columns: 74px 1fr; }
+.edge-label {
+  align-self: center;
+  color: #9aa9bb;
+  font-size: .68rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.seat.edge { border-style: dashed; border-color: #4a3d63; background: #1c1830; }
+.seat.edge .dot { background: #c7b0e3; }
+.seat-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: #16293d;
+  border: 1px solid #2d4763;
+  border-radius: 8px;
+  color: #f4f0e3;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 600;
+  padding: 4px 7px;
+}
+.seat-name:focus { outline: 2px solid #d6b36b; outline-offset: 1px; }
 .seat.empty { border-style: dashed; color: #61798f; font-weight: 500; justify-content: center; cursor: pointer; }
 .seat.selected { border-color: #d6b36b; background: #1d354e; }
 .seat.drop-here { border-color: #d6b36b; }
@@ -132,6 +156,7 @@ document.getElementById('seating-root').innerHTML = `<header>
   <div class="bar">
     <button type="button" id="tab-edit" aria-pressed="true" onclick="showView('edit')">Szerkesztés</button>
     <button type="button" id="tab-map" aria-pressed="false" onclick="showView('map')">Térkép</button>
+    <button type="button" id="tab-names" aria-pressed="false" onclick="toggleNames()">Nevek</button>
     <button type="button" onclick="downloadMarkdown()">Mentés (.md)</button>
     <button type="button" onclick="document.getElementById('import-file').click()">Betöltés (.md)</button>
     <select id="base-plan" aria-label="Alapterv"><option value="A" selected>„A” változat — korrigált</option><option value="B">„B” változat — korrigált</option><option value="C">„C” változat — affinitás</option></select>
@@ -158,33 +183,68 @@ const PLANS = INITIAL.plans;
 const SUBTITLES = INITIAL.subtitles;
 let baseVersion = PLANS[INITIAL.version] ? INITIAL.version : Object.keys(PLANS)[0];
 const EVERYONE = INITIAL.head.concat(
-  ...PLANS[baseVersion].map((t) => t.left.concat(t.right))
+  ...PLANS[baseVersion].map((t) => t.left.concat(t.right, t.edge || []))
 ).filter(Boolean);
+const EDGE_SLOTS = 2;
 const BY_ID = new Map(EVERYONE.map((p) => [p.id, p]));
+let customNames = {};
 let state = load();
 let picked = null;
+let renameMode = false;
+
+function displayName(person) {
+  return customNames[person.id] || person.name;
+}
+
+function renameGuest(personId, value) {
+  const person = BY_ID.get(personId);
+  const name = value.trim();
+  if (!person) return;
+  if (name && name !== person.name) customNames[personId] = name;
+  else delete customNames[personId];
+  save();
+  render();
+}
+
+function toggleNames() {
+  renameMode = !renameMode;
+  picked = null;
+  document.getElementById("tab-names").setAttribute("aria-pressed", String(renameMode));
+  if (renameMode) showView("edit");
+  document.getElementById("status").textContent = renameMode
+    ? "Névszerkesztés: írd át a nevet, majd kattints ki. Üresen hagyva visszaáll az eredeti."
+    : "";
+  render();
+}
 
 function baseTables() {
   return PLANS[baseVersion];
 }
 
 function blankTables() {
-  return baseTables().map((t) => ({ name: t.name, left: t.left.slice(), right: t.right.slice() }));
+  return baseTables().map((t) => ({
+    name: t.name,
+    left: t.left.slice(),
+    right: t.right.slice(),
+    edge: (t.edge || []).slice(),
+  }));
 }
 
 function load() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (saved && PLANS[saved.version]) baseVersion = saved.version;
+    if (saved && saved.names) customNames = saved.names;
     if (saved && saved.tables && saved.tables.length === baseTables().length) {
       const tables = saved.tables.map((t) => ({
         name: t.name || null,
         left: (t.left || []).map((id) => BY_ID.get(id) || null),
         right: (t.right || []).map((id) => BY_ID.get(id) || null),
+        edge: (t.edge || []).map((id) => BY_ID.get(id) || null),
       }));
       const seated = new Set(tables.flatMap(seats).map((p) => p.id));
       baseTables().forEach((table, index) => {
-        table.left.concat(table.right).forEach((person) => {
+        table.left.concat(table.right, table.edge || []).forEach((person) => {
           if (person && !seated.has(person.id)) sitAtFreeSeat(tables[index], person);
         });
       });
@@ -201,17 +261,19 @@ function save() {
     STORAGE_KEY,
     JSON.stringify({
       version: baseVersion,
+      names: customNames,
       tables: state.tables.map((t) => ({
         name: t.name,
         left: t.left.map((p) => (p ? p.id : null)),
         right: t.right.map((p) => (p ? p.id : null)),
+        edge: t.edge.map((p) => (p ? p.id : null)),
       })),
     })
   );
 }
 
 function seats(table) {
-  return table.left.concat(table.right).filter(Boolean);
+  return table.left.concat(table.right, table.edge || []).filter(Boolean);
 }
 
 function autoLabel(table) {
@@ -251,6 +313,15 @@ function freeSeat(table) {
 }
 
 function sitAtFreeSeat(table, person) {
+  if (person.baby) {
+    for (let i = 0; i < EDGE_SLOTS; i += 1) {
+      if (!table.edge[i]) {
+        while (table.edge.length <= i) table.edge.push(null);
+        table.edge[i] = person;
+        return;
+      }
+    }
+  }
   const spot = freeSeat(table);
   const side = table[spot.side];
   while (side.length <= spot.index) side.push(null);
@@ -299,15 +370,33 @@ function renameTable(index, value) {
   render();
 }
 
+function nameField(person) {
+  const field = document.createElement("input");
+  field.className = "seat-name";
+  field.value = customNames[person.id] || "";
+  field.placeholder = person.name;
+  field.setAttribute("aria-label", person.name + " neve");
+  field.addEventListener("change", () => renameGuest(person.id, field.value));
+  field.addEventListener("click", (event) => event.stopPropagation());
+  return field;
+}
+
 function seatCell(person, place) {
   const cell = document.createElement("div");
   cell.className = "seat " + place.side + (person ? "" : " empty");
   if (samePlace(picked, place)) cell.classList.add("selected");
+  if (person && renameMode) {
+    cell.classList.add("renaming");
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    cell.append(dot, nameField(person));
+    return cell;
+  }
   if (person) {
     cell.draggable = true;
     const dot = document.createElement("span");
     dot.className = "dot";
-    cell.append(dot, document.createTextNode(person.name));
+    cell.append(dot, document.createTextNode(displayName(person)));
     cell.addEventListener("dragstart", (event) => {
       event.dataTransfer.setData("text/plain", JSON.stringify(place));
       event.dataTransfer.effectAllowed = "move";
@@ -349,11 +438,21 @@ function headSection() {
     item.className = "readonly";
     const dot = document.createElement("span");
     dot.className = "dot";
-    item.append(dot, document.createTextNode(person.name));
+    item.append(dot, renameMode ? nameField(person) : document.createTextNode(displayName(person)));
     list.append(item);
   });
   section.append(heading, list);
   return section;
+}
+
+function edgeRow(table, index, slot) {
+  const row = document.createElement("div");
+  row.className = "row edge-row";
+  const label = document.createElement("span");
+  label.className = "edge-label";
+  label.textContent = "asztalvég";
+  row.append(label, seatCell(table.edge[slot] || null, { table: index, side: "edge", index: slot }));
+  return row;
 }
 
 function tableSection(table, index) {
@@ -393,6 +492,7 @@ function tableSection(table, index) {
 
   const grid = document.createElement("div");
   grid.className = "seats";
+  grid.append(edgeRow(table, index, 0));
   const rows = rowCount(table) + 1;
   for (let i = 0; i < rows; i += 1) {
     const row = document.createElement("div");
@@ -407,6 +507,7 @@ function tableSection(table, index) {
     );
     grid.append(row);
   }
+  grid.append(edgeRow(table, index, 1));
   section.append(heading, grid);
   return section;
 }
@@ -450,8 +551,18 @@ function mapTable(index, table) {
       const anchor = outward >= 0 ? "start" : "end";
       out += '<circle cx="' + mx.toFixed(1) + '" cy="' + my.toFixed(1) + '" r="20" fill="' +
         (sideIndex === 0 ? "#9bc9d5" : "#efbf8c") + '" stroke="#102033" stroke-width="3"/>';
-      out += svgText(mx + outward * 34, my + 8, person.name, 25, "#f4f0e3", anchor, "600");
+      out += svgText(mx + outward * 34, my + 8, displayName(person), 25, "#f4f0e3", anchor, "600");
     });
+  });
+  (table.edge || []).slice(0, 2).forEach((person, slot) => {
+    if (!person) return;
+    const direction = slot === 0 ? -1 : 1;
+    const reach = length / 2 + 62;
+    const bx = cx + dx * direction * reach;
+    const by = cy + dy * direction * reach;
+    out += '<circle cx="' + bx.toFixed(1) + '" cy="' + by.toFixed(1) +
+      '" r="16" fill="#c7b0e3" stroke="#102033" stroke-width="3"/>';
+    out += svgText(bx, by + (direction < 0 ? -26 : 37), displayName(person) + " (baba)", 22, "#e6dcf6", "middle", "600");
   });
   return '<g>' + out + '</g>';
 }
@@ -473,7 +584,7 @@ function renderMap() {
     const x = 500 + index * 280;
     svg += '<circle cx="' + x + '" cy="485" r="22" fill="' + (index % 2 === 0 ? "#9bc9d5" : "#efbf8c") +
       '" stroke="#102033" stroke-width="3"/>';
-    svg += svgText(x, 440, person.name, 25, "#f4f0e3", "middle", "600");
+    svg += svgText(x, 440, displayName(person), 25, "#f4f0e3", "middle", "600");
   });
   state.tables.forEach((table, index) => { svg += mapTable(index, table); });
   svg += svgText(1200, 4520, total + " fő", 28, "#d6b36b", "middle", "700");
@@ -513,15 +624,17 @@ function markdown() {
     "## Főasztal (" + state.head.length + " fő)",
     "",
   ];
-  state.head.forEach((person) => lines.push("- " + person.name));
+  state.head.forEach((person) => lines.push("- " + displayName(person)));
   state.tables.forEach((table, index) => {
     lines.push("", "## " + tableHeading(table, index) + " (" + seats(table).length + " fő)", "");
     const rows = rowCount(table);
     for (let i = 0; i < rows; i += 1) {
-      const left = table.left[i] ? table.left[i].name : "—";
-      const right = table.right[i] ? table.right[i].name : "—";
+      const left = table.left[i] ? displayName(table.left[i]) : "—";
+      const right = table.right[i] ? displayName(table.right[i]) : "—";
       lines.push(i + 1 + ". " + left + " ↔ " + right);
     }
+    const babies = (table.edge || []).filter(Boolean).map(displayName);
+    if (babies.length) lines.push("- Asztalvég: " + babies.join(" · "));
   });
   lines.push("");
   return lines.join("\n");
@@ -541,15 +654,24 @@ function parseMarkdown(text) {
   const headIds = new Set(INITIAL.head.map((p) => p.id));
   const pool = new Map();
   EVERYONE.forEach((p) => {
-    if (!pool.has(p.name)) pool.set(p.name, []);
-    pool.get(p.name).push(p.id);
+    [p.name, displayName(p)].forEach((label) => {
+      if (!pool.has(label)) pool.set(label, []);
+      if (!pool.get(label).includes(p.id)) pool.get(label).push(p.id);
+    });
   });
+  const used = new Set();
   const unknown = [];
   const clean = (raw) => raw.replace(/[*_`]/g, "").trim();
   const take = (name) => {
     if (!name || /^[—–-]$/.test(name)) return null;
-    const ids = pool.get(name);
-    if (ids && ids.length) return BY_ID.get(ids.shift());
+    const ids = pool.get(name) || [];
+    while (ids.length) {
+      const id = ids.shift();
+      if (!used.has(id)) {
+        used.add(id);
+        return BY_ID.get(id);
+      }
+    }
     unknown.push(name);
     return null;
   };
@@ -559,7 +681,7 @@ function parseMarkdown(text) {
     const heading = line.match(/^#{2,6}\s+(.*)$/);
     if (heading) {
       const title = clean(heading[1]).replace(/\s*\(\s*\d+\s*fő\s*\)\s*$/i, "").trim();
-      current = /^főasztal/i.test(title) ? null : { title, rows: [], flat: [] };
+      current = /^főasztal/i.test(title) ? null : { title, rows: [], flat: [], edge: [] };
       if (current) sections.push(current);
       return;
     }
@@ -568,6 +690,14 @@ function parseMarkdown(text) {
     if (!item) return;
     const body = clean(item[1]);
     if (!body) return;
+    const edge = body.match(/^asztalvég\s*:\s*(.*)$/i);
+    if (edge) {
+      edge[1].split(/[·,;]/).forEach((raw) => {
+        const person = take(clean(raw).replace(/\s*\(baba\)\s*$/i, ""));
+        if (person) current.edge.push(person);
+      });
+      return;
+    }
     if (body.includes("↔")) {
       const pair = body.split("↔");
       current.rows.push([take(clean(pair[0])), take(clean(pair[1] || ""))]);
@@ -579,38 +709,54 @@ function parseMarkdown(text) {
   if (!sections.length) return { error: "A fájlban nem találtam asztalokat." };
 
   const tables = sections.slice(0, baseTables().length).map((section) => {
+    const edge = section.edge.slice(0, EDGE_SLOTS);
     if (section.rows.length) {
       return {
         name: section.title,
         left: section.rows.map((row) => row[0]),
         right: section.rows.map((row) => row[1]),
+        edge,
       };
     }
     const split = Math.ceil(section.flat.length / 2);
-    return { name: section.title, left: section.flat.slice(0, split), right: section.flat.slice(split) };
+    return {
+      name: section.title,
+      left: section.flat.slice(0, split),
+      right: section.flat.slice(split),
+      edge,
+    };
   });
-  while (tables.length < baseTables().length) tables.push({ name: null, left: [], right: [] });
+  while (tables.length < baseTables().length) tables.push({ name: null, left: [], right: [], edge: [] });
   sections.slice(baseTables().length).forEach((extra) => {
     const last = tables[tables.length - 1];
     extra.rows.forEach((row) => row.forEach((person) => person && sitAtFreeSeat(last, person)));
     extra.flat.forEach((person) => sitAtFreeSeat(last, person));
+    extra.edge.forEach((person) => sitAtFreeSeat(last, person));
   });
 
   const missing = [];
   baseTables().forEach((table, index) => {
-    table.left.concat(table.right).forEach((person) => {
-      const ids = pool.get(person.name);
-      if (ids && ids.includes(person.id) && !headIds.has(person.id)) {
-        ids.splice(ids.indexOf(person.id), 1);
+    table.left.concat(table.right, table.edge || []).forEach((person) => {
+      if (person && !used.has(person.id) && !headIds.has(person.id)) {
+        used.add(person.id);
         sitAtFreeSeat(tables[index], person);
-        missing.push(person.name);
+        missing.push(displayName(person));
       }
     });
   });
 
   tables.forEach((table) => {
+    ["left", "right"].forEach((side) => {
+      table[side].forEach((person, i) => {
+        if (person && person.baby) {
+          table[side][i] = null;
+          sitAtFreeSeat(table, person);
+        }
+      });
+    });
     trimSide(table.left);
     trimSide(table.right);
+    trimSide(table.edge);
     const custom = (table.name || "").replace(/^\d+\.\s*asztal\s*[—–·:-]?\s*/i, "").trim();
     table.name = custom && custom !== autoLabel(table) ? custom : null;
   });
@@ -651,5 +797,5 @@ function resetPlan() {
   render();
 }
 
-Object.assign(window, { showView, downloadMarkdown, importMarkdown, resetPlan });
+Object.assign(window, { showView, toggleNames, downloadMarkdown, importMarkdown, resetPlan });
 render();
