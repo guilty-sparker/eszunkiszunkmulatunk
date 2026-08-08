@@ -28,6 +28,17 @@ button {
   min-height: 38px;
 }
 button:active { background: #28435e; }
+select {
+  border: 1px solid #496985;
+  border-radius: 999px;
+  background: #14283d;
+  color: #f4f0e3;
+  font: inherit;
+  font-weight: 600;
+  padding: 7px 12px;
+  min-height: 38px;
+  max-width: 100%;
+}
 button[aria-pressed="true"] { background: #d6b36b; color: #10243a; border-color: #d6b36b; }
 .hint { margin: 8px 0 0; color: #9eb0c0; font-size: .78rem; text-align: center; }
 main { padding: 12px; }
@@ -117,12 +128,13 @@ body.unlocked { background: #0d1d2d; display: block; padding: 0; }
 `;
 document.head.append(styles);
 document.getElementById('seating-root').innerHTML = `<header>
-  <h1>„A” VÁLTOZAT · KORRIGÁLT · <span id="total"></span></h1>
+  <h1><span id="subtitle">„A” VÁLTOZAT · KORRIGÁLT</span> · <span id="total"></span></h1>
   <div class="bar">
     <button type="button" id="tab-edit" aria-pressed="true" onclick="showView('edit')">Szerkesztés</button>
     <button type="button" id="tab-map" aria-pressed="false" onclick="showView('map')">Térkép</button>
     <button type="button" onclick="downloadMarkdown()">Mentés (.md)</button>
     <button type="button" onclick="document.getElementById('import-file').click()">Betöltés (.md)</button>
+    <select id="base-plan" aria-label="Alapterv"><option value="A" selected>„A” változat — korrigált</option><option value="B">„B” változat — korrigált</option><option value="C">„C” változat — affinitás</option></select>
     <button type="button" onclick="resetPlan()">Alaphelyzet</button>
   </div>
   <input type="file" id="import-file" accept=".md,text/markdown" hidden onchange="importMarkdown(this)">
@@ -141,30 +153,37 @@ back.textContent = '← Vissza';
 document.querySelector('.bar').append(back);
 const stateNode = document.getElementById("editor-state");
 const INITIAL = window.__SEATING_STATE__ || JSON.parse(stateNode.textContent);
-const STORAGE_KEY = "seating-editor-" + INITIAL.version + "-sides";
+const STORAGE_KEY = "seating-editor-sides";
+const PLANS = INITIAL.plans;
+const SUBTITLES = INITIAL.subtitles;
+let baseVersion = PLANS[INITIAL.version] ? INITIAL.version : Object.keys(PLANS)[0];
+const EVERYONE = INITIAL.head.concat(
+  ...PLANS[baseVersion].map((t) => t.left.concat(t.right))
+).filter(Boolean);
+const BY_ID = new Map(EVERYONE.map((p) => [p.id, p]));
 let state = load();
 let picked = null;
 
-const EVERYONE = INITIAL.head.concat(
-  ...INITIAL.tables.map((t) => t.left.concat(t.right))
-).filter(Boolean);
-const BY_ID = new Map(EVERYONE.map((p) => [p.id, p]));
+function baseTables() {
+  return PLANS[baseVersion];
+}
 
 function blankTables() {
-  return INITIAL.tables.map((t) => ({ name: t.name, left: t.left.slice(), right: t.right.slice() }));
+  return baseTables().map((t) => ({ name: t.name, left: t.left.slice(), right: t.right.slice() }));
 }
 
 function load() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (saved && saved.tables && saved.tables.length === INITIAL.tables.length) {
+    if (saved && PLANS[saved.version]) baseVersion = saved.version;
+    if (saved && saved.tables && saved.tables.length === baseTables().length) {
       const tables = saved.tables.map((t) => ({
         name: t.name || null,
         left: (t.left || []).map((id) => BY_ID.get(id) || null),
         right: (t.right || []).map((id) => BY_ID.get(id) || null),
       }));
       const seated = new Set(tables.flatMap(seats).map((p) => p.id));
-      INITIAL.tables.forEach((table, index) => {
+      baseTables().forEach((table, index) => {
         table.left.concat(table.right).forEach((person) => {
           if (person && !seated.has(person.id)) sitAtFreeSeat(tables[index], person);
         });
@@ -181,6 +200,7 @@ function save() {
   localStorage.setItem(
     STORAGE_KEY,
     JSON.stringify({
+      version: baseVersion,
       tables: state.tables.map((t) => ({
         name: t.name,
         left: t.left.map((p) => (p ? p.id : null)),
@@ -446,7 +466,7 @@ function renderMap() {
   svg += '<rect width="2400" height="4600" fill="#0d1d2d"/>';
   svg += '<rect x="64" y="230" width="2272" height="4250" rx="12" fill="#10243a" stroke="#243d56" stroke-width="4"/>';
   svg += svgText(1200, 92, "ÜLTETÉSI TÉRKÉP", 54, "#d6b36b", "middle", "700");
-  svg += svgText(1200, 160, INITIAL.subtitle, 28, "#f4f0e3", "middle", "400");
+  svg += svgText(1200, 160, SUBTITLES[baseVersion], 28, "#f4f0e3", "middle", "400");
   svg += svgText(1200, 300, "FŐASZTAL", 27, "#d6b36b", "middle", "700");
   svg += '<line x1="650" y1="580" x2="1750" y2="580" stroke="#f2edd9" stroke-width="92" stroke-linecap="round"/>';
   state.head.forEach((person, index) => {
@@ -463,6 +483,9 @@ function renderMap() {
 
 function render() {
   document.getElementById("total").textContent = seatedTotal() + " fő";
+  document.getElementById("subtitle").textContent = SUBTITLES[baseVersion];
+  const picker = document.getElementById("base-plan");
+  if (picker) picker.value = baseVersion;
   renderEditor();
   if (!document.getElementById("map").classList.contains("hidden")) renderMap();
 }
@@ -480,7 +503,7 @@ function showView(view) {
 function markdown() {
   const stamp = new Date().toLocaleString("hu-HU");
   const lines = [
-    "# Ültetési terv — " + INITIAL.subtitle,
+    "# Ültetési terv — " + SUBTITLES[baseVersion],
     "",
     "Mentve: " + stamp,
     "Összesen: " + seatedTotal() + " fő",
@@ -509,7 +532,7 @@ function downloadMarkdown() {
   const blob = new Blob([markdown()], { type: "text/markdown;charset=utf-8" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "ultetes-" + INITIAL.version + "-" + stamp + ".md";
+  link.download = "ultetes-" + baseVersion + "-" + stamp + ".md";
   link.click();
   URL.revokeObjectURL(link.href);
 }
@@ -555,7 +578,7 @@ function parseMarkdown(text) {
   });
   if (!sections.length) return { error: "A fájlban nem találtam asztalokat." };
 
-  const tables = sections.slice(0, INITIAL.tables.length).map((section) => {
+  const tables = sections.slice(0, baseTables().length).map((section) => {
     if (section.rows.length) {
       return {
         name: section.title,
@@ -566,15 +589,15 @@ function parseMarkdown(text) {
     const split = Math.ceil(section.flat.length / 2);
     return { name: section.title, left: section.flat.slice(0, split), right: section.flat.slice(split) };
   });
-  while (tables.length < INITIAL.tables.length) tables.push({ name: null, left: [], right: [] });
-  sections.slice(INITIAL.tables.length).forEach((extra) => {
+  while (tables.length < baseTables().length) tables.push({ name: null, left: [], right: [] });
+  sections.slice(baseTables().length).forEach((extra) => {
     const last = tables[tables.length - 1];
     extra.rows.forEach((row) => row.forEach((person) => person && sitAtFreeSeat(last, person)));
     extra.flat.forEach((person) => sitAtFreeSeat(last, person));
   });
 
   const missing = [];
-  INITIAL.tables.forEach((table, index) => {
+  baseTables().forEach((table, index) => {
     table.left.concat(table.right).forEach((person) => {
       const ids = pool.get(person.name);
       if (ids && ids.includes(person.id) && !headIds.has(person.id)) {
@@ -619,10 +642,12 @@ function importMarkdown(input) {
 }
 
 function resetPlan() {
-  localStorage.removeItem(STORAGE_KEY);
+  const picker = document.getElementById("base-plan");
+  if (picker && PLANS[picker.value]) baseVersion = picker.value;
   state = { head: INITIAL.head.slice(), tables: blankTables() };
   picked = null;
-  document.getElementById("status").textContent = "";
+  save();
+  document.getElementById("status").textContent = SUBTITLES[baseVersion] + " betöltve";
   render();
 }
 
