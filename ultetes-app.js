@@ -74,19 +74,9 @@ li {
   touch-action: manipulation;
 }
 li.readonly { cursor: default; opacity: .85; }
-.table-no { color: #9eb0c0; font-weight: 700; flex: 0 0 auto; }
-.table-name {
-  flex: 1 1 auto;
-  min-width: 0;
-  background: #10243a;
-  border: 1px solid #2d4763;
-  border-radius: 8px;
-  color: #d6b36b;
-  font: inherit;
-  font-weight: 700;
-  padding: 6px 9px;
-}
-.table-name:focus { outline: 2px solid #d6b36b; outline-offset: 1px; }
+.table-no { color: #f4f0e3; font-weight: 700; flex: 1 1 auto; }
+.drop-group { padding: 0; width: 32px; min-height: 32px; border-radius: 8px; font-size: .9rem; flex: 0 0 auto; }
+.drop-group:disabled { opacity: .35; }
 .order { display: flex; gap: 4px; flex: 0 0 auto; }
 .move-table { padding: 0; width: 32px; min-height: 32px; border-radius: 8px; font-size: .8rem; }
 .move-table:disabled { opacity: .35; }
@@ -152,18 +142,17 @@ body.unlocked { background: #0d1d2d; display: block; padding: 0; }
 `;
 document.head.append(styles);
 document.getElementById('seating-root').innerHTML = `<header>
-  <h1><span id="subtitle">„A” VÁLTOZAT · KORRIGÁLT</span> · <span id="total"></span></h1>
+  <h1><span id="subtitle">MENTETT ÜLTETÉS</span> · <span id="total"></span></h1>
   <div class="bar">
     <button type="button" id="tab-edit" aria-pressed="true" onclick="showView('edit')">Szerkesztés</button>
     <button type="button" id="tab-map" aria-pressed="false" onclick="showView('map')">Térkép</button>
     <button type="button" id="tab-names" aria-pressed="false" onclick="toggleNames()">Nevek</button>
-    <button type="button" onclick="downloadMarkdown()">Mentés (.md)</button>
-    <button type="button" onclick="document.getElementById('import-file').click()">Betöltés (.md)</button>
-    <select id="base-plan" aria-label="Alapterv"><option value="A" selected>„A” változat — korrigált</option><option value="B">„B” változat — korrigált</option><option value="C">„C” változat — affinitás</option></select>
+    <button type="button" onclick="copyLink()">Link másolása</button>
+    <button type="button" onclick="addGroup()">Új csoport</button>
+    <select id="base-plan" aria-label="Alapterv"><option value="S" selected>Mentett ültetés</option><option value="A">„A” változat — korrigált</option><option value="B">„B” változat — korrigált</option><option value="C">„C” változat — affinitás</option></select>
     <button type="button" onclick="resetPlan()">Alaphelyzet</button>
   </div>
-  <input type="file" id="import-file" accept=".md,text/markdown" hidden onchange="importMarkdown(this)">
-  <p class="hint">Húzd a nevet másik asztalra, vagy koppints rá és utána a célhelyre.</p>
+  <p class="hint">Húzd a nevet másik helyre, vagy koppints rá és utána a célhelyre. Üres helyre koppintva új vendéget vehetsz fel.</p>
   <p class="hint" id="status"></p>
 </header>
 <main>
@@ -183,23 +172,89 @@ const PLANS = INITIAL.plans;
 const SUBTITLES = INITIAL.subtitles;
 let baseVersion = PLANS[INITIAL.version] ? INITIAL.version : Object.keys(PLANS)[0];
 const EVERYONE = INITIAL.head.concat(
-  ...PLANS[baseVersion].map((t) => t.left.concat(t.right, t.edge || []))
+  ...PLANS[INITIAL.version].map((t) => t.left.concat(t.right, t.edge || []))
 ).filter(Boolean);
 const EDGE_SLOTS = 2;
-const BY_ID = new Map(EVERYONE.map((p) => [p.id, p]));
+const PEOPLE = new Map(EVERYONE.map((p) => [p.id, p]));
+const PASSWORD = window.__SEATING_PASSWORD__ || "";
 let customNames = {};
+let added = [];
+let nextAdded = 1;
 let state = load();
 let picked = null;
+let pending = null;
 let renameMode = false;
+
+function status(message) {
+  document.getElementById("status").textContent = message;
+}
 
 function displayName(person) {
   return customNames[person.id] || person.name;
 }
 
-function renameGuest(personId, value) {
-  const person = BY_ID.get(personId);
+function registerAdded(list) {
+  added.forEach((person) => PEOPLE.delete(person.id));
+  added = list.map((entry, position) => ({
+    id: entry.id || "x" + (position + 1),
+    name: entry.name,
+    group: "Új vendég",
+    baby: !!entry.baby,
+    added: true,
+  }));
+  added.forEach((person) => PEOPLE.set(person.id, person));
+  nextAdded = added.reduce((top, person) => Math.max(top, Number(person.id.slice(1)) + 1), 1);
+}
+
+function addGuestAt(place, value) {
   const name = value.trim();
+  pending = null;
+  if (name) {
+    const person = {
+      id: "x" + nextAdded++,
+      name,
+      group: "Új vendég",
+      baby: place.side === "edge",
+      added: true,
+    };
+    added.push(person);
+    PEOPLE.set(person.id, person);
+    const side = state.tables[place.table][place.side];
+    while (side.length <= place.index) side.push(null);
+    side[place.index] = person;
+    save();
+  }
+  render();
+}
+
+function removeGuest(personId) {
+  state.tables.forEach((table) => {
+    ["left", "right", "edge"].forEach((side) => {
+      table[side].forEach((person, i) => {
+        if (person && person.id === personId) table[side][i] = null;
+      });
+      trimSide(table[side]);
+    });
+  });
+  added = added.filter((person) => person.id !== personId);
+  PEOPLE.delete(personId);
+  save();
+  render();
+}
+
+function renameGuest(personId, value) {
+  const person = PEOPLE.get(personId);
   if (!person) return;
+  const name = value.trim();
+  if (person.added) {
+    if (!name) removeGuest(personId);
+    else {
+      person.name = name;
+      save();
+      render();
+    }
+    return;
+  }
   if (name && name !== person.name) customNames[personId] = name;
   else delete customNames[personId];
   save();
@@ -209,11 +264,10 @@ function renameGuest(personId, value) {
 function toggleNames() {
   renameMode = !renameMode;
   picked = null;
+  pending = null;
   document.getElementById("tab-names").setAttribute("aria-pressed", String(renameMode));
   if (renameMode) showView("edit");
-  document.getElementById("status").textContent = renameMode
-    ? "Névszerkesztés: írd át a nevet, majd kattints ki. Üresen hagyva visszaáll az eredeti."
-    : "";
+  status(renameMode ? "Névszerkesztés: írd át a nevet, majd kattints ki. Új vendég neve üresen hagyva törlődik." : "");
   render();
 }
 
@@ -223,7 +277,6 @@ function baseTables() {
 
 function blankTables() {
   return baseTables().map((t) => ({
-    name: t.name,
     left: t.left.slice(),
     right: t.right.slice(),
     edge: (t.edge || []).slice(),
@@ -235,17 +288,19 @@ function load() {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (saved && PLANS[saved.version]) baseVersion = saved.version;
     if (saved && saved.names) customNames = saved.names;
-    if (saved && saved.tables && saved.tables.length === baseTables().length) {
+    if (saved && saved.added) registerAdded(saved.added);
+    if (saved && saved.tables && saved.tables.length) {
       const tables = saved.tables.map((t) => ({
-        name: t.name || null,
-        left: (t.left || []).map((id) => BY_ID.get(id) || null),
-        right: (t.right || []).map((id) => BY_ID.get(id) || null),
-        edge: (t.edge || []).map((id) => BY_ID.get(id) || null),
+        left: (t.left || []).map((id) => PEOPLE.get(id) || null),
+        right: (t.right || []).map((id) => PEOPLE.get(id) || null),
+        edge: (t.edge || []).map((id) => PEOPLE.get(id) || null),
       }));
       const seated = new Set(tables.flatMap(seats).map((p) => p.id));
       baseTables().forEach((table, index) => {
         table.left.concat(table.right, table.edge || []).forEach((person) => {
-          if (person && !seated.has(person.id)) sitAtFreeSeat(tables[index], person);
+          if (person && !seated.has(person.id)) {
+            sitAtFreeSeat(tables[Math.min(index, tables.length - 1)], person);
+          }
         });
       });
       return { head: INITIAL.head.slice(), tables };
@@ -262,8 +317,8 @@ function save() {
     JSON.stringify({
       version: baseVersion,
       names: customNames,
+      added: added.map((p) => ({ id: p.id, name: p.name, baby: p.baby })),
       tables: state.tables.map((t) => ({
-        name: t.name,
         left: t.left.map((p) => (p ? p.id : null)),
         right: t.right.map((p) => (p ? p.id : null)),
         edge: t.edge.map((p) => (p ? p.id : null)),
@@ -276,21 +331,8 @@ function seats(table) {
   return table.left.concat(table.right, table.edge || []).filter(Boolean);
 }
 
-function autoLabel(table) {
-  const counts = new Map();
-  seats(table).forEach((p) => counts.set(p.group, (counts.get(p.group) || 0) + 1));
-  let best = "Asztal";
-  let top = -1;
-  counts.forEach((value, key) => { if (value > top) { top = value; best = key; } });
-  return best;
-}
-
-function tableTitle(table) {
-  return table.name || autoLabel(table);
-}
-
-function tableHeading(table, index) {
-  return (index + 1) + ". asztal — " + tableTitle(table);
+function tableHeading(index) {
+  return (index + 1) + ". csoport";
 }
 
 function rowCount(table) {
@@ -363,9 +405,20 @@ function moveTable(index, delta) {
   render();
 }
 
-function renameTable(index, value) {
-  const name = value.trim();
-  state.tables[index].name = name && name !== autoLabel(state.tables[index]) ? name : null;
+function addGroup() {
+  state.tables.push({ left: [], right: [], edge: [] });
+  picked = null;
+  pending = null;
+  save();
+  render();
+  status(state.tables.length + ". csoport hozzáadva");
+}
+
+function removeGroup(index) {
+  if (seats(state.tables[index]).length) return;
+  state.tables.splice(index, 1);
+  picked = null;
+  pending = null;
   save();
   render();
 }
@@ -373,10 +426,20 @@ function renameTable(index, value) {
 function nameField(person) {
   const field = document.createElement("input");
   field.className = "seat-name";
-  field.value = customNames[person.id] || "";
-  field.placeholder = person.name;
+  field.value = person.added ? person.name : customNames[person.id] || "";
+  field.placeholder = person.added ? "Név (üresen törlöd)" : person.name;
   field.setAttribute("aria-label", person.name + " neve");
   field.addEventListener("change", () => renameGuest(person.id, field.value));
+  field.addEventListener("click", (event) => event.stopPropagation());
+  return field;
+}
+
+function newGuestField(place) {
+  const field = document.createElement("input");
+  field.className = "seat-name";
+  field.placeholder = place.side === "edge" ? "Új baba neve" : "Új vendég neve";
+  field.setAttribute("aria-label", "Új vendég neve");
+  field.addEventListener("change", () => addGuestAt(place, field.value));
   field.addEventListener("click", (event) => event.stopPropagation());
   return field;
 }
@@ -401,6 +464,9 @@ function seatCell(person, place) {
       event.dataTransfer.setData("text/plain", JSON.stringify(place));
       event.dataTransfer.effectAllowed = "move";
     });
+  } else if (samePlace(pending, place)) {
+    cell.classList.add("renaming");
+    cell.append(newGuestField(place));
   } else {
     cell.textContent = "üres";
   }
@@ -420,6 +486,7 @@ function seatCell(person, place) {
     event.stopPropagation();
     if (picked) moveSeat(picked, place);
     else if (person) { picked = place; render(); }
+    else if (!renameMode) { pending = place; render(); }
   });
   return cell;
 }
@@ -460,18 +527,22 @@ function tableSection(table, index) {
   const heading = document.createElement("h2");
   const number = document.createElement("span");
   number.className = "table-no";
-  number.textContent = index + 1 + ".";
-  const input = document.createElement("input");
-  input.className = "table-name";
-  input.value = table.name || "";
-  input.placeholder = autoLabel(table);
-  input.setAttribute("aria-label", index + 1 + ". asztal neve");
-  input.addEventListener("change", () => renameTable(index, input.value));
-  input.addEventListener("click", (event) => event.stopPropagation());
+  number.textContent = tableHeading(index);
   const count = document.createElement("span");
   const total = seats(table).length;
   count.textContent = total + " fő";
-  if (total > 16 || total < 14) count.className = "count-warn";
+  if (total > 16) count.className = "count-warn";
+  const drop = document.createElement("button");
+  drop.type = "button";
+  drop.className = "drop-group";
+  drop.textContent = "✕";
+  drop.title = "Üres csoport törlése";
+  drop.setAttribute("aria-label", tableHeading(index) + " törlése");
+  drop.disabled = total > 0 || state.tables.length <= 1;
+  drop.addEventListener("click", (event) => {
+    event.stopPropagation();
+    removeGroup(index);
+  });
   const order = document.createElement("span");
   order.className = "order";
   [["◀", -1, "előrébb"], ["▶", 1, "hátrébb"]].forEach(([glyph, delta, what]) => {
@@ -479,8 +550,8 @@ function tableSection(table, index) {
     button.type = "button";
     button.className = "move-table";
     button.textContent = glyph;
-    button.title = "Asztal " + what;
-    button.setAttribute("aria-label", index + 1 + ". asztal " + what);
+    button.title = "Csoport " + what;
+    button.setAttribute("aria-label", tableHeading(index) + " " + what);
     button.disabled = index + delta < 0 || index + delta >= state.tables.length;
     button.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -488,7 +559,7 @@ function tableSection(table, index) {
     });
     order.append(button);
   });
-  heading.append(number, input, order, count);
+  heading.append(number, order, count, drop);
 
   const grid = document.createElement("div");
   grid.className = "seats";
@@ -538,7 +609,7 @@ function mapTable(index, table) {
   let out = '<line x1="' + (cx - dx * length / 2).toFixed(1) + '" y1="' + (cy - dy * length / 2).toFixed(1) +
     '" x2="' + (cx + dx * length / 2).toFixed(1) + '" y2="' + (cy + dy * length / 2).toFixed(1) +
     '" stroke="#f2edd9" stroke-width="82" stroke-linecap="round"/>';
-  out += svgText(cx, cy - 350, tableHeading(table, index), 26, "#d6b36b", "middle", "700");
+  out += svgText(cx, cy - 350, tableHeading(index), 26, "#d6b36b", "middle", "700");
   [table.left, table.right].forEach((guests, sideIndex) => {
     const side = sideIndex === 0 ? -1 : 1;
     guests.forEach((person, seat) => {
@@ -573,9 +644,12 @@ function seatedTotal() {
 
 function renderMap() {
   const total = seatedTotal();
-  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 4600">';
-  svg += '<rect width="2400" height="4600" fill="#0d1d2d"/>';
-  svg += '<rect x="64" y="230" width="2272" height="4250" rx="12" fill="#10243a" stroke="#243d56" stroke-width="4"/>';
+  const rows = Math.max(1, Math.ceil(state.tables.length / 2));
+  const height = 1080 + (rows - 1) * 700 + 720;
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 ' + height + '">';
+  svg += '<rect width="2400" height="' + height + '" fill="#0d1d2d"/>';
+  svg += '<rect x="64" y="230" width="2272" height="' + (height - 350) +
+    '" rx="12" fill="#10243a" stroke="#243d56" stroke-width="4"/>';
   svg += svgText(1200, 92, "ÜLTETÉSI TÉRKÉP", 54, "#d6b36b", "middle", "700");
   svg += svgText(1200, 160, SUBTITLES[baseVersion], 28, "#f4f0e3", "middle", "400");
   svg += svgText(1200, 300, "FŐASZTAL", 27, "#d6b36b", "middle", "700");
@@ -587,7 +661,7 @@ function renderMap() {
     svg += svgText(x, 440, displayName(person), 25, "#f4f0e3", "middle", "600");
   });
   state.tables.forEach((table, index) => { svg += mapTable(index, table); });
-  svg += svgText(1200, 4520, total + " fő", 28, "#d6b36b", "middle", "700");
+  svg += svgText(1200, height - 80, total + " fő", 28, "#d6b36b", "middle", "700");
   svg += '</svg>';
   document.getElementById("map").innerHTML = svg;
 }
@@ -611,191 +685,158 @@ function showView(view) {
   if (view === "map") renderMap();
 }
 
-function markdown() {
-  const stamp = new Date().toLocaleString("hu-HU");
-  const lines = [
-    "# Ültetési terv — " + SUBTITLES[baseVersion],
-    "",
-    "Mentve: " + stamp,
-    "Összesen: " + seatedTotal() + " fő",
-    "",
-    "Az asztaloknál a két oldal egymással szemben ül, soronként párba állítva.",
-    "",
-    "## Főasztal (" + state.head.length + " fő)",
-    "",
-  ];
-  state.head.forEach((person) => lines.push("- " + displayName(person)));
-  state.tables.forEach((table, index) => {
-    lines.push("", "## " + tableHeading(table, index) + " (" + seats(table).length + " fő)", "");
-    const rows = rowCount(table);
-    for (let i = 0; i < rows; i += 1) {
-      const left = table.left[i] ? displayName(table.left[i]) : "—";
-      const right = table.right[i] ? displayName(table.right[i]) : "—";
-      lines.push(i + 1 + ". " + left + " ↔ " + right);
-    }
-    const babies = (table.edge || []).filter(Boolean).map(displayName);
-    if (babies.length) lines.push("- Asztalvég: " + babies.join(" · "));
-  });
-  lines.push("");
-  return lines.join("\n");
-}
-
-function downloadMarkdown() {
-  const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-");
-  const blob = new Blob([markdown()], { type: "text/markdown;charset=utf-8" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "ultetes-" + baseVersion + "-" + stamp + ".md";
-  link.click();
-  URL.revokeObjectURL(link.href);
-}
-
-function parseMarkdown(text) {
-  const headIds = new Set(INITIAL.head.map((p) => p.id));
-  const pool = new Map();
-  EVERYONE.forEach((p) => {
-    [p.name, displayName(p)].forEach((label) => {
-      if (!pool.has(label)) pool.set(label, []);
-      if (!pool.get(label).includes(p.id)) pool.get(label).push(p.id);
-    });
-  });
-  const used = new Set();
-  const unknown = [];
-  const clean = (raw) => raw.replace(/[*_`]/g, "").trim();
-  const take = (name) => {
-    if (!name || /^[—–-]$/.test(name)) return null;
-    const ids = pool.get(name) || [];
-    while (ids.length) {
-      const id = ids.shift();
-      if (!used.has(id)) {
-        used.add(id);
-        return BY_ID.get(id);
-      }
-    }
-    unknown.push(name);
-    return null;
+function encodeSeating() {
+  const index = new Map(EVERYONE.map((person, i) => [person.id, i]));
+  const addedIndex = new Map(added.map((person, i) => [person.id, EVERYONE.length + i]));
+  const slot = (person) => {
+    if (!person) return -1;
+    return index.has(person.id) ? index.get(person.id) : addedIndex.get(person.id);
   };
-  const sections = [];
-  let current = null;
-  text.split(/\r?\n/).forEach((line) => {
-    const heading = line.match(/^#{2,6}\s+(.*)$/);
-    if (heading) {
-      const title = clean(heading[1]).replace(/\s*\(\s*\d+\s*fő\s*\)\s*$/i, "").trim();
-      current = /^főasztal/i.test(title) ? null : { title, rows: [], flat: [], edge: [] };
-      if (current) sections.push(current);
-      return;
-    }
-    if (!current) return;
-    const item = line.match(/^\s*(?:[-*+]|\d+[.)])\s+(.*)$/);
-    if (!item) return;
-    const body = clean(item[1]);
-    if (!body) return;
-    const edge = body.match(/^asztalvég\s*:\s*(.*)$/i);
-    if (edge) {
-      edge[1].split(/[·,;]/).forEach((raw) => {
-        const person = take(clean(raw).replace(/\s*\(baba\)\s*$/i, ""));
-        if (person) current.edge.push(person);
-      });
-      return;
-    }
-    if (body.includes("↔")) {
-      const pair = body.split("↔");
-      current.rows.push([take(clean(pair[0])), take(clean(pair[1] || ""))]);
-    } else {
-      const person = take(clean(body.split("(")[0]));
-      if (person) current.flat.push(person);
-    }
+  const names = {};
+  Object.keys(customNames).forEach((id) => {
+    if (index.has(id)) names[index.get(id)] = customNames[id];
   });
-  if (!sections.length) return { error: "A fájlban nem találtam asztalokat." };
-
-  const tables = sections.slice(0, baseTables().length).map((section) => {
-    const edge = section.edge.slice(0, EDGE_SLOTS);
-    if (section.rows.length) {
-      return {
-        name: section.title,
-        left: section.rows.map((row) => row[0]),
-        right: section.rows.map((row) => row[1]),
-        edge,
-      };
-    }
-    const split = Math.ceil(section.flat.length / 2);
-    return {
-      name: section.title,
-      left: section.flat.slice(0, split),
-      right: section.flat.slice(split),
-      edge,
-    };
-  });
-  while (tables.length < baseTables().length) tables.push({ name: null, left: [], right: [], edge: [] });
-  sections.slice(baseTables().length).forEach((extra) => {
-    const last = tables[tables.length - 1];
-    extra.rows.forEach((row) => row.forEach((person) => person && sitAtFreeSeat(last, person)));
-    extra.flat.forEach((person) => sitAtFreeSeat(last, person));
-    extra.edge.forEach((person) => sitAtFreeSeat(last, person));
-  });
-
-  const missing = [];
-  baseTables().forEach((table, index) => {
-    table.left.concat(table.right, table.edge || []).forEach((person) => {
-      if (person && !used.has(person.id) && !headIds.has(person.id)) {
-        used.add(person.id);
-        sitAtFreeSeat(tables[index], person);
-        missing.push(displayName(person));
-      }
-    });
-  });
-
-  tables.forEach((table) => {
-    ["left", "right"].forEach((side) => {
-      table[side].forEach((person, i) => {
-        if (person && person.baby) {
-          table[side][i] = null;
-          sitAtFreeSeat(table, person);
-        }
-      });
-    });
-    trimSide(table.left);
-    trimSide(table.right);
-    trimSide(table.edge);
-    const custom = (table.name || "").replace(/^\d+\.\s*asztal\s*[—–·:-]?\s*/i, "").trim();
-    table.name = custom && custom !== autoLabel(table) ? custom : null;
-  });
-  return { tables, unknown, missing };
+  return {
+    v: baseVersion,
+    a: added.map((person) => [person.name, person.baby ? 1 : 0]),
+    n: names,
+    t: state.tables.map((t) => [t.left.map(slot), t.right.map(slot), t.edge.map(slot)]),
+  };
 }
 
-function importMarkdown(input) {
-  const file = input.files && input.files[0];
-  input.value = "";
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    const result = parseMarkdown(String(reader.result));
-    const status = document.getElementById("status");
-    if (result.error) {
-      status.textContent = result.error;
-      return;
+function decodeSeating(payload) {
+  registerAdded((payload.a || []).map((entry, i) => ({ id: "x" + (i + 1), name: entry[0], baby: entry[1] })));
+  customNames = {};
+  Object.keys(payload.n || {}).forEach((key) => {
+    const person = EVERYONE[Number(key)];
+    if (person) customNames[person.id] = payload.n[key];
+  });
+  if (PLANS[payload.v]) baseVersion = payload.v;
+  const seat = (position) => {
+    if (position < 0) return null;
+    if (position < EVERYONE.length) return EVERYONE[position];
+    return added[position - EVERYONE.length] || null;
+  };
+  state = {
+    head: INITIAL.head.slice(),
+    tables: (payload.t || []).map((t) => ({
+      left: t[0].map(seat),
+      right: t[1].map(seat),
+      edge: t[2].map(seat),
+    })),
+  };
+  picked = null;
+  pending = null;
+}
+
+function base64url(bytes) {
+  let binary = "";
+  bytes.forEach((value) => { binary += String.fromCharCode(value); });
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function unbase64url(value) {
+  const padded = value.replace(/-/g, "+").replace(/_/g, "/");
+  return Uint8Array.from(atob(padded + "=".repeat((4 - (padded.length % 4)) % 4)), (c) => c.charCodeAt(0));
+}
+
+async function deflate(value) {
+  if (typeof CompressionStream === "undefined") return new TextEncoder().encode(value);
+  const stream = new Blob([value]).stream().pipeThrough(new CompressionStream("gzip"));
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+
+async function inflate(bytes) {
+  if (typeof DecompressionStream !== "undefined") {
+    try {
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+      return await new Response(stream).text();
+    } catch (error) {
+      return new TextDecoder().decode(bytes);
     }
-    state = { head: INITIAL.head.slice(), tables: result.tables };
+  }
+  return new TextDecoder().decode(bytes);
+}
+
+async function seatingKey(salt) {
+  const material = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(PASSWORD), "PBKDF2", false, ["deriveKey"]
+  );
+  return crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt, iterations: 310000, hash: "SHA-256" },
+    material,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["encrypt", "decrypt"]
+  );
+}
+
+async function seatingHash() {
+  const body = await deflate(JSON.stringify(encodeSeating()));
+  if (!PASSWORD) return "#s=0" + base64url(body);
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await seatingKey(salt);
+  const sealed = new Uint8Array(await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, body));
+  const packed = new Uint8Array(salt.length + iv.length + sealed.length);
+  packed.set(salt);
+  packed.set(iv, salt.length);
+  packed.set(sealed, salt.length + iv.length);
+  return "#s=1" + base64url(packed);
+}
+
+async function readSeatingHash(hash) {
+  const raw = hash.replace(/^#s=/, "");
+  const bytes = unbase64url(raw.slice(1));
+  if (raw.slice(0, 1) !== "1") return JSON.parse(await inflate(bytes));
+  const key = await seatingKey(bytes.slice(0, 16));
+  const plain = await crypto.subtle.decrypt(
+    { name: "AES-GCM", iv: bytes.slice(16, 28) }, key, bytes.slice(28)
+  );
+  return JSON.parse(await inflate(new Uint8Array(plain)));
+}
+
+async function copyLink() {
+  let url = "";
+  try {
+    url = location.origin + location.pathname + (await seatingHash());
+  } catch (error) {
+    status("A link nem készült el.");
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    status("Link a vágólapon (" + url.length + " karakter).");
+  } catch (error) {
+    prompt("Másold ki a linket:", url);
+  }
+}
+
+async function applySharedLink() {
+  if (!location.hash.startsWith("#s=")) return;
+  try {
+    decodeSeating(await readSeatingHash(location.hash));
     save();
-    picked = null;
-    render();
-    const notes = [file.name + " betöltve"];
-    if (result.missing.length) notes.push(result.missing.length + " hiányzó vendég az eredeti asztalára került");
-    if (result.unknown.length) notes.push("ismeretlen név kihagyva: " + result.unknown.join(", "));
-    status.textContent = notes.join(" · ");
-  };
-  reader.readAsText(file, "utf-8");
+    history.replaceState(null, "", location.pathname + location.search);
+    status("Megosztott ültetés betöltve.");
+  } catch (error) {
+    status("A megosztott link nem olvasható.");
+  }
+  render();
 }
 
 function resetPlan() {
   const picker = document.getElementById("base-plan");
   if (picker && PLANS[picker.value]) baseVersion = picker.value;
+  registerAdded([]);
   state = { head: INITIAL.head.slice(), tables: blankTables() };
   picked = null;
+  pending = null;
   save();
-  document.getElementById("status").textContent = SUBTITLES[baseVersion] + " betöltve";
+  status(SUBTITLES[baseVersion] + " betöltve");
   render();
 }
 
-Object.assign(window, { showView, toggleNames, downloadMarkdown, importMarkdown, resetPlan });
+Object.assign(window, { showView, toggleNames, copyLink, addGroup, resetPlan });
 render();
+if (typeof location !== "undefined") applySharedLink();

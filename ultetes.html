@@ -89,6 +89,7 @@ async function unlock(password) {
     { name: "AES-GCM", iv: bytes(payload.nonce) }, key, bytes(payload.data)
   );
   window.__SEATING_STATE__ = JSON.parse(new TextDecoder().decode(plain));
+  window.__SEATING_PASSWORD__ = password;
   await import("./ultetes-app.js");
   gate.remove();
   document.body.classList.add("unlocked");
