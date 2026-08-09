@@ -59,21 +59,6 @@ section h2 {
   gap: 10px;
 }
 section h2 span { color: #9eb0c0; font-weight: 500; }
-ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-li {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: #10243a;
-  border: 1px solid #22384f;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: grab;
-  touch-action: manipulation;
-}
-li.readonly { cursor: default; opacity: .85; }
 .table-no { color: #f4f0e3; font-weight: 700; flex: 1 1 auto; }
 .drop-group { padding: 0; width: 32px; min-height: 32px; border-radius: 8px; font-size: .9rem; flex: 0 0 auto; }
 .drop-group:disabled { opacity: .35; }
@@ -110,6 +95,8 @@ li.readonly { cursor: default; opacity: .85; }
 }
 .seat.edge { border-style: dashed; border-color: #4a3d63; background: #1c1830; }
 .seat.edge .dot { background: #c7b0e3; }
+.row.head-row { grid-template-columns: 1fr; }
+.seat.head .dot { background: #d6b36b; }
 .seat-name {
   flex: 1 1 auto;
   min-width: 0;
@@ -130,7 +117,6 @@ li.readonly { cursor: default; opacity: .85; }
 .seat.right .dot { background: #efbf8c; }
 .seat.empty .dot { display: none; }
 .dot { width: 11px; height: 11px; border-radius: 50%; flex: 0 0 auto; background: #9bc9d5; }
-li:nth-child(even) .dot { background: #efbf8c; }
 #map { overflow: auto; }
 #map svg { display: block; width: min(100%, 1400px); min-width: 760px; height: auto; margin: 0 auto; }
 .hidden { display: none; }
@@ -219,7 +205,7 @@ function addGuestAt(place, value) {
     };
     added.push(person);
     PEOPLE.set(person.id, person);
-    const side = state.tables[place.table][place.side];
+    const side = seatArray(place);
     while (side.length <= place.index) side.push(null);
     side[place.index] = person;
     save();
@@ -228,6 +214,10 @@ function addGuestAt(place, value) {
 }
 
 function removeGuest(personId) {
+  state.head.forEach((person, i) => {
+    if (person && person.id === personId) state.head[i] = null;
+  });
+  trimSide(state.head);
   state.tables.forEach((table) => {
     ["left", "right", "edge"].forEach((side) => {
       table[side].forEach((person, i) => {
@@ -295,7 +285,10 @@ function load() {
         right: (t.right || []).map((id) => PEOPLE.get(id) || null),
         edge: (t.edge || []).map((id) => PEOPLE.get(id) || null),
       }));
-      const seated = new Set(tables.flatMap(seats).map((p) => p.id));
+      const seated = new Set(
+        tables.flatMap(seats).concat((saved.head || []).map((id) => PEOPLE.get(id)).filter(Boolean))
+          .map((p) => p.id)
+      );
       baseTables().forEach((table, index) => {
         table.left.concat(table.right, table.edge || []).forEach((person) => {
           if (person && !seated.has(person.id)) {
@@ -303,7 +296,16 @@ function load() {
           }
         });
       });
-      return { head: INITIAL.head.slice(), tables };
+      const head = saved.head
+        ? saved.head.map((id) => PEOPLE.get(id) || null)
+        : INITIAL.head.slice();
+      const placed = new Set(
+        head.concat(...tables.flatMap(seats)).filter(Boolean).map((p) => p.id)
+      );
+      INITIAL.head.forEach((person) => {
+        if (!placed.has(person.id)) head.push(person);
+      });
+      return { head, tables };
     }
   } catch (error) {
     localStorage.removeItem(STORAGE_KEY);
@@ -318,6 +320,7 @@ function save() {
       version: baseVersion,
       names: customNames,
       added: added.map((p) => ({ id: p.id, name: p.name, baby: p.baby })),
+      head: state.head.map((p) => (p ? p.id : null)),
       tables: state.tables.map((t) => ({
         left: t.left.map((p) => (p ? p.id : null)),
         right: t.right.map((p) => (p ? p.id : null)),
@@ -329,6 +332,10 @@ function save() {
 
 function seats(table) {
   return table.left.concat(table.right, table.edge || []).filter(Boolean);
+}
+
+function seatArray(place) {
+  return place.table < 0 ? state.head : state.tables[place.table][place.side];
 }
 
 function tableHeading(index) {
@@ -377,8 +384,8 @@ function moveSeat(from, to) {
     render();
     return;
   }
-  const source = state.tables[from.table][from.side];
-  const target = state.tables[to.table][to.side];
+  const source = seatArray(from);
+  const target = seatArray(to);
   while (target.length <= to.index) target.push(null);
   const mover = source[from.index] || null;
   if (!mover) return;
@@ -495,20 +502,20 @@ function headSection() {
   const section = document.createElement("section");
   const heading = document.createElement("h2");
   const title = document.createElement("span");
+  title.className = "table-no";
   title.textContent = "Főasztal";
   const count = document.createElement("span");
-  count.textContent = state.head.length + " fő";
+  count.textContent = state.head.filter(Boolean).length + " fő";
   heading.append(title, count);
-  const list = document.createElement("ul");
-  state.head.forEach((person) => {
-    const item = document.createElement("li");
-    item.className = "readonly";
-    const dot = document.createElement("span");
-    dot.className = "dot";
-    item.append(dot, renameMode ? nameField(person) : document.createTextNode(displayName(person)));
-    list.append(item);
-  });
-  section.append(heading, list);
+  const grid = document.createElement("div");
+  grid.className = "seats";
+  for (let i = 0; i < state.head.length + 1; i += 1) {
+    const row = document.createElement("div");
+    row.className = "row head-row";
+    row.append(seatCell(state.head[i] || null, { table: -1, side: "head", index: i }));
+    grid.append(row);
+  }
+  section.append(heading, grid);
   return section;
 }
 
@@ -639,7 +646,8 @@ function mapTable(index, table) {
 }
 
 function seatedTotal() {
-  return state.head.length + state.tables.reduce((sum, table) => sum + seats(table).length, 0);
+  return state.head.filter(Boolean).length +
+    state.tables.reduce((sum, table) => sum + seats(table).length, 0);
 }
 
 function renderMap() {
@@ -653,11 +661,17 @@ function renderMap() {
   svg += svgText(1200, 92, "ÜLTETÉSI TÉRKÉP", 54, "#d6b36b", "middle", "700");
   svg += svgText(1200, 160, SUBTITLES[baseVersion], 28, "#f4f0e3", "middle", "400");
   svg += svgText(1200, 300, "FŐASZTAL", 27, "#d6b36b", "middle", "700");
-  svg += '<line x1="650" y1="580" x2="1750" y2="580" stroke="#f2edd9" stroke-width="92" stroke-linecap="round"/>';
-  state.head.forEach((person, index) => {
-    const x = 500 + index * 280;
-    svg += '<circle cx="' + x + '" cy="485" r="22" fill="' + (index % 2 === 0 ? "#9bc9d5" : "#efbf8c") +
-      '" stroke="#102033" stroke-width="3"/>';
+  const headGuests = state.head.filter(Boolean);
+  const headSpan = Math.max(1100, (headGuests.length - 1) * 280);
+  const headStart = 1200 - headSpan / 2;
+  svg += '<line x1="' + (headStart - 60).toFixed(1) + '" y1="580" x2="' + (headStart + headSpan + 60).toFixed(1) +
+    '" y2="580" stroke="#f2edd9" stroke-width="92" stroke-linecap="round"/>';
+  headGuests.forEach((person, index) => {
+    const x = headGuests.length === 1
+      ? 1200
+      : headStart + (index * headSpan) / (headGuests.length - 1);
+    svg += '<circle cx="' + x.toFixed(1) + '" cy="485" r="22" fill="' +
+      (index % 2 === 0 ? "#9bc9d5" : "#efbf8c") + '" stroke="#102033" stroke-width="3"/>';
     svg += svgText(x, 440, displayName(person), 25, "#f4f0e3", "middle", "600");
   });
   state.tables.forEach((table, index) => { svg += mapTable(index, table); });
@@ -700,6 +714,7 @@ function encodeSeating() {
     v: baseVersion,
     a: added.map((person) => [person.name, person.baby ? 1 : 0]),
     n: names,
+    h: state.head.map(slot),
     t: state.tables.map((t) => [t.left.map(slot), t.right.map(slot), t.edge.map(slot)]),
   };
 }
@@ -718,7 +733,7 @@ function decodeSeating(payload) {
     return added[position - EVERYONE.length] || null;
   };
   state = {
-    head: INITIAL.head.slice(),
+    head: payload.h ? payload.h.map(seat) : INITIAL.head.slice(),
     tables: (payload.t || []).map((t) => ({
       left: t[0].map(seat),
       right: t[1].map(seat),
