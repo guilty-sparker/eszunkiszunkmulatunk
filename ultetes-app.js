@@ -110,6 +110,17 @@ section h2 span { color: #9eb0c0; font-weight: 500; }
   padding: 4px 7px;
 }
 .seat-name:focus { outline: 2px solid #d6b36b; outline-offset: 1px; }
+.drop-guest {
+  flex: 0 0 auto;
+  padding: 0;
+  width: 30px;
+  min-height: 30px;
+  border-radius: 8px;
+  border: 1px solid #6b3b46;
+  background: #2a1b22;
+  color: #f0b8c0;
+  font-size: .85rem;
+}
 .seat.empty { border-style: dashed; color: #61798f; font-weight: 500; justify-content: center; cursor: pointer; }
 .seat.selected { border-color: #d6b36b; background: #1d354e; }
 .seat.drop-here { border-color: #d6b36b; }
@@ -135,6 +146,7 @@ document.getElementById('seating-root').innerHTML = `<header>
     <button type="button" id="tab-names" aria-pressed="false" onclick="toggleNames()">Nevek</button>
     <button type="button" onclick="copyLink()">Link másolása</button>
     <button type="button" onclick="addGroup()">Új csoport</button>
+    <button type="button" id="restore" onclick="restoreGuests()" hidden></button>
     <select id="base-plan" aria-label="Alapterv"><option value="S" selected>Mentett ültetés</option><option value="A">„A” változat — korrigált</option><option value="B">„B” változat — korrigált</option><option value="C">„C” változat — affinitás</option></select>
     <button type="button" onclick="resetPlan()">Alaphelyzet</button>
   </div>
@@ -164,6 +176,7 @@ const EDGE_SLOTS = 2;
 const PEOPLE = new Map(EVERYONE.map((p) => [p.id, p]));
 const PASSWORD = window.__SEATING_PASSWORD__ || "";
 let customNames = {};
+let removed = [];
 let added = [];
 let nextAdded = 1;
 let state = load();
@@ -213,6 +226,20 @@ function addGuestAt(place, value) {
   render();
 }
 
+function deleteGuest(personId) {
+  if (!PEOPLE.get(personId).added && !removed.includes(personId)) removed.push(personId);
+  removeGuest(personId);
+}
+
+function restoreGuests() {
+  const back = removed.map((id) => PEOPLE.get(id)).filter(Boolean);
+  removed = [];
+  back.forEach((person) => sitAtFreeSeat(state.tables[state.tables.length - 1], person));
+  save();
+  render();
+  status(back.length + " vendég visszahelyezve az utolsó csoportba");
+}
+
 function removeGuest(personId) {
   state.head.forEach((person, i) => {
     if (person && person.id === personId) state.head[i] = null;
@@ -226,8 +253,10 @@ function removeGuest(personId) {
       trimSide(table[side]);
     });
   });
-  added = added.filter((person) => person.id !== personId);
-  PEOPLE.delete(personId);
+  if (added.some((person) => person.id === personId)) {
+    added = added.filter((person) => person.id !== personId);
+    PEOPLE.delete(personId);
+  }
   save();
   render();
 }
@@ -257,7 +286,7 @@ function toggleNames() {
   pending = null;
   document.getElementById("tab-names").setAttribute("aria-pressed", String(renameMode));
   if (renameMode) showView("edit");
-  status(renameMode ? "Névszerkesztés: írd át a nevet, majd kattints ki. Új vendég neve üresen hagyva törlődik." : "");
+  status(renameMode ? "Névszerkesztés: írd át a nevet, vagy töröld a vendéget a ✕ gombbal." : "");
   render();
 }
 
@@ -278,6 +307,7 @@ function load() {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (saved && PLANS[saved.version]) baseVersion = saved.version;
     if (saved && saved.names) customNames = saved.names;
+    if (saved && saved.removed) removed = saved.removed;
     if (saved && saved.added) registerAdded(saved.added);
     if (saved && saved.tables && saved.tables.length) {
       const tables = saved.tables.map((t) => ({
@@ -291,7 +321,7 @@ function load() {
       );
       baseTables().forEach((table, index) => {
         table.left.concat(table.right, table.edge || []).forEach((person) => {
-          if (person && !seated.has(person.id)) {
+          if (person && !seated.has(person.id) && !removed.includes(person.id)) {
             sitAtFreeSeat(tables[Math.min(index, tables.length - 1)], person);
           }
         });
@@ -303,7 +333,7 @@ function load() {
         head.concat(...tables.flatMap(seats)).filter(Boolean).map((p) => p.id)
       );
       INITIAL.head.forEach((person) => {
-        if (!placed.has(person.id)) head.push(person);
+        if (!placed.has(person.id) && !removed.includes(person.id)) head.push(person);
       });
       return { head, tables };
     }
@@ -319,6 +349,7 @@ function save() {
     JSON.stringify({
       version: baseVersion,
       names: customNames,
+      removed,
       added: added.map((p) => ({ id: p.id, name: p.name, baby: p.baby })),
       head: state.head.map((p) => (p ? p.id : null)),
       tables: state.tables.map((t) => ({
@@ -459,7 +490,17 @@ function seatCell(person, place) {
     cell.classList.add("renaming");
     const dot = document.createElement("span");
     dot.className = "dot";
-    cell.append(dot, nameField(person));
+    const drop = document.createElement("button");
+    drop.type = "button";
+    drop.className = "drop-guest";
+    drop.textContent = "✕";
+    drop.title = "Vendég törlése";
+    drop.setAttribute("aria-label", displayName(person) + " törlése");
+    drop.addEventListener("click", (event) => {
+      event.stopPropagation();
+      deleteGuest(person.id);
+    });
+    cell.append(dot, nameField(person), drop);
     return cell;
   }
   if (person) {
@@ -682,6 +723,11 @@ function renderMap() {
 
 function render() {
   document.getElementById("total").textContent = seatedTotal() + " fő";
+  const restore = document.getElementById("restore");
+  if (restore) {
+    restore.hidden = !removed.length;
+    restore.textContent = "Töröltek vissza (" + removed.length + ")";
+  }
   document.getElementById("subtitle").textContent = SUBTITLES[baseVersion];
   const picker = document.getElementById("base-plan");
   if (picker) picker.value = baseVersion;
@@ -714,6 +760,7 @@ function encodeSeating() {
     v: baseVersion,
     a: added.map((person) => [person.name, person.baby ? 1 : 0]),
     n: names,
+    d: removed.map((id) => index.get(id)).filter((position) => position !== undefined),
     h: state.head.map(slot),
     t: state.tables.map((t) => [t.left.map(slot), t.right.map(slot), t.edge.map(slot)]),
   };
@@ -726,6 +773,7 @@ function decodeSeating(payload) {
     const person = EVERYONE[Number(key)];
     if (person) customNames[person.id] = payload.n[key];
   });
+  removed = (payload.d || []).map((position) => EVERYONE[position]).filter(Boolean).map((p) => p.id);
   if (PLANS[payload.v]) baseVersion = payload.v;
   const seat = (position) => {
     if (position < 0) return null;
@@ -844,6 +892,7 @@ function resetPlan() {
   const picker = document.getElementById("base-plan");
   if (picker && PLANS[picker.value]) baseVersion = picker.value;
   registerAdded([]);
+  removed = [];
   state = { head: INITIAL.head.slice(), tables: blankTables() };
   picked = null;
   pending = null;
@@ -852,6 +901,6 @@ function resetPlan() {
   render();
 }
 
-Object.assign(window, { showView, toggleNames, copyLink, addGroup, resetPlan });
+Object.assign(window, { showView, toggleNames, copyLink, addGroup, resetPlan, restoreGuests });
 render();
 if (typeof location !== "undefined") applySharedLink();
