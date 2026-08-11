@@ -187,6 +187,8 @@ let picked = null;
 let pending = null;
 let renameMode = false;
 let mapEdit = false;
+let pickedTable = null;
+const MOVE_HINT = "Mozgatás: koppints egy névre vagy egy csoportra, majd a célra.";
 
 function status(message) {
   document.getElementById("status").textContent = message;
@@ -287,6 +289,7 @@ function renameGuest(personId, value) {
 function toggleNames() {
   renameMode = !renameMode;
   picked = null;
+  pickedTable = null;
   pending = null;
   if (renameMode) mapEdit = false;
   document.getElementById("tab-names").setAttribute("aria-pressed", String(renameMode));
@@ -299,26 +302,63 @@ function toggleNames() {
 function toggleMapEdit() {
   mapEdit = !mapEdit;
   picked = null;
+  pickedTable = null;
   pending = null;
   if (mapEdit) renameMode = false;
   document.getElementById("tab-move").setAttribute("aria-pressed", String(mapEdit));
   document.getElementById("tab-names").setAttribute("aria-pressed", String(renameMode));
   if (mapEdit) showView("map");
-  status(mapEdit ? "Mozgatás: koppints egy névre, majd a célhelyre." : "");
+  status(mapEdit ? MOVE_HINT : "");
   render();
+}
+
+function swapTables(a, b) {
+  const moved = state.tables[a];
+  state.tables[a] = state.tables[b];
+  state.tables[b] = moved;
+  picked = null;
+  pickedTable = null;
+  save();
+  render();
+  status(tableHeading(a) + " és " + tableHeading(b) + " helyet cserélt.");
+}
+
+// A picked guest only accepts seats, a picked group only accepts groups.
+function mapGroupClick(index) {
+  if (picked) return;
+  if (pickedTable === null) {
+    pickedTable = index;
+    status(tableHeading(index) + " kiválasztva — koppints a másik csoportra.");
+    render();
+    return;
+  }
+  if (pickedTable === index) {
+    pickedTable = null;
+    status(MOVE_HINT);
+    render();
+    return;
+  }
+  swapTables(pickedTable, index);
 }
 
 function mapClick(event) {
   if (!mapEdit) return;
-  const hit = event.target.closest && event.target.closest("[data-seat]");
+  const hit = event.target.closest && event.target.closest("[data-seat],[data-group]");
   if (!hit) {
-    if (picked) {
+    if (picked || pickedTable !== null) {
       picked = null;
-      status("Mozgatás: koppints egy névre, majd a célhelyre.");
+      pickedTable = null;
+      status(MOVE_HINT);
       render();
     }
     return;
   }
+  const group = hit.getAttribute("data-group");
+  if (group !== null) {
+    mapGroupClick(Number(group));
+    return;
+  }
+  if (pickedTable !== null) return;
   const place = {
     table: Number(hit.getAttribute("data-table")),
     side: hit.getAttribute("data-side"),
@@ -326,7 +366,7 @@ function mapClick(event) {
   };
   if (picked) {
     moveSeat(picked, place);
-    status("Mozgatás: koppints egy névre, majd a célhelyre.");
+    status(MOVE_HINT);
     return;
   }
   const person = seatArray(place)[place.index];
@@ -458,6 +498,7 @@ function moveSeat(from, to) {
   if (!from || !to) return;
   if (from.table === to.table && from.side === to.side && from.index === to.index) {
     picked = null;
+  pickedTable = null;
     render();
     return;
   }
@@ -471,6 +512,7 @@ function moveSeat(from, to) {
   trimSide(source);
   trimSide(target);
   picked = null;
+  pickedTable = null;
   save();
   render();
 }
@@ -485,6 +527,7 @@ function moveTable(index, delta) {
   const [table] = state.tables.splice(index, 1);
   state.tables.splice(target, 0, table);
   picked = null;
+  pickedTable = null;
   save();
   render();
 }
@@ -492,6 +535,7 @@ function moveTable(index, delta) {
 function addGroup() {
   state.tables.push({ left: [], right: [], edge: [] });
   picked = null;
+  pickedTable = null;
   pending = null;
   save();
   render();
@@ -502,6 +546,7 @@ function removeGroup(index) {
   if (seats(state.tables[index]).length) return;
   state.tables.splice(index, 1);
   picked = null;
+  pickedTable = null;
   pending = null;
   save();
   render();
@@ -734,10 +779,22 @@ function mapTable(index, table) {
   const ny = dx;
   const length = 830;
   const slots = rowCount(table) + 1;
-  let out = '<line x1="' + (cx - dx * length / 2).toFixed(1) + '" y1="' + (cy - dy * length / 2).toFixed(1) +
-    '" x2="' + (cx + dx * length / 2).toFixed(1) + '" y2="' + (cy + dy * length / 2).toFixed(1) +
-    '" stroke="#f2edd9" stroke-width="82" stroke-linecap="round"/>';
+  const bar = 'x1="' + (cx - dx * length / 2).toFixed(1) + '" y1="' + (cy - dy * length / 2).toFixed(1) +
+    '" x2="' + (cx + dx * length / 2).toFixed(1) + '" y2="' + (cy + dy * length / 2).toFixed(1) + '"';
+  let out = "";
+  if (mapEdit && pickedTable === index) {
+    out += '<line ' + bar + ' stroke="#d6b36b" stroke-width="104" stroke-linecap="round"/>';
+  }
+  out += '<line ' + bar + ' stroke="#f2edd9" stroke-width="82" stroke-linecap="round"/>';
+  if (mapEdit) {
+    out += '<line class="seat-hit" data-group="' + index + '" ' + bar +
+      ' stroke="transparent" stroke-width="86" stroke-linecap="round"/>';
+  }
   out += svgText(cx, cy - 350, tableHeading(index), 26, "#d6b36b", "middle", "700");
+  if (mapEdit) {
+    out += '<rect class="seat-hit" data-group="' + index + '" x="' + (cx - 150) + '" y="' + (cy - 386) +
+      '" width="300" height="56" fill="transparent"/>';
+  }
   [table.left, table.right].forEach((guests, sideIndex) => {
     const side = sideIndex === 0 ? -1 : 1;
     const sideName = sideIndex === 0 ? "left" : "right";
@@ -930,6 +987,7 @@ function decodeSeating(payload) {
     })),
   };
   picked = null;
+  pickedTable = null;
   pending = null;
 }
 
@@ -1036,6 +1094,7 @@ function resetPlan() {
   removed = [];
   state = { head: INITIAL.head.slice(), tables: blankTables() };
   picked = null;
+  pickedTable = null;
   pending = null;
   save();
   status(SUBTITLES[baseVersion] + " betöltve");
