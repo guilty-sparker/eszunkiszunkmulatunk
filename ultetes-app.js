@@ -148,6 +148,7 @@ document.getElementById('seating-root').innerHTML = `<header>
     <button type="button" id="tab-names" aria-pressed="false" onclick="toggleNames()">Nevek</button>
     <button type="button" id="tab-move" aria-pressed="false" onclick="toggleMapEdit()">Mozgatás</button>
     <button type="button" onclick="copyLink()">Link másolása</button>
+    <button type="button" id="save-png" onclick="exportPng()">PNG mentése</button>
     <button type="button" onclick="addGroup()">Új csoport</button>
     <button type="button" id="restore" onclick="restoreGuests()" hidden></button>
     <select id="base-plan" aria-label="Alapterv"><option value="S" selected>Mentett ültetés</option><option value="A">„A” változat — korrigált</option><option value="B">„B” változat — korrigált</option><option value="C">„C” változat — affinitás</option></select>
@@ -736,6 +737,9 @@ function svgText(x, y, text, size, color, anchor, weight) {
     '" font-family="system-ui, Arial, sans-serif">' + escaped + '</text>';
 }
 
+const MAP_W = 2400;
+const MAX_PNG_PIXELS = 16000000;
+const EXPORT_SCALES = [3, 2, 1.5, 1];
 const MAP_TABLE_TOP = 1080;
 const MAP_ROW_STEP = 700;
 const MAP_TABLE_REACH = 340;
@@ -894,18 +898,23 @@ function seatedTotal() {
     state.tables.reduce((sum, table) => sum + seats(table).length, 0);
 }
 
-function renderMap() {
-  const total = seatedTotal();
+function mapHeight() {
   const rows = Math.max(1, Math.ceil(state.tables.length / 2));
-  const lastRow = MAP_TABLE_TOP + (rows - 1) * MAP_ROW_STEP;
-  const height = lastRow + 1460;
-  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 ' + height + '">';
+  return MAP_TABLE_TOP + (rows - 1) * MAP_ROW_STEP + 1460;
+}
+
+function mapSvg() {
+  const total = seatedTotal();
+  const height = mapHeight();
+  const lastRow = height - 1460;
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + MAP_W + '" height="' + height +
+    '" viewBox="0 0 ' + MAP_W + ' ' + height + '">';
   svg += '<defs><pattern id="dance-tiles" width="120" height="120" patternUnits="userSpaceOnUse">' +
     '<rect width="120" height="120" fill="#10243a"/>' +
     '<rect width="60" height="60" fill="#f2edd9" opacity=".055"/>' +
     '<rect x="60" y="60" width="60" height="60" fill="#f2edd9" opacity=".055"/>' +
     '</pattern></defs>';
-  svg += '<rect width="2400" height="' + height + '" fill="#0d1d2d"/>';
+  svg += '<rect width="' + MAP_W + '" height="' + height + '" fill="#0d1d2d"/>';
   svg += '<rect x="64" y="230" width="2272" height="' + (height - 350) +
     '" rx="12" fill="#10243a" stroke="#243d56" stroke-width="4"/>';
   svg += svgText(1200, 92, "ÜLTETÉSI TÉRKÉP", 54, "#d6b36b", "middle", "700");
@@ -915,8 +924,115 @@ function renderMap() {
   state.tables.forEach((table, index) => { svg += mapTable(index, table); });
   svg += venueFeatures(lastRow + MAP_TABLE_REACH);
   svg += svgText(1200, height - 80, total + " fő", 28, "#d6b36b", "middle", "700");
-  svg += '</svg>';
-  document.getElementById("map").innerHTML = svg;
+  return svg + '</svg>';
+}
+
+function renderMap() {
+  document.getElementById("map").innerHTML = mapSvg();
+}
+
+// The picture always shows the clean map, never the move-mode scaffolding.
+function exportSvg() {
+  const wasEdit = mapEdit;
+  const wasPicked = picked;
+  const wasTable = pickedTable;
+  mapEdit = false;
+  picked = null;
+  pickedTable = null;
+  const svg = mapSvg();
+  mapEdit = wasEdit;
+  picked = wasPicked;
+  pickedTable = wasTable;
+  return svg;
+}
+
+// Bigger is sharper when zoomed on a phone, but every browser has a canvas
+// ceiling (Safari's is the low one) and busts it by going blank rather than
+// throwing. So try the largest first and keep halving until a real PNG lands.
+function exportScales(width, height) {
+  return EXPORT_SCALES.filter((scale, index) =>
+    index === EXPORT_SCALES.length - 1 || width * height * scale * scale <= MAX_PNG_PIXELS * 4);
+}
+
+function loadImage(source) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error("svg"));
+    image.src = source;
+  });
+}
+
+function canvasBlob(canvas) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("blob"))), "image/png");
+  });
+}
+
+async function deliverPng(blob, filename) {
+  const file = new File([blob], filename, { type: "image/png" });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], title: "Ültetési térkép" });
+      return "megosztva";
+    } catch (error) {
+      if (error && error.name === "AbortError") return "megszakítva";
+    }
+  }
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
+  return "letöltve";
+}
+
+// An over-budget canvas comes back blank, which still compresses to a tiny
+// PNG — so treat a suspiciously small file as a failure and step down.
+function looksBlank(blob, pixels) {
+  return blob.size < Math.max(20000, pixels / 400);
+}
+
+async function drawPng(image, width, height, scale) {
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.floor(width * scale);
+  canvas.height = Math.floor(height * scale);
+  if (!canvas.width || !canvas.height) return null;
+  const context = canvas.getContext("2d");
+  context.fillStyle = "#0d1d2d";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  const blob = await canvasBlob(canvas);
+  if (looksBlank(blob, canvas.width * canvas.height)) return null;
+  return { blob, width: canvas.width, height: canvas.height };
+}
+
+async function exportPng() {
+  const button = document.getElementById("save-png");
+  button.disabled = true;
+  status("PNG készítése…");
+  try {
+    const height = mapHeight();
+    const source = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(exportSvg());
+    const image = await loadImage(source);
+    let png = null;
+    for (const scale of exportScales(MAP_W, height)) {
+      try {
+        png = await drawPng(image, MAP_W, height, scale);
+      } catch (error) {
+        png = null;
+      }
+      if (png) break;
+    }
+    if (!png) throw new Error("canvas");
+    const what = await deliverPng(png.blob, "ultetesi-terkep.png");
+    status("PNG " + what + " (" + png.width + "×" + png.height + ", " +
+      Math.round(png.blob.size / 1024) + " kB).");
+  } catch (error) {
+    status("A PNG nem készült el.");
+  }
+  button.disabled = false;
 }
 
 function render() {
@@ -1101,7 +1217,7 @@ function resetPlan() {
   render();
 }
 
-Object.assign(window, { showView, toggleNames, toggleMapEdit, copyLink, addGroup, resetPlan, restoreGuests });
+Object.assign(window, { showView, toggleNames, toggleMapEdit, copyLink, exportPng, addGroup, resetPlan, restoreGuests });
 document.getElementById("map").addEventListener("click", mapClick);
 render();
 if (typeof location !== "undefined") applySharedLink();
