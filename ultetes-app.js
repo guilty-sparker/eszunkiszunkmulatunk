@@ -645,10 +645,17 @@ function svgText(x, y, text, size, color, anchor, weight) {
     '" font-family="system-ui, Arial, sans-serif">' + escaped + '</text>';
 }
 
+const MAP_TABLE_TOP = 1080;
+const MAP_ROW_STEP = 700;
+const MAP_TABLE_REACH = 340;
+const DANCE_W = 1200;
+const DANCE_H = 380;
+const ICON_SCALE = 1.4;
+
 function mapTable(index, table) {
   const angle = (index % 2 === 0 ? -38 : 38) * Math.PI / 180;
   const cx = index % 2 === 0 ? 650 : 1750;
-  const cy = 1080 + Math.floor(index / 2) * 700;
+  const cy = MAP_TABLE_TOP + Math.floor(index / 2) * MAP_ROW_STEP;
   const dx = Math.cos(angle);
   const dy = Math.sin(angle);
   const nx = -dy;
@@ -686,6 +693,49 @@ function mapTable(index, table) {
   return '<g>' + out + '</g>';
 }
 
+function stroke(shape) {
+  return '<' + shape + ' fill="none" stroke="#d6b36b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>';
+}
+
+// Icons are drawn around (0, 0) at their natural size, then scaled into place.
+function icon(cx, cy, shapes, label) {
+  return '<g transform="translate(' + cx + ' ' + cy + ') scale(' + ICON_SCALE + ')">' + shapes + '</g>' +
+    svgText(cx, cy + 152 * ICON_SCALE, label, 34, "#d6b36b", "middle", "700");
+}
+
+function danceFloor(cx, cy, width, height) {
+  const out = '<rect x="' + (cx - width / 2) + '" y="' + (cy - height / 2) + '" width="' + width +
+    '" height="' + height + '" rx="18" fill="url(#dance-tiles)" stroke="#d6b36b" stroke-width="5"/>';
+  return '<g>' + out + svgText(cx, cy + 12, "TÁNCPARKETT", 34, "#d6b36b", "middle", "700") + '</g>';
+}
+
+function barIcon(cx, cy) {
+  let out = stroke('rect x="-115" y="40" width="230" height="18" rx="5"');
+  out += stroke('rect x="-100" y="58" width="200" height="50" rx="4"');
+  out += stroke('rect x="-72" y="-40" width="34" height="80" rx="7"');
+  out += stroke('rect x="-61" y="-72" width="12" height="32" rx="4"');
+  [15, 72].forEach((gx) => {
+    out += stroke('path d="M' + (gx - 22) + ' -30H' + (gx + 22) + 'L' + gx + ' 2Z"');
+    out += stroke('path d="M' + gx + ' 2V34M' + (gx - 16) + ' 34H' + (gx + 16) + '"');
+  });
+  return icon(cx, cy, out, "BÁR");
+}
+
+function bandIcon(cx, cy) {
+  let out = stroke('circle cx="-30" cy="30" r="62"');
+  out += stroke('circle cx="-30" cy="30" r="24"');
+  out += stroke('path d="M-78 78L-96 104M18 78L36 104"');
+  out += stroke('path d="M80 -34V92M58 108L80 92L102 108"');
+  out += stroke('path d="M34 -30Q80 -54 126 -34"');
+  return icon(cx, cy, out, "ZENEKAR");
+}
+
+function venueFeatures(topY) {
+  const danceCy = topY + 120 + DANCE_H / 2;
+  const iconCy = danceCy + DANCE_H / 2 + 200;
+  return danceFloor(1200, danceCy, DANCE_W, DANCE_H) + barIcon(780, iconCy) + bandIcon(1620, iconCy);
+}
+
 function seatedTotal() {
   return state.head.filter(Boolean).length +
     state.tables.reduce((sum, table) => sum + seats(table).length, 0);
@@ -694,8 +744,14 @@ function seatedTotal() {
 function renderMap() {
   const total = seatedTotal();
   const rows = Math.max(1, Math.ceil(state.tables.length / 2));
-  const height = 1080 + (rows - 1) * 700 + 720;
+  const lastRow = MAP_TABLE_TOP + (rows - 1) * MAP_ROW_STEP;
+  const height = lastRow + 1460;
   let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 ' + height + '">';
+  svg += '<defs><pattern id="dance-tiles" width="120" height="120" patternUnits="userSpaceOnUse">' +
+    '<rect width="120" height="120" fill="#10243a"/>' +
+    '<rect width="60" height="60" fill="#f2edd9" opacity=".055"/>' +
+    '<rect x="60" y="60" width="60" height="60" fill="#f2edd9" opacity=".055"/>' +
+    '</pattern></defs>';
   svg += '<rect width="2400" height="' + height + '" fill="#0d1d2d"/>';
   svg += '<rect x="64" y="230" width="2272" height="' + (height - 350) +
     '" rx="12" fill="#10243a" stroke="#243d56" stroke-width="4"/>';
@@ -716,6 +772,7 @@ function renderMap() {
     svg += svgText(x, 440, displayName(person), 25, "#f4f0e3", "middle", "600");
   });
   state.tables.forEach((table, index) => { svg += mapTable(index, table); });
+  svg += venueFeatures(lastRow + MAP_TABLE_REACH);
   svg += svgText(1200, height - 80, total + " fő", 28, "#d6b36b", "middle", "700");
   svg += '</svg>';
   document.getElementById("map").innerHTML = svg;
