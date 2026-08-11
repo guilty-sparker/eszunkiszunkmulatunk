@@ -130,6 +130,8 @@ section h2 span { color: #9eb0c0; font-weight: 500; }
 .dot { width: 11px; height: 11px; border-radius: 50%; flex: 0 0 auto; background: #9bc9d5; }
 #map { overflow: auto; }
 #map svg { display: block; width: min(100%, 1400px); min-width: 760px; height: auto; margin: 0 auto; }
+#map svg text { pointer-events: none; }
+#map .seat-hit { cursor: pointer; }
 .hidden { display: none; }
 .count-warn { color: #efbf8c; }
 
@@ -144,6 +146,7 @@ document.getElementById('seating-root').innerHTML = `<header>
     <button type="button" id="tab-edit" aria-pressed="true" onclick="showView('edit')">Szerkesztés</button>
     <button type="button" id="tab-map" aria-pressed="false" onclick="showView('map')">Térkép</button>
     <button type="button" id="tab-names" aria-pressed="false" onclick="toggleNames()">Nevek</button>
+    <button type="button" id="tab-move" aria-pressed="false" onclick="toggleMapEdit()">Mozgatás</button>
     <button type="button" onclick="copyLink()">Link másolása</button>
     <button type="button" onclick="addGroup()">Új csoport</button>
     <button type="button" id="restore" onclick="restoreGuests()" hidden></button>
@@ -183,6 +186,7 @@ let state = load();
 let picked = null;
 let pending = null;
 let renameMode = false;
+let mapEdit = false;
 
 function status(message) {
   document.getElementById("status").textContent = message;
@@ -284,9 +288,51 @@ function toggleNames() {
   renameMode = !renameMode;
   picked = null;
   pending = null;
+  if (renameMode) mapEdit = false;
   document.getElementById("tab-names").setAttribute("aria-pressed", String(renameMode));
+  document.getElementById("tab-move").setAttribute("aria-pressed", String(mapEdit));
   if (renameMode) showView("edit");
   status(renameMode ? "Névszerkesztés: írd át a nevet, vagy töröld a vendéget a ✕ gombbal." : "");
+  render();
+}
+
+function toggleMapEdit() {
+  mapEdit = !mapEdit;
+  picked = null;
+  pending = null;
+  if (mapEdit) renameMode = false;
+  document.getElementById("tab-move").setAttribute("aria-pressed", String(mapEdit));
+  document.getElementById("tab-names").setAttribute("aria-pressed", String(renameMode));
+  if (mapEdit) showView("map");
+  status(mapEdit ? "Mozgatás: koppints egy névre, majd a célhelyre." : "");
+  render();
+}
+
+function mapClick(event) {
+  if (!mapEdit) return;
+  const hit = event.target.closest && event.target.closest("[data-seat]");
+  if (!hit) {
+    if (picked) {
+      picked = null;
+      status("Mozgatás: koppints egy névre, majd a célhelyre.");
+      render();
+    }
+    return;
+  }
+  const place = {
+    table: Number(hit.getAttribute("data-table")),
+    side: hit.getAttribute("data-side"),
+    index: Number(hit.getAttribute("data-index")),
+  };
+  if (picked) {
+    moveSeat(picked, place);
+    status("Mozgatás: koppints egy névre, majd a célhelyre.");
+    return;
+  }
+  const person = seatArray(place)[place.index];
+  if (!person) return;
+  picked = place;
+  status(displayName(person) + " kiválasztva — koppints a célhelyre.");
   render();
 }
 
@@ -651,6 +697,32 @@ const MAP_TABLE_REACH = 340;
 const DANCE_W = 1200;
 const DANCE_H = 380;
 const ICON_SCALE = 1.4;
+const SEAT_HIT_R = 40;
+
+// Draws one seat: the guest's dot, or a dashed slot while moving, plus the
+// selection ring and the tap target. Empty slots exist only in move mode.
+function mapSeat(place, person, x, y, radius, fill) {
+  const cx = x.toFixed(1);
+  const cy = y.toFixed(1);
+  let out = "";
+  if (person) {
+    out += '<circle cx="' + cx + '" cy="' + cy + '" r="' + radius + '" fill="' + fill +
+      '" stroke="#102033" stroke-width="3"/>';
+  } else if (mapEdit) {
+    out += '<circle cx="' + cx + '" cy="' + cy + '" r="' + radius +
+      '" fill="none" stroke="#4f6c88" stroke-width="3" stroke-dasharray="7 7"/>';
+  }
+  if (mapEdit && samePlace(picked, place)) {
+    out += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (radius + 12) +
+      '" fill="none" stroke="#d6b36b" stroke-width="5"/>';
+  }
+  if (mapEdit) {
+    out += '<circle class="seat-hit" data-seat="1" data-table="' + place.table + '" data-side="' +
+      place.side + '" data-index="' + place.index + '" cx="' + cx + '" cy="' + cy +
+      '" r="' + SEAT_HIT_R + '" fill="transparent"/>';
+  }
+  return out;
+}
 
 function mapTable(index, table) {
   const angle = (index % 2 === 0 ? -38 : 38) * Math.PI / 180;
@@ -661,36 +733,60 @@ function mapTable(index, table) {
   const nx = -dy;
   const ny = dx;
   const length = 830;
+  const slots = rowCount(table) + 1;
   let out = '<line x1="' + (cx - dx * length / 2).toFixed(1) + '" y1="' + (cy - dy * length / 2).toFixed(1) +
     '" x2="' + (cx + dx * length / 2).toFixed(1) + '" y2="' + (cy + dy * length / 2).toFixed(1) +
     '" stroke="#f2edd9" stroke-width="82" stroke-linecap="round"/>';
   out += svgText(cx, cy - 350, tableHeading(index), 26, "#d6b36b", "middle", "700");
   [table.left, table.right].forEach((guests, sideIndex) => {
     const side = sideIndex === 0 ? -1 : 1;
-    guests.forEach((person, seat) => {
-      if (!person) return;
-      const fraction = guests.length === 1 ? 0.5 : seat / (guests.length - 1);
+    const sideName = sideIndex === 0 ? "left" : "right";
+    for (let seat = 0; seat < slots; seat += 1) {
+      const person = guests[seat] || null;
+      if (!person && !mapEdit) continue;
+      const fraction = slots === 1 ? 0.5 : seat / (slots - 1);
       const along = (fraction - 0.5) * length * 0.88;
       const mx = cx + dx * along + nx * side * 92;
       const my = cy + dy * along + ny * side * 92;
       const outward = nx * side;
       const anchor = outward >= 0 ? "start" : "end";
-      out += '<circle cx="' + mx.toFixed(1) + '" cy="' + my.toFixed(1) + '" r="20" fill="' +
-        (sideIndex === 0 ? "#9bc9d5" : "#efbf8c") + '" stroke="#102033" stroke-width="3"/>';
-      out += svgText(mx + outward * 34, my + 8, displayName(person), 25, "#f4f0e3", anchor, "600");
-    });
+      out += mapSeat({ table: index, side: sideName, index: seat }, person, mx, my, 20,
+        sideIndex === 0 ? "#9bc9d5" : "#efbf8c");
+      if (person) {
+        out += svgText(mx + outward * 34, my + 8, displayName(person), 25, "#f4f0e3", anchor, "600");
+      }
+    }
   });
-  (table.edge || []).slice(0, 2).forEach((person, slot) => {
-    if (!person) return;
+  for (let slot = 0; slot < EDGE_SLOTS; slot += 1) {
+    const person = (table.edge || [])[slot] || null;
+    if (!person && !mapEdit) continue;
     const direction = slot === 0 ? -1 : 1;
     const reach = length / 2 + 62;
     const bx = cx + dx * direction * reach;
     const by = cy + dy * direction * reach;
-    out += '<circle cx="' + bx.toFixed(1) + '" cy="' + by.toFixed(1) +
-      '" r="16" fill="#c7b0e3" stroke="#102033" stroke-width="3"/>';
-    out += svgText(bx, by + (direction < 0 ? -26 : 37), displayName(person) + " (baba)", 22, "#e6dcf6", "middle", "600");
-  });
+    out += mapSeat({ table: index, side: "edge", index: slot }, person, bx, by, 16, "#c7b0e3");
+    if (person) {
+      out += svgText(bx, by + (direction < 0 ? -26 : 37), displayName(person) + " (baba)", 22, "#e6dcf6", "middle", "600");
+    }
+  }
   return '<g>' + out + '</g>';
+}
+
+function mapHead() {
+  const slots = state.head.length + 1;
+  const headSpan = Math.max(1100, (slots - 1) * 280);
+  const headStart = 1200 - headSpan / 2;
+  let out = '<line x1="' + (headStart - 60).toFixed(1) + '" y1="580" x2="' + (headStart + headSpan + 60).toFixed(1) +
+    '" y2="580" stroke="#f2edd9" stroke-width="92" stroke-linecap="round"/>';
+  for (let i = 0; i < slots; i += 1) {
+    const person = state.head[i] || null;
+    if (!person && !mapEdit) continue;
+    const x = slots === 1 ? 1200 : headStart + (i * headSpan) / (slots - 1);
+    out += mapSeat({ table: -1, side: "head", index: i }, person, x, 485, 22,
+      i % 2 === 0 ? "#9bc9d5" : "#efbf8c");
+    if (person) out += svgText(x, 440, displayName(person), 25, "#f4f0e3", "middle", "600");
+  }
+  return out;
 }
 
 function stroke(shape) {
@@ -758,19 +854,7 @@ function renderMap() {
   svg += svgText(1200, 92, "ÜLTETÉSI TÉRKÉP", 54, "#d6b36b", "middle", "700");
   svg += svgText(1200, 160, SUBTITLES[baseVersion], 28, "#f4f0e3", "middle", "400");
   svg += svgText(1200, 300, "FŐASZTAL", 27, "#d6b36b", "middle", "700");
-  const headGuests = state.head.filter(Boolean);
-  const headSpan = Math.max(1100, (headGuests.length - 1) * 280);
-  const headStart = 1200 - headSpan / 2;
-  svg += '<line x1="' + (headStart - 60).toFixed(1) + '" y1="580" x2="' + (headStart + headSpan + 60).toFixed(1) +
-    '" y2="580" stroke="#f2edd9" stroke-width="92" stroke-linecap="round"/>';
-  headGuests.forEach((person, index) => {
-    const x = headGuests.length === 1
-      ? 1200
-      : headStart + (index * headSpan) / (headGuests.length - 1);
-    svg += '<circle cx="' + x.toFixed(1) + '" cy="485" r="22" fill="' +
-      (index % 2 === 0 ? "#9bc9d5" : "#efbf8c") + '" stroke="#102033" stroke-width="3"/>';
-    svg += svgText(x, 440, displayName(person), 25, "#f4f0e3", "middle", "600");
-  });
+  svg += mapHead();
   state.tables.forEach((table, index) => { svg += mapTable(index, table); });
   svg += venueFeatures(lastRow + MAP_TABLE_REACH);
   svg += svgText(1200, height - 80, total + " fő", 28, "#d6b36b", "middle", "700");
@@ -958,6 +1042,7 @@ function resetPlan() {
   render();
 }
 
-Object.assign(window, { showView, toggleNames, copyLink, addGroup, resetPlan, restoreGuests });
+Object.assign(window, { showView, toggleNames, toggleMapEdit, copyLink, addGroup, resetPlan, restoreGuests });
+document.getElementById("map").addEventListener("click", mapClick);
 render();
 if (typeof location !== "undefined") applySharedLink();
