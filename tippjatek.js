@@ -15,7 +15,11 @@ const EVERYONE = INITIAL.head
 
 const BY_ID = new Map(EVERYONE.map((person) => [person.id, person]));
 
-let lang = localStorage.getItem("preferredLang") || "hu";
+// Only the languages this page actually offers, read off the flags in the
+// markup. A guest whose site preference is Romanian lands on Hungarian.
+const POLL_LANGS = [...document.querySelectorAll(".poll-lang")].map((b) => b.dataset.lang);
+const preferred = localStorage.getItem("preferredLang");
+let lang = POLL_LANGS.includes(preferred) ? preferred : "hu";
 let copy = window.getPoll(lang);
 let guest = BY_ID.has(localStorage.getItem(GUEST_KEY)) ? localStorage.getItem(GUEST_KEY) : null;
 let myVotes = {};
