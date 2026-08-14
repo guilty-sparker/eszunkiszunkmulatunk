@@ -68,7 +68,7 @@
   },
   "poll": {
     "title": "Predictions",
-    "intro": "Eight questions about the big day. Pick your name, place your guesses, then see what everyone else thinks. One answer per question, and no going back.",
+    "intro": "Ten questions about the two of us. Pick your name, place your guesses, then see what everyone else thinks. One answer per question, and no going back.",
     "namePrompt": "Start typing your name",
     "namePlaceholder": "Name…",
     "noMatch": "No such name on the guest list.",
@@ -82,177 +82,141 @@
     "questions": [
       {
         "id": "q1",
-        "text": "Who cries first at the ceremony?",
+        "text": "🍻 Who says “I’m not drinking any more” first?",
         "options": [
           {
-            "id": "a",
-            "text": "The groom"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "The bride"
-          },
-          {
-            "id": "c",
-            "text": "The mothers"
-          },
-          {
-            "id": "d",
-            "text": "Nobody"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q2",
-        "text": "When does the last guest go home?",
+        "text": "🕺 Who ends up dancing on the table first?",
         "options": [
           {
-            "id": "a",
-            "text": "Before midnight"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "Between 1am and 3am"
-          },
-          {
-            "id": "c",
-            "text": "Between 3am and 5am"
-          },
-          {
-            "id": "d",
-            "text": "After sunrise"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q3",
-        "text": "How late does the ceremony start?",
+        "text": "🏠 Who says “can we go home already” first?",
         "options": [
           {
-            "id": "a",
-            "text": "Right on time"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "1–10 minutes"
-          },
-          {
-            "id": "c",
-            "text": "11–30 minutes"
-          },
-          {
-            "id": "d",
-            "text": "More than half an hour"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q4",
-        "text": "Who gives the longest toast?",
+        "text": "🗺️ Who would get lost even with GPS?",
         "options": [
           {
-            "id": "a",
-            "text": "The master of ceremonies"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "One of the fathers"
-          },
-          {
-            "id": "c",
-            "text": "A witness"
-          },
-          {
-            "id": "d",
-            "text": "The groom"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q5",
-        "text": "Who is last to leave the dance floor?",
+        "text": "🏝️ Who would last longer on a desert island?",
         "options": [
           {
-            "id": "a",
-            "text": "The groom"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "The bride"
-          },
-          {
-            "id": "c",
-            "text": "The witnesses"
-          },
-          {
-            "id": "d",
-            "text": "A grandparent"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q6",
-        "text": "Which music fills the dance floor?",
+        "text": "🤬 Who would start a completely pointless argument and insist they were right?",
         "options": [
           {
-            "id": "a",
-            "text": "Hungarian party classics"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "2000s hits"
-          },
-          {
-            "id": "c",
-            "text": "Slow and romantic"
-          },
-          {
-            "id": "d",
-            "text": "Modern pop"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q7",
-        "text": "How much of the cake gets eaten?",
+        "text": "👻 Who would last longer alone through a horror film?",
         "options": [
           {
-            "id": "a",
-            "text": "Less than there is"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "Exactly all of it"
-          },
-          {
-            "id": "c",
-            "text": "All of it, and they ask for more"
-          },
-          {
-            "id": "d",
-            "text": "There is some left for breakfast"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q8",
-        "text": "Who catches the bouquet?",
+        "text": "🔍 Who could spend 20 minutes looking for something they were holding the whole time?",
         "options": [
           {
-            "id": "a",
-            "text": "A single friend"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "A relative"
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q9",
+        "text": "🍕 Who would take “just one bite” of someone else’s food and end up eating half?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
-            "id": "c",
-            "text": "Someone already taken"
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q10",
+        "text": "💡 Who would buy something completely pointless purely because it looked like a hell of a deal?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
-            "id": "d",
-            "text": "Nobody catches it"
+            "id": "b",
+            "text": "👰 Bea"
           }
         ]
       }

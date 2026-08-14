@@ -243,8 +243,29 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible" && guest) renderPoll();
 });
 
-document.getElementById("poll-title").textContent = copy.title;
-document.getElementById("poll-intro").textContent = copy.intro;
+// --- language ---------------------------------------------------------------
 
-if (guest) renderPoll();
-else renderPicker();
+function applyLanguage() {
+  copy = window.getPoll(lang);
+  document.documentElement.lang = lang;
+  document.getElementById("poll-title").textContent = copy.title;
+  document.getElementById("poll-intro").textContent = copy.intro;
+  for (const button of document.querySelectorAll(".poll-lang")) {
+    button.setAttribute("aria-pressed", String(button.dataset.lang === lang));
+  }
+  // Question ids are language-independent, so a switch is a pure re-render:
+  // votes already cast stay locked and the counts stay put.
+  if (guest) renderPoll();
+  else renderPicker();
+}
+
+for (const button of document.querySelectorAll(".poll-lang")) {
+  button.addEventListener("click", () => {
+    lang = button.dataset.lang;
+    // Shared with the rest of the site, so the choice follows the guest back.
+    localStorage.setItem("preferredLang", lang);
+    applyLanguage();
+  });
+}
+
+applyLanguage();

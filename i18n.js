@@ -81,7 +81,7 @@ const translationsData = {
       "yourPick": "a te tipped",
       "leading": "vezet",
       "allDone": "Minden tipp leadva. Augusztus 22-én kiderül.",
-      "intro": "Nyolc kérdés a nagy napról. Válaszd ki a neved, tippelj, aztán nézd meg, mit gondolnak a többiek. Tippenként egy válasz, és nincs visszaút.",
+      "intro": "Tíz kérdés rólunk kettőnkről. Válaszd ki a neved, tippelj, aztán nézd meg, mit gondolnak a többiek. Kérdésenként egy tipp, és nincs visszaút.",
       "namePrompt": "Kezdd el beírni a neved",
       "namePlaceholder": "Név…",
       "noMatch": "Nincs ilyen név a vendéglistán.",
@@ -95,177 +95,141 @@ const translationsData = {
       "questions": [
         {
           "id": "q1",
-          "text": "Ki sír először a ceremónián?",
+          "text": "🍻 Ki mondja hamarabb, hogy „Én már nem iszom többet”?",
           "options": [
             {
-              "id": "a",
-              "text": "A vőlegény"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "A menyasszony"
-            },
-            {
-              "id": "c",
-              "text": "Az anyukák"
-            },
-            {
-              "id": "d",
-              "text": "Senki"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q2",
-          "text": "Mikor megy haza az utolsó vendég?",
+          "text": "🕺 Ki fog előbb táncolni az asztalon?",
           "options": [
             {
-              "id": "a",
-              "text": "Éjfél előtt"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "01:00 és 03:00 között"
-            },
-            {
-              "id": "c",
-              "text": "03:00 és 05:00 között"
-            },
-            {
-              "id": "d",
-              "text": "Napfelkelte után"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q3",
-          "text": "Mennyit késik a ceremónia kezdete?",
+          "text": "🏠 Ki fogja előbb azt mondani, hogy „Menjünk már haza”?",
           "options": [
             {
-              "id": "a",
-              "text": "Pontosan kezdődik"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "1–10 percet"
-            },
-            {
-              "id": "c",
-              "text": "11–30 percet"
-            },
-            {
-              "id": "d",
-              "text": "Több mint fél órát"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q4",
-          "text": "Ki mondja a leghosszabb pohárköszöntőt?",
+          "text": "🗺️ Ki tévedne el előbb GPS-szel is?",
           "options": [
             {
-              "id": "a",
-              "text": "A násznagy"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "Az egyik apuka"
-            },
-            {
-              "id": "c",
-              "text": "Egy tanú"
-            },
-            {
-              "id": "d",
-              "text": "A vőlegény"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q5",
-          "text": "Ki marad utoljára a táncparketten?",
+          "text": "🏝️ Ki tudna tovább élni egy lakatlan szigeten?",
           "options": [
             {
-              "id": "a",
-              "text": "A vőlegény"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "A menyasszony"
-            },
-            {
-              "id": "c",
-              "text": "A tanúk"
-            },
-            {
-              "id": "d",
-              "text": "Egy nagyszülő"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q6",
-          "text": "Melyik zenére táncol a legtöbb ember?",
+          "text": "🤬 Ki kezdene el egy teljesen értelmetlen vitát, és ragaszkodna hozzá, hogy neki van igaza?",
           "options": [
             {
-              "id": "a",
-              "text": "Mulatós"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "A 2000-es évek slágerei"
-            },
-            {
-              "id": "c",
-              "text": "Lassú, romantikus"
-            },
-            {
-              "id": "d",
-              "text": "Modern pop"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q7",
-          "text": "Hány tányér tortát esznek meg a vendégek?",
+          "text": "👻 Ki bírná tovább egyedül egy horrorfilmben?",
           "options": [
             {
-              "id": "a",
-              "text": "Kevesebbet, mint amennyi van"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "Pont annyit"
-            },
-            {
-              "id": "c",
-              "text": "Mindet, és kérnek még"
-            },
-            {
-              "id": "d",
-              "text": "Marad reggelire is"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q8",
-          "text": "Ki kapja el a menyasszonyi csokrot?",
+          "text": "🔍 Ki lenne képes 20 percig keresni valamit, ami végig a kezében volt?",
           "options": [
             {
-              "id": "a",
-              "text": "Egy egyedülálló barátnő"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "Egy rokon"
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q9",
+          "text": "🍕 Ki enne meg egy másik ember kajájából „csak egy falatot”, majd végül a felét?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
-              "id": "c",
-              "text": "Valaki, aki már foglalt"
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q10",
+          "text": "💡 Ki venne egy teljesen értelmetlen dolgot csak azért, mert kurva jó dealnek tűnt?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
-              "id": "d",
-              "text": "Senki nem kapja el"
+              "id": "b",
+              "text": "👰 Bea"
             }
           ]
         }
@@ -352,7 +316,7 @@ const translationsData = {
       "yourPick": "your pick",
       "leading": "leading",
       "allDone": "All guesses are in. We find out on 22 August.",
-      "intro": "Eight questions about the big day. Pick your name, place your guesses, then see what everyone else thinks. One answer per question, and no going back.",
+      "intro": "Ten questions about the two of us. Pick your name, place your guesses, then see what everyone else thinks. One answer per question, and no going back.",
       "namePrompt": "Start typing your name",
       "namePlaceholder": "Name…",
       "noMatch": "No such name on the guest list.",
@@ -366,177 +330,141 @@ const translationsData = {
       "questions": [
         {
           "id": "q1",
-          "text": "Who cries first at the ceremony?",
+          "text": "🍻 Who says “I’m not drinking any more” first?",
           "options": [
             {
-              "id": "a",
-              "text": "The groom"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "The bride"
-            },
-            {
-              "id": "c",
-              "text": "The mothers"
-            },
-            {
-              "id": "d",
-              "text": "Nobody"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q2",
-          "text": "When does the last guest go home?",
+          "text": "🕺 Who ends up dancing on the table first?",
           "options": [
             {
-              "id": "a",
-              "text": "Before midnight"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "Between 1am and 3am"
-            },
-            {
-              "id": "c",
-              "text": "Between 3am and 5am"
-            },
-            {
-              "id": "d",
-              "text": "After sunrise"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q3",
-          "text": "How late does the ceremony start?",
+          "text": "🏠 Who says “can we go home already” first?",
           "options": [
             {
-              "id": "a",
-              "text": "Right on time"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "1–10 minutes"
-            },
-            {
-              "id": "c",
-              "text": "11–30 minutes"
-            },
-            {
-              "id": "d",
-              "text": "More than half an hour"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q4",
-          "text": "Who gives the longest toast?",
+          "text": "🗺️ Who would get lost even with GPS?",
           "options": [
             {
-              "id": "a",
-              "text": "The master of ceremonies"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "One of the fathers"
-            },
-            {
-              "id": "c",
-              "text": "A witness"
-            },
-            {
-              "id": "d",
-              "text": "The groom"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q5",
-          "text": "Who is last to leave the dance floor?",
+          "text": "🏝️ Who would last longer on a desert island?",
           "options": [
             {
-              "id": "a",
-              "text": "The groom"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "The bride"
-            },
-            {
-              "id": "c",
-              "text": "The witnesses"
-            },
-            {
-              "id": "d",
-              "text": "A grandparent"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q6",
-          "text": "Which music fills the dance floor?",
+          "text": "🤬 Who would start a completely pointless argument and insist they were right?",
           "options": [
             {
-              "id": "a",
-              "text": "Hungarian party classics"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "2000s hits"
-            },
-            {
-              "id": "c",
-              "text": "Slow and romantic"
-            },
-            {
-              "id": "d",
-              "text": "Modern pop"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q7",
-          "text": "How much of the cake gets eaten?",
+          "text": "👻 Who would last longer alone through a horror film?",
           "options": [
             {
-              "id": "a",
-              "text": "Less than there is"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "Exactly all of it"
-            },
-            {
-              "id": "c",
-              "text": "All of it, and they ask for more"
-            },
-            {
-              "id": "d",
-              "text": "There is some left for breakfast"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q8",
-          "text": "Who catches the bouquet?",
+          "text": "🔍 Who could spend 20 minutes looking for something they were holding the whole time?",
           "options": [
             {
-              "id": "a",
-              "text": "A single friend"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "A relative"
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q9",
+          "text": "🍕 Who would take “just one bite” of someone else’s food and end up eating half?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
-              "id": "c",
-              "text": "Someone already taken"
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q10",
+          "text": "💡 Who would buy something completely pointless purely because it looked like a hell of a deal?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
-              "id": "d",
-              "text": "Nobody catches it"
+              "id": "b",
+              "text": "👰 Bea"
             }
           ]
         }
@@ -623,7 +551,7 @@ const translationsData = {
       "yourPick": "alegerea ta",
       "leading": "conduce",
       "allDone": "Toate răspunsurile au fost trimise. Aflăm pe 22 august.",
-      "intro": "Opt întrebări despre ziua cea mare. Alege-ți numele, ghicește, apoi vezi ce cred ceilalți. Un răspuns per întrebare și fără cale de întoarcere.",
+      "intro": "Zece întrebări despre noi doi. Alege-ți numele, ghicește, apoi vezi ce cred ceilalți. Un răspuns per întrebare și fără cale de întoarcere.",
       "namePrompt": "Începe să îți scrii numele",
       "namePlaceholder": "Nume…",
       "noMatch": "Nu există acest nume pe lista invitaților.",
@@ -637,177 +565,141 @@ const translationsData = {
       "questions": [
         {
           "id": "q1",
-          "text": "Cine plânge primul la ceremonie?",
+          "text": "🍻 Cine spune primul „Eu nu mai beau nimic”?",
           "options": [
             {
-              "id": "a",
-              "text": "Mirele"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "Mireasa"
-            },
-            {
-              "id": "c",
-              "text": "Mamele"
-            },
-            {
-              "id": "d",
-              "text": "Nimeni"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q2",
-          "text": "Când pleacă acasă ultimul invitat?",
+          "text": "🕺 Cine ajunge primul să danseze pe masă?",
           "options": [
             {
-              "id": "a",
-              "text": "Înainte de miezul nopții"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "Între 01:00 și 03:00"
-            },
-            {
-              "id": "c",
-              "text": "Între 03:00 și 05:00"
-            },
-            {
-              "id": "d",
-              "text": "După răsărit"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q3",
-          "text": "Cu cât întârzie începutul ceremoniei?",
+          "text": "🏠 Cine spune primul „Hai să mergem acasă”?",
           "options": [
             {
-              "id": "a",
-              "text": "Începe la fix"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "1–10 minute"
-            },
-            {
-              "id": "c",
-              "text": "11–30 de minute"
-            },
-            {
-              "id": "d",
-              "text": "Peste o jumătate de oră"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q4",
-          "text": "Cine ține cel mai lung toast?",
+          "text": "🗺️ Cine s-ar rătăci chiar și cu GPS-ul?",
           "options": [
             {
-              "id": "a",
-              "text": "Nașul"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "Unul dintre tați"
-            },
-            {
-              "id": "c",
-              "text": "Un martor"
-            },
-            {
-              "id": "d",
-              "text": "Mirele"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q5",
-          "text": "Cine rămâne ultimul pe ringul de dans?",
+          "text": "🏝️ Cine ar rezista mai mult pe o insulă pustie?",
           "options": [
             {
-              "id": "a",
-              "text": "Mirele"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "Mireasa"
-            },
-            {
-              "id": "c",
-              "text": "Martorii"
-            },
-            {
-              "id": "d",
-              "text": "Un bunic"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q6",
-          "text": "Pe ce muzică dansează cei mai mulți?",
+          "text": "🤬 Cine ar începe o ceartă complet inutilă și ar insista că are dreptate?",
           "options": [
             {
-              "id": "a",
-              "text": "Muzică populară maghiară"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "Hituri din anii 2000"
-            },
-            {
-              "id": "c",
-              "text": "Lent și romantic"
-            },
-            {
-              "id": "d",
-              "text": "Pop modern"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q7",
-          "text": "Cât din tort se mănâncă?",
+          "text": "👻 Cine ar rezista mai mult singur la un film de groază?",
           "options": [
             {
-              "id": "a",
-              "text": "Mai puțin decât este"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "Exact tot"
-            },
-            {
-              "id": "c",
-              "text": "Tot, și mai cer"
-            },
-            {
-              "id": "d",
-              "text": "Rămâne și pentru micul dejun"
+              "text": "👰 Bea"
             }
           ]
         },
         {
           "id": "q8",
-          "text": "Cine prinde buchetul miresei?",
+          "text": "🔍 Cine ar căuta 20 de minute ceva ce a avut tot timpul în mână?",
           "options": [
             {
-              "id": "a",
-              "text": "O prietenă necăsătorită"
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
               "id": "b",
-              "text": "O rudă"
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q9",
+          "text": "🍕 Cine ar lua „doar o îmbucătură” din mâncarea altuia și ar termina jumătate?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
-              "id": "c",
-              "text": "Cineva deja într-o relație"
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q10",
+          "text": "💡 Cine ar cumpăra ceva complet inutil doar pentru că părea o ofertă al naibii de bună?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
             },
             {
-              "id": "d",
-              "text": "Nimeni nu îl prinde"
+              "id": "b",
+              "text": "👰 Bea"
             }
           ]
         }

@@ -68,7 +68,7 @@
   },
   "poll": {
     "title": "Tippjáték",
-    "intro": "Nyolc kérdés a nagy napról. Válaszd ki a neved, tippelj, aztán nézd meg, mit gondolnak a többiek. Tippenként egy válasz, és nincs visszaút.",
+    "intro": "Tíz kérdés rólunk kettőnkről. Válaszd ki a neved, tippelj, aztán nézd meg, mit gondolnak a többiek. Kérdésenként egy tipp, és nincs visszaút.",
     "namePrompt": "Kezdd el beírni a neved",
     "namePlaceholder": "Név…",
     "noMatch": "Nincs ilyen név a vendéglistán.",
@@ -82,177 +82,141 @@
     "questions": [
       {
         "id": "q1",
-        "text": "Ki sír először a ceremónián?",
+        "text": "🍻 Ki mondja hamarabb, hogy „Én már nem iszom többet”?",
         "options": [
           {
-            "id": "a",
-            "text": "A vőlegény"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "A menyasszony"
-          },
-          {
-            "id": "c",
-            "text": "Az anyukák"
-          },
-          {
-            "id": "d",
-            "text": "Senki"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q2",
-        "text": "Mikor megy haza az utolsó vendég?",
+        "text": "🕺 Ki fog előbb táncolni az asztalon?",
         "options": [
           {
-            "id": "a",
-            "text": "Éjfél előtt"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "01:00 és 03:00 között"
-          },
-          {
-            "id": "c",
-            "text": "03:00 és 05:00 között"
-          },
-          {
-            "id": "d",
-            "text": "Napfelkelte után"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q3",
-        "text": "Mennyit késik a ceremónia kezdete?",
+        "text": "🏠 Ki fogja előbb azt mondani, hogy „Menjünk már haza”?",
         "options": [
           {
-            "id": "a",
-            "text": "Pontosan kezdődik"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "1–10 percet"
-          },
-          {
-            "id": "c",
-            "text": "11–30 percet"
-          },
-          {
-            "id": "d",
-            "text": "Több mint fél órát"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q4",
-        "text": "Ki mondja a leghosszabb pohárköszöntőt?",
+        "text": "🗺️ Ki tévedne el előbb GPS-szel is?",
         "options": [
           {
-            "id": "a",
-            "text": "A násznagy"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "Az egyik apuka"
-          },
-          {
-            "id": "c",
-            "text": "Egy tanú"
-          },
-          {
-            "id": "d",
-            "text": "A vőlegény"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q5",
-        "text": "Ki marad utoljára a táncparketten?",
+        "text": "🏝️ Ki tudna tovább élni egy lakatlan szigeten?",
         "options": [
           {
-            "id": "a",
-            "text": "A vőlegény"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "A menyasszony"
-          },
-          {
-            "id": "c",
-            "text": "A tanúk"
-          },
-          {
-            "id": "d",
-            "text": "Egy nagyszülő"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q6",
-        "text": "Melyik zenére táncol a legtöbb ember?",
+        "text": "🤬 Ki kezdene el egy teljesen értelmetlen vitát, és ragaszkodna hozzá, hogy neki van igaza?",
         "options": [
           {
-            "id": "a",
-            "text": "Mulatós"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "A 2000-es évek slágerei"
-          },
-          {
-            "id": "c",
-            "text": "Lassú, romantikus"
-          },
-          {
-            "id": "d",
-            "text": "Modern pop"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q7",
-        "text": "Hány tányér tortát esznek meg a vendégek?",
+        "text": "👻 Ki bírná tovább egyedül egy horrorfilmben?",
         "options": [
           {
-            "id": "a",
-            "text": "Kevesebbet, mint amennyi van"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "Pont annyit"
-          },
-          {
-            "id": "c",
-            "text": "Mindet, és kérnek még"
-          },
-          {
-            "id": "d",
-            "text": "Marad reggelire is"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q8",
-        "text": "Ki kapja el a menyasszonyi csokrot?",
+        "text": "🔍 Ki lenne képes 20 percig keresni valamit, ami végig a kezében volt?",
         "options": [
           {
-            "id": "a",
-            "text": "Egy egyedülálló barátnő"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "Egy rokon"
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q9",
+        "text": "🍕 Ki enne meg egy másik ember kajájából „csak egy falatot”, majd végül a felét?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
-            "id": "c",
-            "text": "Valaki, aki már foglalt"
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q10",
+        "text": "💡 Ki venne egy teljesen értelmetlen dolgot csak azért, mert kurva jó dealnek tűnt?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
-            "id": "d",
-            "text": "Senki nem kapja el"
+            "id": "b",
+            "text": "👰 Bea"
           }
         ]
       }

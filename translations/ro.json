@@ -68,7 +68,7 @@
   },
   "poll": {
     "title": "Joc de predicții",
-    "intro": "Opt întrebări despre ziua cea mare. Alege-ți numele, ghicește, apoi vezi ce cred ceilalți. Un răspuns per întrebare și fără cale de întoarcere.",
+    "intro": "Zece întrebări despre noi doi. Alege-ți numele, ghicește, apoi vezi ce cred ceilalți. Un răspuns per întrebare și fără cale de întoarcere.",
     "namePrompt": "Începe să îți scrii numele",
     "namePlaceholder": "Nume…",
     "noMatch": "Nu există acest nume pe lista invitaților.",
@@ -82,177 +82,141 @@
     "questions": [
       {
         "id": "q1",
-        "text": "Cine plânge primul la ceremonie?",
+        "text": "🍻 Cine spune primul „Eu nu mai beau nimic”?",
         "options": [
           {
-            "id": "a",
-            "text": "Mirele"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "Mireasa"
-          },
-          {
-            "id": "c",
-            "text": "Mamele"
-          },
-          {
-            "id": "d",
-            "text": "Nimeni"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q2",
-        "text": "Când pleacă acasă ultimul invitat?",
+        "text": "🕺 Cine ajunge primul să danseze pe masă?",
         "options": [
           {
-            "id": "a",
-            "text": "Înainte de miezul nopții"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "Între 01:00 și 03:00"
-          },
-          {
-            "id": "c",
-            "text": "Între 03:00 și 05:00"
-          },
-          {
-            "id": "d",
-            "text": "După răsărit"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q3",
-        "text": "Cu cât întârzie începutul ceremoniei?",
+        "text": "🏠 Cine spune primul „Hai să mergem acasă”?",
         "options": [
           {
-            "id": "a",
-            "text": "Începe la fix"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "1–10 minute"
-          },
-          {
-            "id": "c",
-            "text": "11–30 de minute"
-          },
-          {
-            "id": "d",
-            "text": "Peste o jumătate de oră"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q4",
-        "text": "Cine ține cel mai lung toast?",
+        "text": "🗺️ Cine s-ar rătăci chiar și cu GPS-ul?",
         "options": [
           {
-            "id": "a",
-            "text": "Nașul"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "Unul dintre tați"
-          },
-          {
-            "id": "c",
-            "text": "Un martor"
-          },
-          {
-            "id": "d",
-            "text": "Mirele"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q5",
-        "text": "Cine rămâne ultimul pe ringul de dans?",
+        "text": "🏝️ Cine ar rezista mai mult pe o insulă pustie?",
         "options": [
           {
-            "id": "a",
-            "text": "Mirele"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "Mireasa"
-          },
-          {
-            "id": "c",
-            "text": "Martorii"
-          },
-          {
-            "id": "d",
-            "text": "Un bunic"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q6",
-        "text": "Pe ce muzică dansează cei mai mulți?",
+        "text": "🤬 Cine ar începe o ceartă complet inutilă și ar insista că are dreptate?",
         "options": [
           {
-            "id": "a",
-            "text": "Muzică populară maghiară"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "Hituri din anii 2000"
-          },
-          {
-            "id": "c",
-            "text": "Lent și romantic"
-          },
-          {
-            "id": "d",
-            "text": "Pop modern"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q7",
-        "text": "Cât din tort se mănâncă?",
+        "text": "👻 Cine ar rezista mai mult singur la un film de groază?",
         "options": [
           {
-            "id": "a",
-            "text": "Mai puțin decât este"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "Exact tot"
-          },
-          {
-            "id": "c",
-            "text": "Tot, și mai cer"
-          },
-          {
-            "id": "d",
-            "text": "Rămâne și pentru micul dejun"
+            "text": "👰 Bea"
           }
         ]
       },
       {
         "id": "q8",
-        "text": "Cine prinde buchetul miresei?",
+        "text": "🔍 Cine ar căuta 20 de minute ceva ce a avut tot timpul în mână?",
         "options": [
           {
-            "id": "a",
-            "text": "O prietenă necăsătorită"
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
             "id": "b",
-            "text": "O rudă"
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q9",
+        "text": "🍕 Cine ar lua „doar o îmbucătură” din mâncarea altuia și ar termina jumătate?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
-            "id": "c",
-            "text": "Cineva deja într-o relație"
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q10",
+        "text": "💡 Cine ar cumpăra ceva complet inutil doar pentru că părea o ofertă al naibii de bună?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
           },
           {
-            "id": "d",
-            "text": "Nimeni nu îl prinde"
+            "id": "b",
+            "text": "👰 Bea"
           }
         ]
       }

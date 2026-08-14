@@ -6,16 +6,10 @@
 
 // Question and choice ids, mirrored from the `poll` section of i18n.js.
 // Only the ids live here — the text is translated in one place, on the site.
-const QUESTIONS = {
-  q1: ["a", "b", "c", "d"],
-  q2: ["a", "b", "c", "d"],
-  q3: ["a", "b", "c", "d"],
-  q4: ["a", "b", "c", "d"],
-  q5: ["a", "b", "c", "d"],
-  q6: ["a", "b", "c", "d"],
-  q7: ["a", "b", "c", "d"],
-  q8: ["a", "b", "c", "d"],
-};
+// Every question is "Gábor or Bea": g or b.
+const QUESTIONS = Object.fromEntries(
+  Array.from({ length: 10 }, (_, i) => ["q" + (i + 1), ["g", "b"]])
+);
 
 // Deliberately permissive. The seating data owns the id format and this
 // worker should not encode a guess about it. Queries are parameterised, so

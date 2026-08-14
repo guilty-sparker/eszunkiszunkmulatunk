@@ -68,6 +68,25 @@ body.unlocked .poll-wrap { display: block; }
   border-bottom: 1px solid rgba(244, 234, 220, .1);
 }
 .poll-topbar h1 { margin: 0; font-size: 1.35rem; font-weight: 600; letter-spacing: .01em; }
+.poll-topbar__right { display: flex; align-items: center; gap: 12px; }
+
+/* Flags inline rather than the main site's dropdown: three targets beat a
+   menu on a phone, and this page does not load styles.css. */
+.poll-langs { display: flex; gap: 4px; }
+.poll-lang {
+  display: block;
+  padding: 3px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+  opacity: .45;
+  transition: opacity .15s ease, border-color .15s ease;
+}
+.poll-lang:hover { opacity: .8; }
+.poll-lang[aria-pressed="true"] { opacity: 1; border-color: #d6b36b; }
+.poll-lang img { display: block; width: 24px; height: 18px; border-radius: 2px; }
 .poll-progress {
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   font-variant-numeric: tabular-nums;
@@ -244,7 +263,20 @@ body.unlocked .poll-wrap { display: block; }
 <div class="poll-wrap">
   <div class="poll-topbar">
     <h1 id="poll-title"></h1>
-    <span class="poll-progress" id="poll-progress"></span>
+    <div class="poll-topbar__right">
+      <span class="poll-progress" id="poll-progress"></span>
+      <div class="poll-langs" id="poll-langs" role="group" aria-label="Nyelv / Language">
+        <button type="button" class="poll-lang" data-lang="hu" aria-label="Magyar">
+          <img src="./flags/hu.webp" alt="HU" width="24" height="18" onerror="this.src='./flags/hu.png'; this.onerror=null;">
+        </button>
+        <button type="button" class="poll-lang" data-lang="en" aria-label="English">
+          <img src="./flags/en.webp" alt="EN" width="24" height="18" onerror="this.src='./flags/en.png'; this.onerror=null;">
+        </button>
+        <button type="button" class="poll-lang" data-lang="ro" aria-label="Română">
+          <img src="./flags/ro.webp" alt="RO" width="24" height="18" onerror="this.src='./flags/ro.png'; this.onerror=null;">
+        </button>
+      </div>
+    </div>
   </div>
   <div class="poll-head">
     <p id="poll-intro"></p>
