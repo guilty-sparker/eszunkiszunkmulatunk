@@ -890,7 +890,7 @@ function bandIcon(cx, cy) {
 function venueFeatures(topY) {
   const danceCy = topY + 120 + DANCE_H / 2;
   const iconCy = danceCy + DANCE_H / 2 + 200;
-  return danceFloor(1200, danceCy, DANCE_W, DANCE_H) + barIcon(780, iconCy) + bandIcon(1620, iconCy);
+  return danceFloor(1200, danceCy, DANCE_W, DANCE_H) + bandIcon(780, iconCy) + barIcon(1620, iconCy);
 }
 
 function seatedTotal() {
