@@ -76,7 +76,7 @@ const translationsData = {
       "button": "Megnyitom az űrlapot"
     },
     "poll": {
-      "title": "Tippjáték",
+      "title": "Lagzi Tippmix",
       "answered": "megtippelve",
       "yourPick": "a te tipped",
       "leading": "vezet",
@@ -311,7 +311,7 @@ const translationsData = {
       "button": "Open form"
     },
     "poll": {
-      "title": "Predictions",
+      "title": "Wedding Polymarket",
       "answered": "answered",
       "yourPick": "your pick",
       "leading": "leading",
@@ -546,7 +546,7 @@ const translationsData = {
       "button": "Deschide formularul"
     },
     "poll": {
-      "title": "Joc de predicții",
+      "title": "Pariuri Matrimoniale",
       "answered": "răspunse",
       "yourPick": "alegerea ta",
       "leading": "conduce",
