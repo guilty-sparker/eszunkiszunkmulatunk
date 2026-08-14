@@ -23,3 +23,11 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# Password rotation backups — encrypted under the previous password
+*.enc.json.bak
+password*.txt
+
+# Worker build artefacts — never belongs in a Pages site
+worker/node_modules/
+worker/.wrangler/

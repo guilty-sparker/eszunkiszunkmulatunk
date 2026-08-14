@@ -65,5 +65,201 @@
   },
   "footer": {
     "text": "Bea & Gábor • 2026.08.22."
+  },
+  "poll": {
+    "title": "Joc de predicții",
+    "intro": "Opt întrebări despre ziua cea mare. Alege-ți numele, ghicește, apoi vezi ce cred ceilalți. Un răspuns per întrebare și fără cale de întoarcere.",
+    "namePrompt": "Începe să îți scrii numele",
+    "namePlaceholder": "Nume…",
+    "noMatch": "Nu există acest nume pe lista invitaților.",
+    "notYou": "Nu ești tu?",
+    "greeting": "Salut",
+    "locked": "Răspunsul tău a fost înregistrat.",
+    "votes": "voturi",
+    "error": "Nu am putut trimite. Încearcă din nou.",
+    "retry": "Din nou",
+    "loading": "Se încarcă…",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "Cine plânge primul la ceremonie?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Mirele"
+          },
+          {
+            "id": "b",
+            "text": "Mireasa"
+          },
+          {
+            "id": "c",
+            "text": "Mamele"
+          },
+          {
+            "id": "d",
+            "text": "Nimeni"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "Când pleacă acasă ultimul invitat?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Înainte de miezul nopții"
+          },
+          {
+            "id": "b",
+            "text": "Între 01:00 și 03:00"
+          },
+          {
+            "id": "c",
+            "text": "Între 03:00 și 05:00"
+          },
+          {
+            "id": "d",
+            "text": "După răsărit"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "Cu cât întârzie începutul ceremoniei?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Începe la fix"
+          },
+          {
+            "id": "b",
+            "text": "1–10 minute"
+          },
+          {
+            "id": "c",
+            "text": "11–30 de minute"
+          },
+          {
+            "id": "d",
+            "text": "Peste o jumătate de oră"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "text": "Cine ține cel mai lung toast?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Nașul"
+          },
+          {
+            "id": "b",
+            "text": "Unul dintre tați"
+          },
+          {
+            "id": "c",
+            "text": "Un martor"
+          },
+          {
+            "id": "d",
+            "text": "Mirele"
+          }
+        ]
+      },
+      {
+        "id": "q5",
+        "text": "Cine rămâne ultimul pe ringul de dans?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Mirele"
+          },
+          {
+            "id": "b",
+            "text": "Mireasa"
+          },
+          {
+            "id": "c",
+            "text": "Martorii"
+          },
+          {
+            "id": "d",
+            "text": "Un bunic"
+          }
+        ]
+      },
+      {
+        "id": "q6",
+        "text": "Pe ce muzică dansează cei mai mulți?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Muzică populară maghiară"
+          },
+          {
+            "id": "b",
+            "text": "Hituri din anii 2000"
+          },
+          {
+            "id": "c",
+            "text": "Lent și romantic"
+          },
+          {
+            "id": "d",
+            "text": "Pop modern"
+          }
+        ]
+      },
+      {
+        "id": "q7",
+        "text": "Cât din tort se mănâncă?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Mai puțin decât este"
+          },
+          {
+            "id": "b",
+            "text": "Exact tot"
+          },
+          {
+            "id": "c",
+            "text": "Tot, și mai cer"
+          },
+          {
+            "id": "d",
+            "text": "Rămâne și pentru micul dejun"
+          }
+        ]
+      },
+      {
+        "id": "q8",
+        "text": "Cine prinde buchetul miresei?",
+        "options": [
+          {
+            "id": "a",
+            "text": "O prietenă necăsătorită"
+          },
+          {
+            "id": "b",
+            "text": "O rudă"
+          },
+          {
+            "id": "c",
+            "text": "Cineva deja într-o relație"
+          },
+          {
+            "id": "d",
+            "text": "Nimeni nu îl prinde"
+          }
+        ]
+      }
+    ],
+    "answered": "răspunse",
+    "yourPick": "alegerea ta",
+    "leading": "conduce",
+    "allDone": "Toate răspunsurile au fost trimise. Aflăm pe 22 august."
   }
 }

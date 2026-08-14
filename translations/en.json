@@ -65,5 +65,201 @@
   },
   "footer": {
     "text": "Bea & Gábor • 2026.08.22."
+  },
+  "poll": {
+    "title": "Predictions",
+    "intro": "Eight questions about the big day. Pick your name, place your guesses, then see what everyone else thinks. One answer per question, and no going back.",
+    "namePrompt": "Start typing your name",
+    "namePlaceholder": "Name…",
+    "noMatch": "No such name on the guest list.",
+    "notYou": "Not you?",
+    "greeting": "Hi",
+    "locked": "Your guess is locked in.",
+    "votes": "votes",
+    "error": "Could not send that. Please try again.",
+    "retry": "Retry",
+    "loading": "Loading…",
+    "questions": [
+      {
+        "id": "q1",
+        "text": "Who cries first at the ceremony?",
+        "options": [
+          {
+            "id": "a",
+            "text": "The groom"
+          },
+          {
+            "id": "b",
+            "text": "The bride"
+          },
+          {
+            "id": "c",
+            "text": "The mothers"
+          },
+          {
+            "id": "d",
+            "text": "Nobody"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "text": "When does the last guest go home?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Before midnight"
+          },
+          {
+            "id": "b",
+            "text": "Between 1am and 3am"
+          },
+          {
+            "id": "c",
+            "text": "Between 3am and 5am"
+          },
+          {
+            "id": "d",
+            "text": "After sunrise"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "text": "How late does the ceremony start?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Right on time"
+          },
+          {
+            "id": "b",
+            "text": "1–10 minutes"
+          },
+          {
+            "id": "c",
+            "text": "11–30 minutes"
+          },
+          {
+            "id": "d",
+            "text": "More than half an hour"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "text": "Who gives the longest toast?",
+        "options": [
+          {
+            "id": "a",
+            "text": "The master of ceremonies"
+          },
+          {
+            "id": "b",
+            "text": "One of the fathers"
+          },
+          {
+            "id": "c",
+            "text": "A witness"
+          },
+          {
+            "id": "d",
+            "text": "The groom"
+          }
+        ]
+      },
+      {
+        "id": "q5",
+        "text": "Who is last to leave the dance floor?",
+        "options": [
+          {
+            "id": "a",
+            "text": "The groom"
+          },
+          {
+            "id": "b",
+            "text": "The bride"
+          },
+          {
+            "id": "c",
+            "text": "The witnesses"
+          },
+          {
+            "id": "d",
+            "text": "A grandparent"
+          }
+        ]
+      },
+      {
+        "id": "q6",
+        "text": "Which music fills the dance floor?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Hungarian party classics"
+          },
+          {
+            "id": "b",
+            "text": "2000s hits"
+          },
+          {
+            "id": "c",
+            "text": "Slow and romantic"
+          },
+          {
+            "id": "d",
+            "text": "Modern pop"
+          }
+        ]
+      },
+      {
+        "id": "q7",
+        "text": "How much of the cake gets eaten?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Less than there is"
+          },
+          {
+            "id": "b",
+            "text": "Exactly all of it"
+          },
+          {
+            "id": "c",
+            "text": "All of it, and they ask for more"
+          },
+          {
+            "id": "d",
+            "text": "There is some left for breakfast"
+          }
+        ]
+      },
+      {
+        "id": "q8",
+        "text": "Who catches the bouquet?",
+        "options": [
+          {
+            "id": "a",
+            "text": "A single friend"
+          },
+          {
+            "id": "b",
+            "text": "A relative"
+          },
+          {
+            "id": "c",
+            "text": "Someone already taken"
+          },
+          {
+            "id": "d",
+            "text": "Nobody catches it"
+          }
+        ]
+      }
+    ],
+    "answered": "answered",
+    "yourPick": "your pick",
+    "leading": "leading",
+    "allDone": "All guesses are in. We find out on 22 August."
   }
 }

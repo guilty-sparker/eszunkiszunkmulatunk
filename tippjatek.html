@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://tippjatek.eszunkiszunkmulatunk.workers.dev">
+<title>Tippjáték — Bea &amp; Gábor</title>
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #160f0b;
+  color: #f4eadc;
+  font-family: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif;
+}
+body:not(.unlocked) { display: grid; place-items: center; padding: 24px; }
+
+/* Gate — identical in behaviour to the seating page. */
+.gate {
+  width: min(420px, 100%);
+  padding: 28px 24px;
+  border: 1px solid rgba(244, 234, 220, .14);
+  border-radius: 18px;
+  background: #1b120d;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .45);
+  text-align: center;
+}
+.gate h1 { margin: 0 0 6px; font-size: 1.7rem; font-weight: 600; }
+.gate p { margin: 0 0 18px; color: rgba(244, 234, 220, .72); font-size: 1.05rem; }
+.gate label { display: block; text-align: left; font-size: .95rem; margin-bottom: 6px; }
+.gate input, .gate button {
+  width: 100%;
+  font: inherit;
+  font-size: 1.05rem;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(244, 234, 220, .22);
+  background: #241811;
+  color: #f4eadc;
+}
+.gate button { margin-top: 12px; background: #8b5a34; border-color: #a87449; cursor: pointer; font-weight: 600; }
+.gate button:disabled { opacity: .6; cursor: progress; }
+.gate .error { margin: 12px 0 0; color: #e7a17a; min-height: 1.3em; font-size: .95rem; }
+.gate .back { display: inline-block; margin-top: 16px; color: rgba(244, 234, 220, .72); font-size: .95rem; }
+
+/* Poll — prediction-market layout on the wedding palette.
+   Question text stays Cormorant serif; every number is sans with tabular
+   figures, so percentages line up column-wise the way market odds do. */
+.poll-wrap { display: none; width: min(600px, 100%); margin: 0 auto; padding: 0 14px 64px; }
+body.unlocked .poll-wrap { display: block; }
+
+.poll-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 -14px 18px;
+  padding: 14px 20px;
+  background: rgba(22, 15, 11, .92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(244, 234, 220, .1);
+}
+.poll-topbar h1 { margin: 0; font-size: 1.35rem; font-weight: 600; letter-spacing: .01em; }
+.poll-progress {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: .82rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: rgba(244, 234, 220, .5);
+  white-space: nowrap;
+}
+.poll-progress b { color: #d6b36b; font-weight: 600; }
+
+.poll-head { padding: 4px 6px 20px; }
+.poll-head p { margin: 0; color: rgba(244, 234, 220, .62); font-size: 1.02rem; line-height: 1.5; }
+.poll-back { display: inline-block; margin: 18px 0 0 6px; color: rgba(244, 234, 220, .5); font-size: .92rem; }
+
+.poll-card {
+  margin: 0 0 12px;
+  padding: 18px 18px 14px;
+  border: 1px solid rgba(244, 234, 220, .11);
+  border-radius: 14px;
+  background: #1b120d;
+}
+.poll-question { margin: 0 0 14px; font-size: 1.22rem; font-weight: 600; line-height: 1.3; }
+.poll-prompt { margin: 0 0 10px; color: rgba(244, 234, 220, .7); }
+.poll-who {
+  margin: 0 0 16px;
+  padding: 0 6px;
+  color: rgba(244, 234, 220, .78);
+  font-size: 1.02rem;
+}
+
+/* Guest picker */
+.poll-input {
+  width: 100%;
+  font: inherit;
+  font-size: 1.1rem;
+  padding: 12px 14px;
+  border-radius: 11px;
+  border: 1px solid rgba(244, 234, 220, .22);
+  background: #241811;
+  color: #f4eadc;
+}
+.poll-input:focus { outline: 2px solid #a87449; outline-offset: 1px; }
+.poll-suggestions { list-style: none; margin: 10px 0 0; padding: 0; }
+.poll-suggestion {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-size: 1.05rem;
+  padding: 11px 14px;
+  margin-bottom: 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(244, 234, 220, .14);
+  background: #241811;
+  color: #f4eadc;
+  cursor: pointer;
+}
+.poll-suggestion:hover { border-color: #a87449; background: #2e1e14; }
+.poll-suggestion--empty { color: rgba(244, 234, 220, .5); cursor: default; border-style: dashed; }
+
+/* Unanswered: outlined option pills, in Polymarket's two-up arrangement. */
+.poll-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (max-width: 460px) { .poll-options { grid-template-columns: 1fr; } }
+.poll-option {
+  font: inherit;
+  font-size: 1.02rem;
+  line-height: 1.25;
+  padding: 13px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(244, 234, 220, .2);
+  background: #241811;
+  color: #f4eadc;
+  cursor: pointer;
+  text-align: left;
+  transition: background .15s ease, border-color .15s ease;
+}
+.poll-option:hover:not(:disabled) { background: #3a2617; border-color: #d6b36b; }
+.poll-option:disabled { opacity: .5; cursor: progress; }
+
+/* Answered: label left, big tabular percentage right, rail underneath. */
+.poll-results { display: grid; gap: 2px; }
+.poll-row { padding: 9px 2px 11px; }
+.poll-row__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+}
+.poll-row__label { font-size: 1.04rem; color: rgba(244, 234, 220, .78); }
+.poll-row--mine .poll-row__label { color: #f4eadc; }
+.poll-row__pct {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.32rem;
+  font-weight: 600;
+  color: rgba(244, 234, 220, .55);
+  white-space: nowrap;
+}
+.poll-row--mine .poll-row__pct { color: #d6b36b; }
+.poll-rail { height: 5px; border-radius: 3px; background: rgba(244, 234, 220, .08); overflow: hidden; }
+.poll-rail__fill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: #8b5a34;
+  transition: width .5s cubic-bezier(.22, .61, .36, 1);
+}
+.poll-row--mine .poll-rail__fill { background: #d6b36b; }
+
+.poll-chip {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(214, 179, 107, .16);
+  color: #d6b36b;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.poll-meta {
+  margin: 12px 0 0;
+  padding-top: 11px;
+  border-top: 1px solid rgba(244, 234, 220, .08);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: .78rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: rgba(244, 234, 220, .42);
+}
+
+.poll-done {
+  margin: 20px 0 0;
+  padding: 16px;
+  border: 1px dashed rgba(214, 179, 107, .3);
+  border-radius: 14px;
+  text-align: center;
+  color: #d6b36b;
+  font-size: 1.05rem;
+}
+
+.poll-error { margin: 10px 0 0; color: #e7a17a; font-size: .96rem; }
+.poll-link {
+  font: inherit;
+  font-size: inherit;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #d6b36b;
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <h1>Tippjáték</h1>
+  <p>Ez az oldal jelszóval védett.</p>
+  <form id="gate-form">
+    <label for="gate-password">Jelszó</label>
+    <input type="password" id="gate-password" autocomplete="current-password" autocapitalize="none" spellcheck="false" required>
+    <button type="submit" id="gate-submit">Belépés</button>
+  </form>
+  <p class="error" id="gate-error" role="alert"></p>
+  <a class="back" href="./">← Vissza a főoldalra</a>
+</div>
+
+<div class="poll-wrap">
+  <div class="poll-topbar">
+    <h1 id="poll-title"></h1>
+    <span class="poll-progress" id="poll-progress"></span>
+  </div>
+  <div class="poll-head">
+    <p id="poll-intro"></p>
+  </div>
+  <div id="poll-root"></div>
+  <a class="poll-back" href="./">← Vissza a főoldalra</a>
+</div>
+
+<script src="./i18n.js"></script>
+<script>
+// Same unlock as ultetes.html, down to the sessionStorage key: one password
+// entry covers both pages for the session.
+const gate = document.getElementById("gate");
+const form = document.getElementById("gate-form");
+const field = document.getElementById("gate-password");
+const submit = document.getElementById("gate-submit");
+const error = document.getElementById("gate-error");
+const SESSION_KEY = "seating-pass";
+
+function bytes(base64) {
+  return Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+}
+
+async function unlock(password) {
+  const payload = await (await fetch("./ultetes-data.enc.json", { cache: "no-store" })).json();
+  const material = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]
+  );
+  const key = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt: bytes(payload.salt), iterations: payload.iterations, hash: "SHA-256" },
+    material,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["decrypt"]
+  );
+  const plain = await crypto.subtle.decrypt(
+    { name: "AES-GCM", iv: bytes(payload.nonce) }, key, bytes(payload.data)
+  );
+  window.__SEATING_STATE__ = JSON.parse(new TextDecoder().decode(plain));
+  await import("./tippjatek.js");
+  gate.remove();
+  document.body.classList.add("unlocked");
+}
+
+async function attempt(password, remember) {
+  submit.disabled = true;
+  error.textContent = "";
+  try {
+    await unlock(password);
+    if (remember) sessionStorage.setItem(SESSION_KEY, password);
+  } catch (failure) {
+    sessionStorage.removeItem(SESSION_KEY);
+    error.textContent = "Hibás jelszó.";
+    submit.disabled = false;
+    field.value = "";
+    field.focus();
+  }
+}
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  attempt(field.value, true);
+});
+
+const remembered = sessionStorage.getItem(SESSION_KEY);
+if (remembered) attempt(remembered, false);
+</script>
+</body>
+</html>

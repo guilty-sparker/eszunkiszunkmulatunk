@@ -75,6 +75,202 @@ const translationsData = {
       "moreDetails": "Ha szükséged van szállás elérhetőségre, kérjük, ezt az alábbi űrlapon jelezd felénk",
       "button": "Megnyitom az űrlapot"
     },
+    "poll": {
+      "title": "Tippjáték",
+      "answered": "megtippelve",
+      "yourPick": "a te tipped",
+      "leading": "vezet",
+      "allDone": "Minden tipp leadva. Augusztus 22-én kiderül.",
+      "intro": "Nyolc kérdés a nagy napról. Válaszd ki a neved, tippelj, aztán nézd meg, mit gondolnak a többiek. Tippenként egy válasz, és nincs visszaút.",
+      "namePrompt": "Kezdd el beírni a neved",
+      "namePlaceholder": "Név…",
+      "noMatch": "Nincs ilyen név a vendéglistán.",
+      "notYou": "Nem te vagy?",
+      "greeting": "Szia",
+      "locked": "A tipped rögzítve.",
+      "votes": "tipp",
+      "error": "Nem sikerült elküldeni. Próbáld újra.",
+      "retry": "Újra",
+      "loading": "Töltés…",
+      "questions": [
+        {
+          "id": "q1",
+          "text": "Ki sír először a ceremónián?",
+          "options": [
+            {
+              "id": "a",
+              "text": "A vőlegény"
+            },
+            {
+              "id": "b",
+              "text": "A menyasszony"
+            },
+            {
+              "id": "c",
+              "text": "Az anyukák"
+            },
+            {
+              "id": "d",
+              "text": "Senki"
+            }
+          ]
+        },
+        {
+          "id": "q2",
+          "text": "Mikor megy haza az utolsó vendég?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Éjfél előtt"
+            },
+            {
+              "id": "b",
+              "text": "01:00 és 03:00 között"
+            },
+            {
+              "id": "c",
+              "text": "03:00 és 05:00 között"
+            },
+            {
+              "id": "d",
+              "text": "Napfelkelte után"
+            }
+          ]
+        },
+        {
+          "id": "q3",
+          "text": "Mennyit késik a ceremónia kezdete?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Pontosan kezdődik"
+            },
+            {
+              "id": "b",
+              "text": "1–10 percet"
+            },
+            {
+              "id": "c",
+              "text": "11–30 percet"
+            },
+            {
+              "id": "d",
+              "text": "Több mint fél órát"
+            }
+          ]
+        },
+        {
+          "id": "q4",
+          "text": "Ki mondja a leghosszabb pohárköszöntőt?",
+          "options": [
+            {
+              "id": "a",
+              "text": "A násznagy"
+            },
+            {
+              "id": "b",
+              "text": "Az egyik apuka"
+            },
+            {
+              "id": "c",
+              "text": "Egy tanú"
+            },
+            {
+              "id": "d",
+              "text": "A vőlegény"
+            }
+          ]
+        },
+        {
+          "id": "q5",
+          "text": "Ki marad utoljára a táncparketten?",
+          "options": [
+            {
+              "id": "a",
+              "text": "A vőlegény"
+            },
+            {
+              "id": "b",
+              "text": "A menyasszony"
+            },
+            {
+              "id": "c",
+              "text": "A tanúk"
+            },
+            {
+              "id": "d",
+              "text": "Egy nagyszülő"
+            }
+          ]
+        },
+        {
+          "id": "q6",
+          "text": "Melyik zenére táncol a legtöbb ember?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Mulatós"
+            },
+            {
+              "id": "b",
+              "text": "A 2000-es évek slágerei"
+            },
+            {
+              "id": "c",
+              "text": "Lassú, romantikus"
+            },
+            {
+              "id": "d",
+              "text": "Modern pop"
+            }
+          ]
+        },
+        {
+          "id": "q7",
+          "text": "Hány tányér tortát esznek meg a vendégek?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Kevesebbet, mint amennyi van"
+            },
+            {
+              "id": "b",
+              "text": "Pont annyit"
+            },
+            {
+              "id": "c",
+              "text": "Mindet, és kérnek még"
+            },
+            {
+              "id": "d",
+              "text": "Marad reggelire is"
+            }
+          ]
+        },
+        {
+          "id": "q8",
+          "text": "Ki kapja el a menyasszonyi csokrot?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Egy egyedülálló barátnő"
+            },
+            {
+              "id": "b",
+              "text": "Egy rokon"
+            },
+            {
+              "id": "c",
+              "text": "Valaki, aki már foglalt"
+            },
+            {
+              "id": "d",
+              "text": "Senki nem kapja el"
+            }
+          ]
+        }
+      ]
+    },
     "footer": {
       "text": "Bea & Gábor • 2026.08.22."
     }
@@ -149,6 +345,202 @@ const translationsData = {
       "costs": "If you send us your feedback by August 1, we can recommend accommodation at your own expense in the nearby village of Căpâlnița.",
       "moreDetails": "If you need accommodation contact details, please let us know via the form below",
       "button": "Open form"
+    },
+    "poll": {
+      "title": "Predictions",
+      "answered": "answered",
+      "yourPick": "your pick",
+      "leading": "leading",
+      "allDone": "All guesses are in. We find out on 22 August.",
+      "intro": "Eight questions about the big day. Pick your name, place your guesses, then see what everyone else thinks. One answer per question, and no going back.",
+      "namePrompt": "Start typing your name",
+      "namePlaceholder": "Name…",
+      "noMatch": "No such name on the guest list.",
+      "notYou": "Not you?",
+      "greeting": "Hi",
+      "locked": "Your guess is locked in.",
+      "votes": "votes",
+      "error": "Could not send that. Please try again.",
+      "retry": "Retry",
+      "loading": "Loading…",
+      "questions": [
+        {
+          "id": "q1",
+          "text": "Who cries first at the ceremony?",
+          "options": [
+            {
+              "id": "a",
+              "text": "The groom"
+            },
+            {
+              "id": "b",
+              "text": "The bride"
+            },
+            {
+              "id": "c",
+              "text": "The mothers"
+            },
+            {
+              "id": "d",
+              "text": "Nobody"
+            }
+          ]
+        },
+        {
+          "id": "q2",
+          "text": "When does the last guest go home?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Before midnight"
+            },
+            {
+              "id": "b",
+              "text": "Between 1am and 3am"
+            },
+            {
+              "id": "c",
+              "text": "Between 3am and 5am"
+            },
+            {
+              "id": "d",
+              "text": "After sunrise"
+            }
+          ]
+        },
+        {
+          "id": "q3",
+          "text": "How late does the ceremony start?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Right on time"
+            },
+            {
+              "id": "b",
+              "text": "1–10 minutes"
+            },
+            {
+              "id": "c",
+              "text": "11–30 minutes"
+            },
+            {
+              "id": "d",
+              "text": "More than half an hour"
+            }
+          ]
+        },
+        {
+          "id": "q4",
+          "text": "Who gives the longest toast?",
+          "options": [
+            {
+              "id": "a",
+              "text": "The master of ceremonies"
+            },
+            {
+              "id": "b",
+              "text": "One of the fathers"
+            },
+            {
+              "id": "c",
+              "text": "A witness"
+            },
+            {
+              "id": "d",
+              "text": "The groom"
+            }
+          ]
+        },
+        {
+          "id": "q5",
+          "text": "Who is last to leave the dance floor?",
+          "options": [
+            {
+              "id": "a",
+              "text": "The groom"
+            },
+            {
+              "id": "b",
+              "text": "The bride"
+            },
+            {
+              "id": "c",
+              "text": "The witnesses"
+            },
+            {
+              "id": "d",
+              "text": "A grandparent"
+            }
+          ]
+        },
+        {
+          "id": "q6",
+          "text": "Which music fills the dance floor?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Hungarian party classics"
+            },
+            {
+              "id": "b",
+              "text": "2000s hits"
+            },
+            {
+              "id": "c",
+              "text": "Slow and romantic"
+            },
+            {
+              "id": "d",
+              "text": "Modern pop"
+            }
+          ]
+        },
+        {
+          "id": "q7",
+          "text": "How much of the cake gets eaten?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Less than there is"
+            },
+            {
+              "id": "b",
+              "text": "Exactly all of it"
+            },
+            {
+              "id": "c",
+              "text": "All of it, and they ask for more"
+            },
+            {
+              "id": "d",
+              "text": "There is some left for breakfast"
+            }
+          ]
+        },
+        {
+          "id": "q8",
+          "text": "Who catches the bouquet?",
+          "options": [
+            {
+              "id": "a",
+              "text": "A single friend"
+            },
+            {
+              "id": "b",
+              "text": "A relative"
+            },
+            {
+              "id": "c",
+              "text": "Someone already taken"
+            },
+            {
+              "id": "d",
+              "text": "Nobody catches it"
+            }
+          ]
+        }
+      ]
     },
     "footer": {
       "text": "Bea & Gábor • 2026.08.22."
@@ -225,6 +617,202 @@ const translationsData = {
       "moreDetails": "Dacă ai nevoie de datele de contact pentru cazare, te rugăm să ne anunți prin formularul de mai jos",
       "button": "Deschide formularul"
     },
+    "poll": {
+      "title": "Joc de predicții",
+      "answered": "răspunse",
+      "yourPick": "alegerea ta",
+      "leading": "conduce",
+      "allDone": "Toate răspunsurile au fost trimise. Aflăm pe 22 august.",
+      "intro": "Opt întrebări despre ziua cea mare. Alege-ți numele, ghicește, apoi vezi ce cred ceilalți. Un răspuns per întrebare și fără cale de întoarcere.",
+      "namePrompt": "Începe să îți scrii numele",
+      "namePlaceholder": "Nume…",
+      "noMatch": "Nu există acest nume pe lista invitaților.",
+      "notYou": "Nu ești tu?",
+      "greeting": "Salut",
+      "locked": "Răspunsul tău a fost înregistrat.",
+      "votes": "voturi",
+      "error": "Nu am putut trimite. Încearcă din nou.",
+      "retry": "Din nou",
+      "loading": "Se încarcă…",
+      "questions": [
+        {
+          "id": "q1",
+          "text": "Cine plânge primul la ceremonie?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Mirele"
+            },
+            {
+              "id": "b",
+              "text": "Mireasa"
+            },
+            {
+              "id": "c",
+              "text": "Mamele"
+            },
+            {
+              "id": "d",
+              "text": "Nimeni"
+            }
+          ]
+        },
+        {
+          "id": "q2",
+          "text": "Când pleacă acasă ultimul invitat?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Înainte de miezul nopții"
+            },
+            {
+              "id": "b",
+              "text": "Între 01:00 și 03:00"
+            },
+            {
+              "id": "c",
+              "text": "Între 03:00 și 05:00"
+            },
+            {
+              "id": "d",
+              "text": "După răsărit"
+            }
+          ]
+        },
+        {
+          "id": "q3",
+          "text": "Cu cât întârzie începutul ceremoniei?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Începe la fix"
+            },
+            {
+              "id": "b",
+              "text": "1–10 minute"
+            },
+            {
+              "id": "c",
+              "text": "11–30 de minute"
+            },
+            {
+              "id": "d",
+              "text": "Peste o jumătate de oră"
+            }
+          ]
+        },
+        {
+          "id": "q4",
+          "text": "Cine ține cel mai lung toast?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Nașul"
+            },
+            {
+              "id": "b",
+              "text": "Unul dintre tați"
+            },
+            {
+              "id": "c",
+              "text": "Un martor"
+            },
+            {
+              "id": "d",
+              "text": "Mirele"
+            }
+          ]
+        },
+        {
+          "id": "q5",
+          "text": "Cine rămâne ultimul pe ringul de dans?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Mirele"
+            },
+            {
+              "id": "b",
+              "text": "Mireasa"
+            },
+            {
+              "id": "c",
+              "text": "Martorii"
+            },
+            {
+              "id": "d",
+              "text": "Un bunic"
+            }
+          ]
+        },
+        {
+          "id": "q6",
+          "text": "Pe ce muzică dansează cei mai mulți?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Muzică populară maghiară"
+            },
+            {
+              "id": "b",
+              "text": "Hituri din anii 2000"
+            },
+            {
+              "id": "c",
+              "text": "Lent și romantic"
+            },
+            {
+              "id": "d",
+              "text": "Pop modern"
+            }
+          ]
+        },
+        {
+          "id": "q7",
+          "text": "Cât din tort se mănâncă?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Mai puțin decât este"
+            },
+            {
+              "id": "b",
+              "text": "Exact tot"
+            },
+            {
+              "id": "c",
+              "text": "Tot, și mai cer"
+            },
+            {
+              "id": "d",
+              "text": "Rămâne și pentru micul dejun"
+            }
+          ]
+        },
+        {
+          "id": "q8",
+          "text": "Cine prinde buchetul miresei?",
+          "options": [
+            {
+              "id": "a",
+              "text": "O prietenă necăsătorită"
+            },
+            {
+              "id": "b",
+              "text": "O rudă"
+            },
+            {
+              "id": "c",
+              "text": "Cineva deja într-o relație"
+            },
+            {
+              "id": "d",
+              "text": "Nimeni nu îl prinde"
+            }
+          ]
+        }
+      ]
+    },
     "footer": {
       "text": "Bea & Gábor • 2026.08.22."
     }
@@ -257,6 +845,11 @@ function loadTranslations(lang) {
   }
   return null;
 }
+
+// The poll page needs whole objects, not strings, so t() cannot serve it.
+window.getPoll = function getPoll(lang) {
+  return (translationsData[lang] || translationsData.hu).poll;
+};
 
 // Get translation by key
 function t(key, lang = currentLang) {

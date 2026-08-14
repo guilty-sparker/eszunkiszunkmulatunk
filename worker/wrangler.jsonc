@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "tippjatek",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-01",
+  "observability": { "enabled": true },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "tippjatek",
+      "database_id": "c5271688-2fb2-4352-a745-29452860fc77",
+      "migrations_dir": "./migrations"
+    }
+  ]
+}
