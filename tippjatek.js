@@ -18,6 +18,10 @@ const VOTE_ATTEMPTS = 3;
 // A phone at a wedding foregrounds and backgrounds constantly. Refreshing on
 // every one of those would be a request storm for numbers that barely move.
 const MIN_REFRESH_MS = 15000;
+// While someone is actually watching, the odds should move on their own —
+// that is most of the fun once they have answered. Only ticks when the page
+// is in front of them, so a pocketed phone costs nothing.
+const LIVE_MS = 25000;
 
 const INITIAL = window.__SEATING_STATE__ || {};
 const PLAN = (INITIAL.plans && INITIAL.plans[INITIAL.version]) || [];
@@ -127,6 +131,139 @@ async function api(path, options, attempts) {
     }
   }
   throw last;
+}
+
+// --- celebration -----------------------------------------------------------
+//
+// Answering is the moment the odds are revealed, so it gets a reward: a
+// firework for Gábor, confetti for Bea. Drawn on one canvas over the page,
+// on a loop that stops itself the moment the last particle is gone, so a
+// phone is not left spinning a rAF for the rest of the reception.
+
+const REDUCED = window.matchMedia
+  ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  : false;
+const GABOR_SPARKS = ["#ffd479", "#ffb347", "#ffe9b0", "#d6b36b", "#fff3d0"];
+const BEA_FLAKES = ["#ff8fab", "#ffc2d1", "#c7b0e3", "#9bc9d5", "#f4eadc", "#efbf8c"];
+
+let fxCanvas = null;
+let fxCtx = null;
+let fxParts = [];
+let fxFrame = 0;
+
+function fxSize() {
+  if (!fxCanvas) return;
+  const ratio = window.devicePixelRatio || 1;
+  fxCanvas.width = Math.floor(window.innerWidth * ratio);
+  fxCanvas.height = Math.floor(window.innerHeight * ratio);
+  fxCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
+}
+
+function fxReady() {
+  if (fxCanvas) return;
+  fxCanvas = document.createElement("canvas");
+  fxCanvas.setAttribute("aria-hidden", "true");
+  fxCanvas.style.cssText =
+    "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60";
+  document.body.append(fxCanvas);
+  fxCtx = fxCanvas.getContext("2d");
+  fxSize();
+  window.addEventListener("resize", fxSize);
+}
+
+function fxRun() {
+  if (fxFrame) return;
+  fxFrame = requestAnimationFrame(fxStep);
+}
+
+function fxStep() {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  fxCtx.clearRect(0, 0, w, h);
+  fxParts = fxParts.filter((p) => p.life > 0 && p.y < h + 80);
+  for (const p of fxParts) {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.life -= p.decay;
+    fxCtx.globalAlpha = Math.max(0, Math.min(1, p.life));
+    fxCtx.fillStyle = p.colour;
+    if (p.spin === undefined) {
+      p.vy += 0.06;
+      p.vx *= 0.985;
+      p.vy *= 0.985;
+      fxCtx.beginPath();
+      fxCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      fxCtx.fill();
+    } else {
+      p.vy += 0.015;
+      p.angle += p.spin;
+      fxCtx.save();
+      fxCtx.translate(p.x, p.y);
+      fxCtx.rotate(p.angle);
+      // Squashing the height as it turns reads as a flake tumbling edge-on.
+      fxCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.angle)));
+      fxCtx.restore();
+    }
+  }
+  fxCtx.globalAlpha = 1;
+  if (fxParts.length) {
+    fxFrame = requestAnimationFrame(fxStep);
+  } else {
+    fxFrame = 0;
+    fxCtx.clearRect(0, 0, w, h);
+  }
+}
+
+function burst(x, y, colour) {
+  for (let i = 0; i < 64; i += 1) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 2 + Math.random() * 5.5;
+    fxParts.push({
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      life: 1,
+      decay: 0.013 + Math.random() * 0.012,
+      size: 1.6 + Math.random() * 2.4,
+      colour,
+    });
+  }
+  fxRun();
+}
+
+function celebrate(choice) {
+  if (REDUCED || document.visibilityState !== "visible") return;
+  fxReady();
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  if (choice === "g") {
+    for (let i = 0; i < 3; i += 1) {
+      const fire = () => burst(
+        w * (0.2 + Math.random() * 0.6),
+        h * (0.15 + Math.random() * 0.32),
+        GABOR_SPARKS[Math.floor(Math.random() * GABOR_SPARKS.length)]
+      );
+      if (i === 0) fire();
+      else setTimeout(fire, i * 230);
+    }
+    return;
+  }
+  for (let i = 0; i < 130; i += 1) {
+    fxParts.push({
+      x: Math.random() * w,
+      y: -20 - Math.random() * h * 0.5,
+      vx: (Math.random() - 0.5) * 2.4,
+      vy: 2 + Math.random() * 3,
+      life: 1,
+      decay: 0.0045,
+      w: 6 + Math.random() * 6,
+      h: 9 + Math.random() * 8,
+      angle: Math.random() * Math.PI,
+      spin: (Math.random() - 0.5) * 0.28,
+      colour: BEA_FLAKES[Math.floor(Math.random() * BEA_FLAKES.length)],
+    });
+  }
+  fxRun();
 }
 
 function el(tag, className, text) {
@@ -247,6 +384,7 @@ function renderQuestion(question) {
           );
           myVotes[question.id] = result.choice;
           counts = result.counts;
+          celebrate(result.choice);
           replaceCard(question);
           repaintAnswered(question.id);
           renderProgress();
@@ -415,6 +553,13 @@ function renderDone() {
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") refresh();
 });
+
+// The live tick. refresh() already declines if it ran recently, if one is in
+// flight, or if nothing is on screen yet, so this stays a no-op until it has
+// something to do.
+setInterval(() => {
+  if (document.visibilityState === "visible") refresh();
+}, LIVE_MS);
 
 // Coming back from a dead spot is the other moment the numbers are stale.
 window.addEventListener("online", refresh);
