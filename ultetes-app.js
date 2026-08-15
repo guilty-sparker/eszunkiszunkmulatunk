@@ -98,6 +98,17 @@ section h2 span { color: #9eb0c0; font-weight: 500; }
 .diet-btn { cursor: pointer; color: #8aa2ba; min-width: 30px; }
 .diet-btn:hover { background: #16304a; }
 .seat.renaming { cursor: default; }
+
+/* Editing names needs room to read them. Two seats abreast leaves the field
+   about a third of a phone's width once the dot and the buttons have taken
+   their share, so while renaming each seat gets a line of its own. */
+body.renaming-mode .row { grid-template-columns: 1fr; gap: 6px; }
+body.renaming-mode .row.edge-row { grid-template-columns: 1fr; }
+body.renaming-mode .axis { display: none; }
+body.renaming-mode .seat.right { flex-direction: row; text-align: left; }
+body.renaming-mode .seat { min-height: 48px; }
+body.renaming-mode .seat-name { font-size: 1.02rem; padding: 7px 9px; }
+body.renaming-mode .edge-label { align-self: flex-start; padding-left: 2px; }
 .row.edge-row { grid-template-columns: 74px 1fr; }
 .edge-label {
   align-self: center;
@@ -113,6 +124,7 @@ section h2 span { color: #9eb0c0; font-weight: 500; }
 .seat-name {
   flex: 1 1 auto;
   min-width: 0;
+  text-overflow: ellipsis;
   background: #16293d;
   border: 1px solid #2d4763;
   border-radius: 8px;
@@ -123,6 +135,7 @@ section h2 span { color: #9eb0c0; font-weight: 500; }
   padding: 4px 7px;
 }
 .seat-name:focus { outline: 2px solid #d6b36b; outline-offset: 1px; }
+.seat-name::placeholder { color: #b9c9d8; opacity: 1; }
 .drop-guest {
   flex: 0 0 auto;
   padding: 0;
@@ -337,6 +350,7 @@ function toggleNames() {
   if (renameMode) mapEdit = false;
   document.getElementById("tab-names").setAttribute("aria-pressed", String(renameMode));
   document.getElementById("tab-move").setAttribute("aria-pressed", String(mapEdit));
+  document.body.classList.toggle("renaming-mode", renameMode);
   if (renameMode) showView("edit");
   status(renameMode ? "Névszerkesztés: írd át a nevet, vagy töröld a vendéget a ✕ gombbal." : "");
   render();
@@ -348,6 +362,7 @@ function toggleMapEdit() {
   pickedTable = null;
   pending = null;
   if (mapEdit) renameMode = false;
+  document.body.classList.toggle("renaming-mode", renameMode);
   document.getElementById("tab-move").setAttribute("aria-pressed", String(mapEdit));
   document.getElementById("tab-names").setAttribute("aria-pressed", String(renameMode));
   if (mapEdit) showView("map");
@@ -616,7 +631,7 @@ function dietButton(person) {
   const button = document.createElement("button");
   button.type = "button";
   button.className = "diet-btn" + (mark ? " on" : "");
-  button.textContent = mark ? mark.short : "🍽";
+  button.textContent = mark ? mark.short : "–";
   button.title = (mark ? mark.title : "Nincs étkezési jelölés") + " — koppints a váltáshoz";
   button.setAttribute("aria-label", displayName(person) + " étkezés: " + (mark ? mark.title : "nincs jelölés"));
   if (mark) { button.style.color = mark.color; button.style.borderColor = mark.color; }
