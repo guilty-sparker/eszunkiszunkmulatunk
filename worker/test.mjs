@@ -71,6 +71,39 @@ const results = await get("/results");
 check("matches the votes cast", results.body?.counts?.q1?.b === 2);
 check("includes every question", Object.keys(results.body?.counts || {}).length === 10);
 
+console.log("/state");
+const state = await get("/state?guest=p1");
+check("returns this guest's votes", state.body?.votes?.q1 === "g");
+check("returns the counts too", state.body?.counts?.q1?.b === 2);
+check("includes every question", Object.keys(state.body?.counts || {}).length === 10);
+const fresh = await get("/state?guest=nobody99");
+check("empty votes for a new guest", Object.keys(fresh.body?.votes || {}).length === 0);
+check("still returns counts", fresh.body?.counts?.q1?.g === 1);
+check("rejects a bad guest id", (await get("/state?guest=..")).status === 400);
+
+// The counts come off a table a trigger maintains, so the thing worth
+// proving is that it can never drift from the votes it is derived from.
+console.log("tally integrity under concurrent votes");
+const burst = Array.from({ length: 25 }, (_, i) =>
+  post({ guest: `burst${i}`, question: "q5", choice: i % 2 ? "b" : "g" })
+);
+await Promise.all(burst);
+const afterBurst = await get("/results");
+check(
+  "every concurrent vote counted exactly once",
+  afterBurst.body?.counts?.q5?.g === 13 && afterBurst.body?.counts?.q5?.b === 12,
+  JSON.stringify(afterBurst.body?.counts?.q5)
+);
+
+console.log("repeated votes never move the count");
+const before = (await get("/results")).body?.counts?.q6?.g || 0;
+await Promise.all(
+  Array.from({ length: 10 }, () => post({ guest: "spammer", question: "q6", choice: "g" }))
+);
+const after = (await get("/results")).body?.counts?.q6;
+check("ten identical votes count as one", after?.g === before + 1, JSON.stringify(after));
+check("the losing choice stays at zero", after?.b === 0);
+
 console.log("CORS");
 const preflight = await fetch(`${BASE}/vote`, {
   method: "OPTIONS",
