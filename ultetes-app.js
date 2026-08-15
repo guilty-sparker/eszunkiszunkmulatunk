@@ -457,6 +457,9 @@ function seatArray(place) {
 }
 
 function tableHeading(index) {
+  const spec = ROOM[index];
+  if (spec && spec.staff) return "Személyzet";
+  if (spec && spec.number) return spec.number + ". csoport";
   return (index + 1) + ". csoport";
 }
 
@@ -743,6 +746,34 @@ const EXPORT_SCALES = [3, 2, 1.5, 1];
 const MAP_TABLE_TOP = 1080;
 const MAP_ROW_STEP = 700;
 const MAP_TABLE_REACH = 340;
+
+// The room as it actually is. Four full rows of two, then a fifth row with
+// only its right-hand table: the way in eats the left-hand slot. That slot
+// became an annex jutting out past the left wall, and its two tables flank
+// the door, so guests walk in between them and step onto the dancefloor.
+const MAIN_ROWS = 5;
+
+// Where each stored table actually stands, and what it is called there.
+// Entries 8 and 9 look out of order on purpose: a shared link stores people
+// as positions in the flattened plan, so reordering the data would silently
+// resolve old links to the wrong names. The group the door displaced keeps
+// its slot in the data and moves only on the floor.
+const ROOM = [
+  { col: "L", row: 0 }, { col: "R", row: 0 },
+  { col: "L", row: 1 }, { col: "R", row: 1 },
+  { col: "L", row: 2 }, { col: "R", row: 2 },
+  { col: "L", row: 3 }, { col: "R", row: 3 },
+  { col: "F", slot: 0, number: 10 },
+  { col: "R", row: 4, number: 9 },
+  { col: "F", slot: 1, staff: true },
+];
+const EXT_W = 700;
+const FOYER_CX = -50;
+const FOYER_LEN = 830;
+const FOYER_SPAN = 400;
+const FOYER_DROP = 520;
+const FOYER_HALF = 800;
+const FOYER_RIGHT = 560;
 const DANCE_W = 1200;
 const DANCE_H = 380;
 const ICON_SCALE = 1.4;
@@ -773,15 +804,56 @@ function mapSeat(place, person, x, y, radius, fill) {
   return out;
 }
 
+function foyerCy() {
+  return MAP_TABLE_TOP + (MAIN_ROWS - 1) * MAP_ROW_STEP + FOYER_DROP;
+}
+
+// Where a table sits on the floor. The annex tables lie flat, east to west,
+// because that is the only way two of them and a walkway fit into the width
+// the annex actually has.
+function tableSpot(index) {
+  const spec = ROOM[index];
+  // Anything added past the room keeps marching down in pairs.
+  if (!spec) {
+    const extra = index - ROOM.length;
+    const left = extra % 2 === 0;
+    return {
+      cx: left ? 650 : 1750,
+      cy: MAP_TABLE_TOP + (MAIN_ROWS + Math.floor(extra / 2)) * MAP_ROW_STEP,
+      deg: left ? -38 : 38,
+      length: 830,
+    };
+  }
+  if (spec.col === "F") {
+    const below = spec.slot === 1;
+    return {
+      cx: FOYER_CX,
+      cy: foyerCy() + (below ? FOYER_SPAN : -FOYER_SPAN),
+      // Mirrored about the walkway, so the pair reads as a gateway.
+      deg: below ? 38 : -38,
+      length: FOYER_LEN,
+      headingBelow: below,
+    };
+  }
+  const left = spec.col === "L";
+  return {
+    cx: left ? 650 : 1750,
+    cy: MAP_TABLE_TOP + spec.row * MAP_ROW_STEP,
+    deg: left ? -38 : 38,
+    length: 830,
+  };
+}
+
 function mapTable(index, table) {
-  const angle = (index % 2 === 0 ? -38 : 38) * Math.PI / 180;
-  const cx = index % 2 === 0 ? 650 : 1750;
-  const cy = MAP_TABLE_TOP + Math.floor(index / 2) * MAP_ROW_STEP;
+  const spot = tableSpot(index);
+  const angle = spot.deg * Math.PI / 180;
+  const cx = spot.cx;
+  const cy = spot.cy;
   const dx = Math.cos(angle);
   const dy = Math.sin(angle);
   const nx = -dy;
   const ny = dx;
-  const length = 830;
+  const length = spot.length;
   const slots = rowCount(table) + 1;
   const bar = 'x1="' + (cx - dx * length / 2).toFixed(1) + '" y1="' + (cy - dy * length / 2).toFixed(1) +
     '" x2="' + (cx + dx * length / 2).toFixed(1) + '" y2="' + (cy + dy * length / 2).toFixed(1) + '"';
@@ -794,9 +866,10 @@ function mapTable(index, table) {
     out += '<line class="seat-hit" data-group="' + index + '" ' + bar +
       ' stroke="transparent" stroke-width="86" stroke-linecap="round"/>';
   }
-  out += svgText(cx, cy - 350, tableHeading(index), 26, "#d6b36b", "middle", "700");
+  const headingY = spot.headingBelow ? cy + 372 : cy - 350;
+  out += svgText(cx, headingY, tableHeading(index), 26, "#d6b36b", "middle", "700");
   if (mapEdit) {
-    out += '<rect class="seat-hit" data-group="' + index + '" x="' + (cx - 150) + '" y="' + (cy - 386) +
+    out += '<rect class="seat-hit" data-group="' + index + '" x="' + (cx - 150) + '" y="' + (headingY - 36) +
       '" width="300" height="56" fill="transparent"/>';
   }
   [table.left, table.right].forEach((guests, sideIndex) => {
@@ -887,6 +960,34 @@ function bandIcon(cx, cy) {
   return icon(cx, cy, out, "ZENEKAR");
 }
 
+// The annex: a dashed room hanging off the left wall where the fifth
+// left-hand table used to be, with the way in between its two tables.
+function foyerArea() {
+  const cy = foyerCy();
+  const left = -EXT_W + 40;
+  const right = FOYER_RIGHT;
+  const half = FOYER_HALF;
+  const top = cy - half;
+  const bottom = cy + half;
+  let out = '<rect x="' + left + '" y="' + top.toFixed(1) + '" width="' + (right - left) +
+    '" height="' + (bottom - top).toFixed(1) +
+    '" rx="20" fill="#10243a" stroke="#d6b36b" stroke-width="4" stroke-dasharray="16 12"/>';
+  // Rub out the wall where the annex opens into the room, so the two read
+  // as one space rather than a box parked against a solid line.
+  out += '<rect x="52" y="' + (top + 12).toFixed(1) + '" width="26" height="' +
+    (bottom - top - 24).toFixed(1) + '" fill="#10243a"/>';
+  out += svgText(left + 26, top + 46, "ELŐTÉR", 27, "#d6b36b", "start", "700");
+  // The door, and the walk between the two tables onto the dancefloor.
+  const armY = cy.toFixed(1);
+  out += '<path d="M' + (left - 0) + ' ' + armY + 'H' + (right - 90) +
+    '" stroke="#d6b36b" stroke-width="5" stroke-dasharray="18 14" fill="none"/>';
+  out += '<path d="M' + (right - 130) + ' ' + (cy - 34).toFixed(1) + 'L' + (right - 70) + ' ' +
+    armY + 'L' + (right - 130) + ' ' + (cy + 34).toFixed(1) +
+    '" fill="none" stroke="#d6b36b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>';
+  out += svgText(left + 26, cy - 22, "BEJÁRAT", 31, "#d6b36b", "start", "700");
+  return '<g>' + out + '</g>';
+}
+
 function venueFeatures(topY) {
   const danceCy = topY + 120 + DANCE_H / 2;
   const iconCy = danceCy + DANCE_H / 2 + 200;
@@ -899,7 +1000,8 @@ function seatedTotal() {
 }
 
 function mapHeight() {
-  const rows = Math.max(1, Math.ceil(state.tables.length / 2));
+  const extra = Math.max(0, state.tables.length - ROOM.length);
+  const rows = MAIN_ROWS + Math.ceil(extra / 2);
   return MAP_TABLE_TOP + (rows - 1) * MAP_ROW_STEP + 1460;
 }
 
@@ -907,20 +1009,24 @@ function mapSvg() {
   const total = seatedTotal();
   const height = mapHeight();
   const lastRow = height - 1460;
-  let svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + MAP_W + '" height="' + height +
-    '" viewBox="0 0 ' + MAP_W + ' ' + height + '">';
+  // The canvas reaches left of zero so the annex has somewhere to be, which
+  // keeps every other coordinate on the map exactly where it was.
+  const fullW = MAP_W + EXT_W;
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + fullW + '" height="' + height +
+    '" viewBox="' + -EXT_W + ' 0 ' + fullW + ' ' + height + '">';
   svg += '<defs><pattern id="dance-tiles" width="120" height="120" patternUnits="userSpaceOnUse">' +
     '<rect width="120" height="120" fill="#10243a"/>' +
     '<rect width="60" height="60" fill="#f2edd9" opacity=".055"/>' +
     '<rect x="60" y="60" width="60" height="60" fill="#f2edd9" opacity=".055"/>' +
     '</pattern></defs>';
-  svg += '<rect width="' + MAP_W + '" height="' + height + '" fill="#0d1d2d"/>';
+  svg += '<rect x="' + -EXT_W + '" width="' + fullW + '" height="' + height + '" fill="#0d1d2d"/>';
   svg += '<rect x="64" y="230" width="2272" height="' + (height - 350) +
     '" rx="12" fill="#10243a" stroke="#243d56" stroke-width="4"/>';
   svg += svgText(1200, 92, "ÜLTETÉSI TÉRKÉP", 54, "#d6b36b", "middle", "700");
   svg += svgText(1200, 160, SUBTITLES[baseVersion], 28, "#f4f0e3", "middle", "400");
   svg += svgText(1200, 300, "FŐASZTAL", 27, "#d6b36b", "middle", "700");
   svg += mapHead();
+  svg += foyerArea();
   state.tables.forEach((table, index) => { svg += mapTable(index, table); });
   svg += venueFeatures(lastRow + MAP_TABLE_REACH);
   svg += svgText(1200, height - 80, total + " fő", 28, "#d6b36b", "middle", "700");
