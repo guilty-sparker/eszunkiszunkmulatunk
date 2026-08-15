@@ -994,9 +994,22 @@ function venueFeatures(topY) {
   return danceFloor(1200, danceCy, DANCE_W, DANCE_H) + bandIcon(780, iconCy) + barIcon(1620, iconCy);
 }
 
+function isStaffTable(index) {
+  const spec = ROOM[index];
+  return !!(spec && spec.staff);
+}
+
+// The headline number is a guest count. Counting the band in it would tell
+// the caterer the wrong thing, so the staff are totalled separately.
 function seatedTotal() {
   return state.head.filter(Boolean).length +
-    state.tables.reduce((sum, table) => sum + seats(table).length, 0);
+    state.tables.reduce(
+      (sum, table, index) => sum + (isStaffTable(index) ? 0 : seats(table).length), 0);
+}
+
+function staffTotal() {
+  return state.tables.reduce(
+    (sum, table, index) => sum + (isStaffTable(index) ? seats(table).length : 0), 0);
 }
 
 function mapHeight() {
@@ -1029,7 +1042,9 @@ function mapSvg() {
   svg += foyerArea();
   state.tables.forEach((table, index) => { svg += mapTable(index, table); });
   svg += venueFeatures(lastRow + MAP_TABLE_REACH);
-  svg += svgText(1200, height - 80, total + " fő", 28, "#d6b36b", "middle", "700");
+  const staff = staffTotal();
+  svg += svgText(1200, height - 80, total + " fő" + (staff ? "  ·  " + staff + " fő személyzet" : ""),
+    28, "#d6b36b", "middle", "700");
   return svg + '</svg>';
 }
 
@@ -1142,7 +1157,9 @@ async function exportPng() {
 }
 
 function render() {
-  document.getElementById("total").textContent = seatedTotal() + " fő";
+  const staffHere = staffTotal();
+  document.getElementById("total").textContent =
+    seatedTotal() + " fő" + (staffHere ? " + " + staffHere + " személyzet" : "");
   const restore = document.getElementById("restore");
   if (restore) {
     restore.hidden = !removed.length;

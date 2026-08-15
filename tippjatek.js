@@ -24,7 +24,8 @@ const PLAN = (INITIAL.plans && INITIAL.plans[INITIAL.version]) || [];
 const EVERYONE = (INITIAL.head || [])
   .concat(...PLAN.map((t) => (t.left || []).concat(t.right || [], t.edge || [])))
   .filter(Boolean)
-  .filter((person) => !person.baby);
+  // Babies do not vote, and neither does the band.
+  .filter((person) => !person.baby && !person.staff);
 
 const BY_ID = new Map(EVERYONE.map((person) => [person.id, person]));
 
