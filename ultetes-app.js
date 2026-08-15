@@ -85,18 +85,25 @@ section h2 span { color: #9eb0c0; font-weight: 500; }
 }
 .seat.right { flex-direction: row-reverse; text-align: right; }
 .diet-tag, .diet-btn {
-  font-size: .72rem;
-  font-weight: 700;
+  font-size: .8rem;
+  font-weight: 800;
   line-height: 1;
-  padding: 3px 5px;
-  border-radius: 6px;
+  padding: 5px 8px;
+  border-radius: 8px;
   border: 1px solid #3a4d63;
   background: transparent;
   white-space: nowrap;
 }
 .diet-tag { margin-left: auto; }
-.diet-btn { cursor: pointer; color: #8aa2ba; min-width: 30px; }
+.diet-btn { cursor: pointer; color: #8aa2ba; min-width: 38px; min-height: 34px; }
 .diet-btn:hover { background: #16304a; }
+/* Marked people read as marked across the room, not on inspection. */
+.diet-tag.set, .diet-btn.on {
+  color: #0b1c2b !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, .25) inset;
+}
+.seat.marked { border-width: 2px; }
 .seat.renaming { cursor: default; }
 
 /* Editing names needs room to read them. Two seats abreast leaves the field
@@ -228,9 +235,9 @@ function status(message) {
 
 // The menu marks, in the order the button cycles through them.
 const DIETS = [
-  { code: "v",  short: "V",  label: "vega",       title: "Vegetáriánus",   color: "#8fd694" },
-  { code: "vg", short: "VG", label: "vegán",      title: "Vegán",          color: "#5fbf7a" },
-  { code: "x",  short: "∅",  label: "nincs menü", title: "Nem kér menüt",  color: "#9fb3c8" },
+  { code: "v",  short: "V",  label: "vega",       title: "Vegetáriánus",  color: "#7ee787" },
+  { code: "vg", short: "VG", label: "vegán",      title: "Vegán",         color: "#2ee6a8" },
+  { code: "x",  short: "∅",  label: "nincs menü", title: "Nem kér menüt", color: "#ff7a6b" },
 ];
 const DIET_BY_CODE = new Map(DIETS.map((d) => [d.code, d]));
 
@@ -634,7 +641,7 @@ function dietButton(person) {
   button.textContent = mark ? mark.short : "–";
   button.title = (mark ? mark.title : "Nincs étkezési jelölés") + " — koppints a váltáshoz";
   button.setAttribute("aria-label", displayName(person) + " étkezés: " + (mark ? mark.title : "nincs jelölés"));
-  if (mark) { button.style.color = mark.color; button.style.borderColor = mark.color; }
+  if (mark) button.style.background = mark.color;
   button.addEventListener("click", (event) => {
     event.stopPropagation();
     cycleDiet(person.id);
@@ -681,12 +688,13 @@ function seatCell(person, place) {
     const mark = dietOf(person);
     if (mark) {
       const tag = document.createElement("span");
-      tag.className = "diet-tag";
+      tag.className = "diet-tag set";
       tag.textContent = mark.short;
       tag.title = mark.title;
-      tag.style.color = mark.color;
-      tag.style.borderColor = mark.color;
+      tag.style.background = mark.color;
       cell.append(tag);
+      cell.classList.add("marked");
+      cell.style.borderColor = mark.color;
     }
     cell.addEventListener("dragstart", (event) => {
       event.dataTransfer.setData("text/plain", JSON.stringify(place));
@@ -830,6 +838,24 @@ function svgText(x, y, text, size, color, anchor, weight, tail) {
   return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" fill="' + color +
     '" font-size="' + size + '" text-anchor="' + anchor + '" font-weight="' + weight +
     '" font-family="system-ui, Arial, sans-serif">' + inner + '</text>';
+}
+
+// Drawn as a solid pill so the mark carries at a glance and in print,
+// rather than depending on someone noticing a tinted word.
+function dietBadge(person, x, y) {
+  const mark = dietOf(person);
+  if (!mark) return "";
+  const w = mark.short.length > 1 ? 48 : 36;
+  return '<rect x="' + (x - w / 2).toFixed(1) + '" y="' + (y - 16).toFixed(1) + '" width="' + w +
+    '" height="32" rx="16" fill="' + mark.color + '"/>' +
+    svgText(x, y + 10, mark.short, 22, "#0b1c2b", "middle", "800");
+}
+
+// How far the name has to step aside to leave room for the badge.
+function dietGap(person) {
+  const mark = dietOf(person);
+  if (!mark) return 0;
+  return (mark.short.length > 1 ? 48 : 36) + 12;
 }
 
 function dietTail(person) {
@@ -984,8 +1010,10 @@ function mapTable(index, table) {
       out += mapSeat({ table: index, side: sideName, index: seat }, person, mx, my, 20,
         sideIndex === 0 ? "#9bc9d5" : "#efbf8c");
       if (person) {
-        out += svgText(mx + outward * 34, my + 8, displayName(person), 25, "#f4f0e3", anchor, "600",
-          dietTail(person));
+        const gap = dietGap(person);
+        if (gap) out += dietBadge(person, mx + outward * (30 + gap / 2), my);
+        out += svgText(mx + outward * (34 + gap), my + 8, displayName(person), 25, "#f4f0e3",
+          anchor, "600", dietTail(person));
       }
     }
   });
@@ -1000,6 +1028,7 @@ function mapTable(index, table) {
     if (person) {
       out += svgText(bx, by + (direction < 0 ? -26 : 37), displayName(person) + " (baba)", 22,
         "#e6dcf6", "middle", "600", dietTail(person));
+      out += dietBadge(person, bx + 54, by);
     }
   }
   return '<g>' + out + '</g>';
@@ -1019,6 +1048,7 @@ function mapHead() {
       i % 2 === 0 ? "#9bc9d5" : "#efbf8c");
     if (person) {
       out += svgText(x, 440, displayName(person), 25, "#f4f0e3", "middle", "600", dietTail(person));
+      out += dietBadge(person, x + 62, 485);
     }
   }
   return out;
