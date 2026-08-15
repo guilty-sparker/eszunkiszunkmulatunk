@@ -830,14 +830,24 @@ function escapeText(text) {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 }
 
-function svgText(x, y, text, size, color, anchor, weight, tail) {
+function svgText(x, y, text, size, color, anchor, weight, tail, halo) {
   let inner = escapeText(text);
   // A tspan rather than a second <text>: the mark has to sit right after the
   // name without anyone having to measure how wide the name is.
   if (tail) inner += '<tspan fill="' + tail.color + '">' + escapeText(tail.text) + "</tspan>";
+  const outline = halo
+    ? ' stroke="#0d1d2d" stroke-width="7" stroke-linejoin="round" paint-order="stroke"'
+    : "";
   return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" fill="' + color +
     '" font-size="' + size + '" text-anchor="' + anchor + '" font-weight="' + weight +
-    '" font-family="system-ui, Arial, sans-serif">' + inner + '</text>';
+    '" font-family="system-ui, Arial, sans-serif"' + outline + ">" + inner + "</text>";
+}
+
+const BABY_COLOR = "#c7b0e3";
+
+function babyBadge(x, y) {
+  return '<rect x="' + (x - 42) + '" y="' + (y - 16) + '" width="84" height="32" rx="16" fill="' +
+    BABY_COLOR + '"/>' + svgText(x, y + 10, "BABA", 21, "#241a33", "middle", "800");
 }
 
 // Drawn as a solid pill so the mark carries at a glance and in print,
@@ -1021,14 +1031,15 @@ function mapTable(index, table) {
     const person = (table.edge || [])[slot] || null;
     if (!person && !mapEdit) continue;
     const direction = slot === 0 ? -1 : 1;
-    const reach = length / 2 + 62;
+    const reach = length / 2 + 96;
     const bx = cx + dx * direction * reach;
     const by = cy + dy * direction * reach;
-    out += mapSeat({ table: index, side: "edge", index: slot }, person, bx, by, 16, "#c7b0e3");
+    out += mapSeat({ table: index, side: "edge", index: slot }, person, bx, by, 20, BABY_COLOR);
     if (person) {
-      out += svgText(bx, by + (direction < 0 ? -26 : 37), displayName(person) + " (baba)", 22,
-        "#e6dcf6", "middle", "600", dietTail(person));
-      out += dietBadge(person, bx + 54, by);
+      out += babyBadge(bx, by + (direction < 0 ? -52 : 62));
+      out += svgText(bx, by + (direction < 0 ? -96 : 108), displayName(person), 25, "#efe4ff",
+        "middle", "700", dietTail(person), true);
+      out += dietBadge(person, bx + 74, by);
     }
   }
   return '<g>' + out + '</g>';
