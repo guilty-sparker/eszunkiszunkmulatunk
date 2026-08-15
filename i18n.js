@@ -80,7 +80,7 @@ const translationsData = {
       "answered": "megtippelve",
       "yourPick": "a te tipped",
       "leading": "vezet",
-      "allDone": "Minden tipp leadva. Augusztus 22-én kiderül.",
+      "allDone": "Minden tipp leadva. Az állás élőben frissül, ahogy a többiek is tippelnek — a többi pedig ma este kiderül.",
       "intro": "Tíz kérdés rólunk kettőnkről. Válaszd ki a neved, tippelj, aztán nézd meg, mit gondolnak a többiek. Kérdésenként egy tipp, és nincs visszaút.",
       "namePrompt": "Kezdd el beírni a neved",
       "namePlaceholder": "Név…",
@@ -95,7 +95,7 @@ const translationsData = {
       "questions": [
         {
           "id": "q1",
-          "text": "🍻 Ki mondja hamarabb, hogy „Én már nem iszom többet”?",
+          "text": "Ki mondja hamarabb, hogy „Én már nem iszom többet”?",
           "options": [
             {
               "id": "g",
@@ -109,7 +109,7 @@ const translationsData = {
         },
         {
           "id": "q2",
-          "text": "🕺 Ki fog előbb táncolni az asztalon?",
+          "text": "Ki fog előbb táncolni az asztalon?",
           "options": [
             {
               "id": "g",
@@ -123,7 +123,7 @@ const translationsData = {
         },
         {
           "id": "q3",
-          "text": "🏠 Ki fogja előbb azt mondani, hogy „Menjünk már haza”?",
+          "text": "Ki fogja előbb azt mondani, hogy „Menjünk már haza”?",
           "options": [
             {
               "id": "g",
@@ -137,7 +137,7 @@ const translationsData = {
         },
         {
           "id": "q4",
-          "text": "🗺️ Ki tévedne el előbb GPS-szel is?",
+          "text": "Ki tévedne el előbb GPS-szel is?",
           "options": [
             {
               "id": "g",
@@ -151,7 +151,7 @@ const translationsData = {
         },
         {
           "id": "q5",
-          "text": "🏝️ Ki tudna tovább élni egy lakatlan szigeten?",
+          "text": "Ki tudna tovább élni egy lakatlan szigeten?",
           "options": [
             {
               "id": "g",
@@ -165,7 +165,7 @@ const translationsData = {
         },
         {
           "id": "q6",
-          "text": "🤬 Ki kezdene el egy teljesen értelmetlen vitát, és ragaszkodna hozzá, hogy neki van igaza?",
+          "text": "Ki kezdene el egy teljesen értelmetlen vitát, és ragaszkodna hozzá, hogy neki van igaza?",
           "options": [
             {
               "id": "g",
@@ -179,7 +179,7 @@ const translationsData = {
         },
         {
           "id": "q7",
-          "text": "👻 Ki bírná tovább egyedül egy horrorfilmben?",
+          "text": "Ki bírná tovább egyedül egy horrorfilmben?",
           "options": [
             {
               "id": "g",
@@ -193,7 +193,7 @@ const translationsData = {
         },
         {
           "id": "q8",
-          "text": "🔍 Ki lenne képes 20 percig keresni valamit, ami végig a kezében volt?",
+          "text": "Ki lenne képes 20 percig keresni valamit, ami végig a kezében volt?",
           "options": [
             {
               "id": "g",
@@ -207,7 +207,7 @@ const translationsData = {
         },
         {
           "id": "q9",
-          "text": "🍕 Ki enne meg egy másik ember kajájából „csak egy falatot”, majd végül a felét?",
+          "text": "Ki enne meg egy másik ember kajájából „csak egy falatot”, majd végül a felét?",
           "options": [
             {
               "id": "g",
@@ -221,7 +221,7 @@ const translationsData = {
         },
         {
           "id": "q10",
-          "text": "💡 Ki venne egy teljesen értelmetlen dolgot csak azért, mert kurva jó dealnek tűnt?",
+          "text": "Ki venne meg valami tökéletesen felesleges dolgot, csak mert ellenállhatatlan ajánlatnak tűnt?",
           "options": [
             {
               "id": "g",
@@ -315,7 +315,7 @@ const translationsData = {
       "answered": "answered",
       "yourPick": "your pick",
       "leading": "leading",
-      "allDone": "All guesses are in. We find out on 22 August.",
+      "allDone": "All guesses are in. The standings update live as the others place theirs — the rest we find out tonight.",
       "intro": "Ten questions about the two of us. Pick your name, place your guesses, then see what everyone else thinks. One answer per question, and no going back.",
       "namePrompt": "Start typing your name",
       "namePlaceholder": "Name…",
@@ -330,7 +330,7 @@ const translationsData = {
       "questions": [
         {
           "id": "q1",
-          "text": "🍻 Who says “I’m not drinking any more” first?",
+          "text": "Who says “I’m not drinking any more” first?",
           "options": [
             {
               "id": "g",
@@ -344,7 +344,7 @@ const translationsData = {
         },
         {
           "id": "q2",
-          "text": "🕺 Who ends up dancing on the table first?",
+          "text": "Who ends up dancing on the table first?",
           "options": [
             {
               "id": "g",
@@ -358,7 +358,7 @@ const translationsData = {
         },
         {
           "id": "q3",
-          "text": "🏠 Who says “can we go home already” first?",
+          "text": "Who says “can we go home already” first?",
           "options": [
             {
               "id": "g",
@@ -372,7 +372,7 @@ const translationsData = {
         },
         {
           "id": "q4",
-          "text": "🗺️ Who would get lost even with GPS?",
+          "text": "Who would get lost even with GPS?",
           "options": [
             {
               "id": "g",
@@ -386,7 +386,7 @@ const translationsData = {
         },
         {
           "id": "q5",
-          "text": "🏝️ Who would last longer on a desert island?",
+          "text": "Who would last longer on a desert island?",
           "options": [
             {
               "id": "g",
@@ -400,7 +400,7 @@ const translationsData = {
         },
         {
           "id": "q6",
-          "text": "🤬 Who would start a completely pointless argument and insist they were right?",
+          "text": "Who would start a completely pointless argument and insist they were right?",
           "options": [
             {
               "id": "g",
@@ -414,7 +414,7 @@ const translationsData = {
         },
         {
           "id": "q7",
-          "text": "👻 Who would last longer alone through a horror film?",
+          "text": "Who would last longer alone through a horror film?",
           "options": [
             {
               "id": "g",
@@ -428,7 +428,7 @@ const translationsData = {
         },
         {
           "id": "q8",
-          "text": "🔍 Who could spend 20 minutes looking for something they were holding the whole time?",
+          "text": "Who could spend 20 minutes looking for something they were holding the whole time?",
           "options": [
             {
               "id": "g",
@@ -442,7 +442,7 @@ const translationsData = {
         },
         {
           "id": "q9",
-          "text": "🍕 Who would take “just one bite” of someone else’s food and end up eating half?",
+          "text": "Who would take “just one bite” of someone else’s food and end up eating half?",
           "options": [
             {
               "id": "g",
@@ -456,7 +456,7 @@ const translationsData = {
         },
         {
           "id": "q10",
-          "text": "💡 Who would buy something completely pointless purely because it looked like a hell of a deal?",
+          "text": "Who would buy something completely pointless just because the offer was too good to pass up?",
           "options": [
             {
               "id": "g",

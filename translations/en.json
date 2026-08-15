@@ -82,7 +82,7 @@
     "questions": [
       {
         "id": "q1",
-        "text": "🍻 Who says “I’m not drinking any more” first?",
+        "text": "Who says “I’m not drinking any more” first?",
         "options": [
           {
             "id": "g",
@@ -96,7 +96,7 @@
       },
       {
         "id": "q2",
-        "text": "🕺 Who ends up dancing on the table first?",
+        "text": "Who ends up dancing on the table first?",
         "options": [
           {
             "id": "g",
@@ -110,7 +110,7 @@
       },
       {
         "id": "q3",
-        "text": "🏠 Who says “can we go home already” first?",
+        "text": "Who says “can we go home already” first?",
         "options": [
           {
             "id": "g",
@@ -124,7 +124,7 @@
       },
       {
         "id": "q4",
-        "text": "🗺️ Who would get lost even with GPS?",
+        "text": "Who would get lost even with GPS?",
         "options": [
           {
             "id": "g",
@@ -138,7 +138,7 @@
       },
       {
         "id": "q5",
-        "text": "🏝️ Who would last longer on a desert island?",
+        "text": "Who would last longer on a desert island?",
         "options": [
           {
             "id": "g",
@@ -152,7 +152,7 @@
       },
       {
         "id": "q6",
-        "text": "🤬 Who would start a completely pointless argument and insist they were right?",
+        "text": "Who would start a completely pointless argument and insist they were right?",
         "options": [
           {
             "id": "g",
@@ -166,7 +166,7 @@
       },
       {
         "id": "q7",
-        "text": "👻 Who would last longer alone through a horror film?",
+        "text": "Who would last longer alone through a horror film?",
         "options": [
           {
             "id": "g",
@@ -180,7 +180,7 @@
       },
       {
         "id": "q8",
-        "text": "🔍 Who could spend 20 minutes looking for something they were holding the whole time?",
+        "text": "Who could spend 20 minutes looking for something they were holding the whole time?",
         "options": [
           {
             "id": "g",
@@ -194,7 +194,7 @@
       },
       {
         "id": "q9",
-        "text": "🍕 Who would take “just one bite” of someone else’s food and end up eating half?",
+        "text": "Who would take “just one bite” of someone else’s food and end up eating half?",
         "options": [
           {
             "id": "g",
@@ -208,7 +208,7 @@
       },
       {
         "id": "q10",
-        "text": "💡 Who would buy something completely pointless purely because it looked like a hell of a deal?",
+        "text": "Who would buy something completely pointless just because the offer was too good to pass up?",
         "options": [
           {
             "id": "g",
@@ -224,6 +224,6 @@
     "answered": "answered",
     "yourPick": "your pick",
     "leading": "leading",
-    "allDone": "All guesses are in. We find out on 22 August."
+    "allDone": "All guesses are in. The standings update live as the others place theirs — the rest we find out tonight."
   }
 }
