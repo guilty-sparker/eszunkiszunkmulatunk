@@ -84,6 +84,19 @@ section h2 span { color: #9eb0c0; font-weight: 500; }
   touch-action: manipulation;
 }
 .seat.right { flex-direction: row-reverse; text-align: right; }
+.diet-tag, .diet-btn {
+  font-size: .72rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 3px 5px;
+  border-radius: 6px;
+  border: 1px solid #3a4d63;
+  background: transparent;
+  white-space: nowrap;
+}
+.diet-tag { margin-left: auto; }
+.diet-btn { cursor: pointer; color: #8aa2ba; min-width: 30px; }
+.diet-btn:hover { background: #16304a; }
 .seat.renaming { cursor: default; }
 .row.edge-row { grid-template-columns: 74px 1fr; }
 .edge-label {
@@ -177,9 +190,14 @@ const EVERYONE = INITIAL.head.concat(
   ...PLANS[INITIAL.version].map((t) => t.left.concat(t.right, t.edge || []))
 ).filter(Boolean);
 const EDGE_SLOTS = 2;
+// The length of EVERYONE on the day links started being shared, before the
+// staff joined the plan. Only ever read for links that predate the `e` field.
+const LEGACY_EVERYONE = 153;
 const PEOPLE = new Map(EVERYONE.map((p) => [p.id, p]));
 const PASSWORD = window.__SEATING_PASSWORD__ || "";
 let customNames = {};
+// id -> "v" (vegetáriánus), "vg" (vegán), "x" (nem kér menüt).
+let diets = {};
 let removed = [];
 let added = [];
 let nextAdded = 1;
@@ -193,6 +211,30 @@ const MOVE_HINT = "Mozgatás: koppints egy névre vagy egy csoportra, majd a cé
 
 function status(message) {
   document.getElementById("status").textContent = message;
+}
+
+// The menu marks, in the order the button cycles through them.
+const DIETS = [
+  { code: "v",  short: "V",  label: "vega",       title: "Vegetáriánus",   color: "#8fd694" },
+  { code: "vg", short: "VG", label: "vegán",      title: "Vegán",          color: "#5fbf7a" },
+  { code: "x",  short: "∅",  label: "nincs menü", title: "Nem kér menüt",  color: "#9fb3c8" },
+];
+const DIET_BY_CODE = new Map(DIETS.map((d) => [d.code, d]));
+
+function dietOf(person) {
+  return person ? DIET_BY_CODE.get(diets[person.id]) || null : null;
+}
+
+// Cycles none -> vega -> vegán -> nincs menü -> none.
+function cycleDiet(id) {
+  const current = diets[id];
+  const at = DIETS.findIndex((d) => d.code === current);
+  const next = DIETS[at + 1];
+  if (next) diets[id] = next.code;
+  else if (at === -1) diets[id] = DIETS[0].code;
+  else delete diets[id];
+  save();
+  render();
 }
 
 function displayName(person) {
@@ -394,6 +436,7 @@ function load() {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (saved && PLANS[saved.version]) baseVersion = saved.version;
     if (saved && saved.names) customNames = saved.names;
+    if (saved && saved.diets) diets = saved.diets;
     if (saved && saved.removed) removed = saved.removed;
     if (saved && saved.added) registerAdded(saved.added);
     if (saved && saved.tables && saved.tables.length) {
@@ -436,6 +479,7 @@ function save() {
     JSON.stringify({
       version: baseVersion,
       names: customNames,
+      diets,
       removed,
       added: added.map((p) => ({ id: p.id, name: p.name, baby: p.baby })),
       head: state.head.map((p) => (p ? p.id : null)),
@@ -567,6 +611,22 @@ function nameField(person) {
   return field;
 }
 
+function dietButton(person) {
+  const mark = dietOf(person);
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "diet-btn" + (mark ? " on" : "");
+  button.textContent = mark ? mark.short : "🍽";
+  button.title = (mark ? mark.title : "Nincs étkezési jelölés") + " — koppints a váltáshoz";
+  button.setAttribute("aria-label", displayName(person) + " étkezés: " + (mark ? mark.title : "nincs jelölés"));
+  if (mark) { button.style.color = mark.color; button.style.borderColor = mark.color; }
+  button.addEventListener("click", (event) => {
+    event.stopPropagation();
+    cycleDiet(person.id);
+  });
+  return button;
+}
+
 function newGuestField(place) {
   const field = document.createElement("input");
   field.className = "seat-name";
@@ -595,7 +655,7 @@ function seatCell(person, place) {
       event.stopPropagation();
       deleteGuest(person.id);
     });
-    cell.append(dot, nameField(person), drop);
+    cell.append(dot, nameField(person), dietButton(person), drop);
     return cell;
   }
   if (person) {
@@ -603,6 +663,16 @@ function seatCell(person, place) {
     const dot = document.createElement("span");
     dot.className = "dot";
     cell.append(dot, document.createTextNode(displayName(person)));
+    const mark = dietOf(person);
+    if (mark) {
+      const tag = document.createElement("span");
+      tag.className = "diet-tag";
+      tag.textContent = mark.short;
+      tag.title = mark.title;
+      tag.style.color = mark.color;
+      tag.style.borderColor = mark.color;
+      cell.append(tag);
+    }
     cell.addEventListener("dragstart", (event) => {
       event.dataTransfer.setData("text/plain", JSON.stringify(place));
       event.dataTransfer.effectAllowed = "move";
@@ -733,11 +803,23 @@ function renderEditor() {
   state.tables.forEach((table, index) => root.append(tableSection(table, index)));
 }
 
-function svgText(x, y, text, size, color, anchor, weight) {
-  const escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+function escapeText(text) {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+}
+
+function svgText(x, y, text, size, color, anchor, weight, tail) {
+  let inner = escapeText(text);
+  // A tspan rather than a second <text>: the mark has to sit right after the
+  // name without anyone having to measure how wide the name is.
+  if (tail) inner += '<tspan fill="' + tail.color + '">' + escapeText(tail.text) + "</tspan>";
   return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" fill="' + color +
     '" font-size="' + size + '" text-anchor="' + anchor + '" font-weight="' + weight +
-    '" font-family="system-ui, Arial, sans-serif">' + escaped + '</text>';
+    '" font-family="system-ui, Arial, sans-serif">' + inner + '</text>';
+}
+
+function dietTail(person) {
+  const mark = dietOf(person);
+  return mark ? { text: " (" + mark.label + ")", color: mark.color } : null;
 }
 
 const MAP_W = 2400;
@@ -887,7 +969,8 @@ function mapTable(index, table) {
       out += mapSeat({ table: index, side: sideName, index: seat }, person, mx, my, 20,
         sideIndex === 0 ? "#9bc9d5" : "#efbf8c");
       if (person) {
-        out += svgText(mx + outward * 34, my + 8, displayName(person), 25, "#f4f0e3", anchor, "600");
+        out += svgText(mx + outward * 34, my + 8, displayName(person), 25, "#f4f0e3", anchor, "600",
+          dietTail(person));
       }
     }
   });
@@ -900,7 +983,8 @@ function mapTable(index, table) {
     const by = cy + dy * direction * reach;
     out += mapSeat({ table: index, side: "edge", index: slot }, person, bx, by, 16, "#c7b0e3");
     if (person) {
-      out += svgText(bx, by + (direction < 0 ? -26 : 37), displayName(person) + " (baba)", 22, "#e6dcf6", "middle", "600");
+      out += svgText(bx, by + (direction < 0 ? -26 : 37), displayName(person) + " (baba)", 22,
+        "#e6dcf6", "middle", "600", dietTail(person));
     }
   }
   return '<g>' + out + '</g>';
@@ -918,7 +1002,9 @@ function mapHead() {
     const x = slots === 1 ? 1200 : headStart + (i * headSpan) / (slots - 1);
     out += mapSeat({ table: -1, side: "head", index: i }, person, x, 485, 22,
       i % 2 === 0 ? "#9bc9d5" : "#efbf8c");
-    if (person) out += svgText(x, 440, displayName(person), 25, "#f4f0e3", "middle", "600");
+    if (person) {
+      out += svgText(x, 440, displayName(person), 25, "#f4f0e3", "middle", "600", dietTail(person));
+    }
   }
   return out;
 }
@@ -1176,10 +1262,22 @@ function encodeSeating() {
   Object.keys(customNames).forEach((id) => {
     if (index.has(id)) names[index.get(id)] = customNames[id];
   });
+  // Menu marks travel for hand-added guests too, so slot() rather than index.
+  const menus = {};
+  Object.keys(diets).forEach((id) => {
+    const position = index.has(id) ? index.get(id) : addedIndex.get(id);
+    if (position !== undefined) menus[position] = diets[id];
+  });
   return {
     v: baseVersion,
+    // Where the guest list stops and hand-added people start. Without this
+    // the boundary is implicit, so growing the seating data silently makes
+    // every older link resolve its added guests to whoever now occupies
+    // those positions.
+    e: EVERYONE.length,
     a: added.map((person) => [person.name, person.baby ? 1 : 0]),
     n: names,
+    m: menus,
     d: removed.map((id) => index.get(id)).filter((position) => position !== undefined),
     h: state.head.map(slot),
     t: state.tables.map((t) => [t.left.map(slot), t.right.map(slot), t.edge.map(slot)]),
@@ -1195,11 +1293,19 @@ function decodeSeating(payload) {
   });
   removed = (payload.d || []).map((position) => EVERYONE[position]).filter(Boolean).map((p) => p.id);
   if (PLANS[payload.v]) baseVersion = payload.v;
+  // Links shared before the staff table existed carry no boundary of their
+  // own, and were written when the guest list ended here.
+  const base = payload.e || LEGACY_EVERYONE;
   const seat = (position) => {
     if (position < 0) return null;
-    if (position < EVERYONE.length) return EVERYONE[position];
-    return added[position - EVERYONE.length] || null;
+    if (position < base) return EVERYONE[position];
+    return added[position - base] || null;
   };
+  diets = {};
+  Object.keys(payload.m || {}).forEach((key) => {
+    const person = seat(Number(key));
+    if (person && DIET_BY_CODE.has(payload.m[key])) diets[person.id] = payload.m[key];
+  });
   state = {
     head: payload.h ? payload.h.map(seat) : INITIAL.head.slice(),
     tables: (payload.t || []).map((t) => ({
