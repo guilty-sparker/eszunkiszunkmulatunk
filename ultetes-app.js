@@ -182,6 +182,7 @@ document.getElementById('seating-root').innerHTML = `<header>
     <button type="button" id="tab-move" aria-pressed="false" onclick="toggleMapEdit()">Mozgatás</button>
     <button type="button" onclick="copyLink()">Link másolása</button>
     <button type="button" id="save-png" onclick="exportPng()">PNG mentése</button>
+    <button type="button" id="save-pdf" onclick="exportPdf()">PDF mentése</button>
     <button type="button" onclick="addGroup()">Új csoport</button>
     <button type="button" id="restore" onclick="restoreGuests()" hidden></button>
     <select id="base-plan" aria-label="Alapterv"><option value="S" selected>Mentett ültetés</option><option value="A">„A” változat — korrigált</option><option value="B">„B” változat — korrigált</option><option value="C">„C” változat — affinitás</option></select>
@@ -1144,6 +1145,12 @@ function seatedTotal() {
     state.tables.reduce((sum, table) => sum + seats(table).length, 0);
 }
 
+// The drawing reaches left of zero for the annex, so its real width is wider
+// than the room. Exports that use MAP_W alone squash it.
+function mapWidth() {
+  return MAP_W + EXT_W;
+}
+
 function mapHeight() {
   const extra = Math.max(0, state.tables.length - ROOM.length);
   const rows = MAIN_ROWS + Math.ceil(extra / 2);
@@ -1265,12 +1272,13 @@ async function exportPng() {
   status("PNG készítése…");
   try {
     const height = mapHeight();
+    const width = mapWidth();
     const source = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(exportSvg());
     const image = await loadImage(source);
     let png = null;
-    for (const scale of exportScales(MAP_W, height)) {
+    for (const scale of exportScales(width, height)) {
       try {
-        png = await drawPng(image, MAP_W, height, scale);
+        png = await drawPng(image, width, height, scale);
       } catch (error) {
         png = null;
       }
@@ -1284,6 +1292,58 @@ async function exportPng() {
     status("A PNG nem készült el.");
   }
   button.disabled = false;
+}
+
+// A PNG is pixels, so zooming in on a name eventually hits the grain — which
+// is the whole complaint about reading the map. Handing the SVG to the
+// browser's own print pipeline produces a genuinely vector PDF instead: the
+// text stays sharp at any zoom and can be searched and selected. Doing the
+// conversion here by hand would mean reimplementing text, paths and the
+// dancefloor's pattern fill, and getting one of them subtly wrong.
+const PDF_PAGE_MM = 420; // A2 across; the page runs as long as the map needs
+
+function printDocument() {
+  const width = mapWidth();
+  const height = mapHeight();
+  const pageH = Math.round((PDF_PAGE_MM * height) / width);
+  return "<!doctype html><html lang=\"hu\"><head><meta charset=\"utf-8\">" +
+    "<title>Ültetési térkép</title><style>" +
+    "@page { size: " + PDF_PAGE_MM + "mm " + pageH + "mm; margin: 0 }" +
+    "html,body { margin:0; padding:0; background:#0d1d2d }" +
+    "svg { display:block; width:100%; height:auto }" +
+    "</style></head><body>" + exportSvg() + "</body></html>";
+}
+
+function exportPdf() {
+  const button = document.getElementById("save-pdf");
+  button.disabled = true;
+  status("PDF előkészítése…");
+  const frame = document.createElement("iframe");
+  frame.setAttribute("aria-hidden", "true");
+  frame.style.cssText =
+    "position:fixed;right:0;bottom:0;width:1px;height:1px;opacity:0;border:0";
+  frame.addEventListener("load", () => {
+    // Give the frame a beat to lay the drawing out before the dialog opens,
+    // or the preview can come up blank.
+    setTimeout(() => {
+      try {
+        frame.contentWindow.focus();
+        frame.contentWindow.print();
+        status("A nyomtatás ablakban válaszd a „Mentés PDF-be” lehetőséget.");
+      } catch (error) {
+        status("A PDF nem készült el.");
+      }
+      // Safari fires nothing after printing, so clean up on a timer rather
+      // than waiting for an event that may never come.
+      setTimeout(() => frame.remove(), 60000);
+      button.disabled = false;
+    }, 250);
+  });
+  document.body.append(frame);
+  const doc = frame.contentDocument || frame.contentWindow.document;
+  doc.open();
+  doc.write(printDocument());
+  doc.close();
 }
 
 function render() {
@@ -1488,7 +1548,7 @@ function resetPlan() {
   render();
 }
 
-Object.assign(window, { showView, toggleNames, toggleMapEdit, copyLink, exportPng, addGroup, resetPlan, restoreGuests });
+Object.assign(window, { showView, toggleNames, toggleMapEdit, copyLink, exportPng, exportPdf, addGroup, resetPlan, restoreGuests });
 document.getElementById("map").addEventListener("click", mapClick);
 render();
 if (typeof location !== "undefined") applySharedLink();
