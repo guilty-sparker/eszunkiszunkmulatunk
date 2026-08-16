@@ -56,6 +56,8 @@ check("guest id with illegal characters", (await post({ guest: "p1; drop", quest
 check("guest id too long", (await post({ guest: "p".repeat(65), question: "q1", choice: "g" })).status === 400);
 check("empty guest id", (await post({ guest: "", question: "q1", choice: "g" })).status === 400);
 check("unknown question", (await post({ guest: "p4", question: "q99", choice: "g" })).status === 400);
+check("question past the end", (await post({ guest: "p4", question: "q20", choice: "g" })).status === 400);
+check("a new question is accepted", (await post({ guest: "p5", question: "q19", choice: "b" })).status === 200);
 check("invalid choice", (await post({ guest: "p4", question: "q1", choice: "z" })).status === 400);
 check("missing fields", (await post({ guest: "p4" })).status === 400);
 
@@ -69,13 +71,13 @@ check("rejects a bad guest id", (await get("/me?guest=..")).status === 400);
 console.log("/results");
 const results = await get("/results");
 check("matches the votes cast", results.body?.counts?.q1?.b === 2);
-check("includes every question", Object.keys(results.body?.counts || {}).length === 10);
+check("includes every question", Object.keys(results.body?.counts || {}).length === 19);
 
 console.log("/state");
 const state = await get("/state?guest=p1");
 check("returns this guest's votes", state.body?.votes?.q1 === "g");
 check("returns the counts too", state.body?.counts?.q1?.b === 2);
-check("includes every question", Object.keys(state.body?.counts || {}).length === 10);
+check("includes every question", Object.keys(state.body?.counts || {}).length === 19);
 const fresh = await get("/state?guest=nobody99");
 check("empty votes for a new guest", Object.keys(fresh.body?.votes || {}).length === 0);
 check("still returns counts", fresh.body?.counts?.q1?.g === 1);

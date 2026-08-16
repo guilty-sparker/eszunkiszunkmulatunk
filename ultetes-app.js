@@ -234,9 +234,12 @@ function status(message) {
 }
 
 // The menu marks, in the order the button cycles through them.
+// One mark per guest, so the kitchen never has to reconcile two.
 const DIETS = [
-  { code: "v",  short: "V",  label: "vega",       title: "Vegetáriánus",  color: "#7ee787" },
+  { code: "v",  short: "V",  label: "vegetáriánus, hal sem",
+    title: "Vegetáriánus — halat sem eszik", color: "#7ee787" },
   { code: "vg", short: "VG", label: "vegán",      title: "Vegán",         color: "#2ee6a8" },
+  { code: "gy", short: "GY", label: "gyerekmenü", title: "Gyerekmenü",    color: "#ffc94d" },
   { code: "x",  short: "∅",  label: "nincs menü", title: "Nem kér menüt", color: "#ff7a6b" },
 ];
 const DIET_BY_CODE = new Map(DIETS.map((d) => [d.code, d]));

@@ -232,6 +232,132 @@ const translationsData = {
               "text": "👰 Bea"
             }
           ]
+        },
+        {
+          "id": "q11",
+          "text": "Ki alszik el hamarabb ma este?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "text": "Ki hozta fel előbb a házasság témáját?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "text": "Kit kap el előbb a kapuzárási pánik?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q14",
+          "text": "Ki lesz a felelősségteljesebb szülő?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "text": "Ki várja jobban a nászutat?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q16",
+          "text": "Ki tud jobban belezúgni egy új hobbiba?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "text": "Kinél van a gyeplő a kapcsolatban?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q18",
+          "text": "Kit vinne el előbb a rendőrség?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "text": "Ki tervezné meg az egész nászutat?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
         }
       ]
     },
@@ -457,6 +583,132 @@ const translationsData = {
         {
           "id": "q10",
           "text": "Who would buy something completely pointless just because the offer was too good to pass up?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q11",
+          "text": "Who falls asleep first tonight?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "text": "Who mentioned marriage first?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "text": "Who will have a midlife crisis first?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q14",
+          "text": "Who will be the more responsible parent?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "text": "Who is looking forward to the honeymoon more?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q16",
+          "text": "Who is more likely to get obsessed with a new hobby?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "text": "Who wears the trousers in the relationship?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q18",
+          "text": "Who is more likely to get arrested?",
+          "options": [
+            {
+              "id": "g",
+              "text": "🤵 Gábor"
+            },
+            {
+              "id": "b",
+              "text": "👰 Bea"
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "text": "Who is more likely to plan the entire honeymoon?",
           "options": [
             {
               "id": "g",

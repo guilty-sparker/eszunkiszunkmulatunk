@@ -14,7 +14,7 @@
 // Only the ids live here — the text is translated in one place, on the site.
 // Every question is "Gábor or Bea": g or b.
 const QUESTIONS = Object.fromEntries(
-  Array.from({ length: 10 }, (_, i) => ["q" + (i + 1), ["g", "b"]])
+  Array.from({ length: 19 }, (_, i) => ["q" + (i + 1), ["g", "b"]])
 );
 
 // Deliberately permissive. The seating data owns the id format and this

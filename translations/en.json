@@ -219,6 +219,132 @@
             "text": "👰 Bea"
           }
         ]
+      },
+      {
+        "id": "q11",
+        "text": "Who falls asleep first tonight?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
+          },
+          {
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q12",
+        "text": "Who mentioned marriage first?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
+          },
+          {
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q13",
+        "text": "Who will have a midlife crisis first?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
+          },
+          {
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q14",
+        "text": "Who will be the more responsible parent?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
+          },
+          {
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q15",
+        "text": "Who is looking forward to the honeymoon more?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
+          },
+          {
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q16",
+        "text": "Who is more likely to get obsessed with a new hobby?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
+          },
+          {
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q17",
+        "text": "Who wears the trousers in the relationship?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
+          },
+          {
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q18",
+        "text": "Who is more likely to get arrested?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
+          },
+          {
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
+      },
+      {
+        "id": "q19",
+        "text": "Who is more likely to plan the entire honeymoon?",
+        "options": [
+          {
+            "id": "g",
+            "text": "🤵 Gábor"
+          },
+          {
+            "id": "b",
+            "text": "👰 Bea"
+          }
+        ]
       }
     ],
     "answered": "answered",
